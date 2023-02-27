@@ -1,0 +1,109 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 99px;
+  background-color: #f3f3f3;
+  color: #333;
+  font-family: sans-serif;
+}
+  
+  
+  .container {
+    text-align: center;
+    max-width: 737px;
+    width: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: #f3f3f3;
+    display: none;
+  }
+  
+  .preloader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #333;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  h1 {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+.sig-input {
+    display: block;
+    width: 100%;
+    margin: 0px 5px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+  }
+  
+  input[type="email"],
+  input[type="text"],
+  input[type="password"],
+  input[type="text"] {
+    background-color: #f3f3f3;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .UL-img{
+
+    /* position: fixed; */
+    width: 345px;
+    height: 200px;
+    left: 464px;
+    top: 0px;
+    background: url(ul.jpg);
+    border-radius: 0px;
+  }
+
+
+.total-form{
+    display: flex;
+    flex-direction: column
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: row
+}
+.navbar-sign{
+
+    position: absolute;
+    width: 1280px;
+    height: 200px;
+    left: 0px;
+    top: 0px;
+    background: #fafafa;
+    border-radius: 0px;
+}
