@@ -1,0 +1,36 @@
+<%-include('../layouts/header.ejs') %>
+
+
+
+<div class="preloader"></div>
+
+  
+
+  <div class="container">
+    <header>
+      <nav class="navbar-sign">
+        <img src="/image/ul2.jpg" alt="" class="UL-img"/>
+    </nav>
+    </header>
+    <div class="row">
+    <!-- <h1>Signup Form</h1> -->
+    <h1>Login</h1>   
+    <% 
+         if(typeof message !=='undefined'){
+      %>
+      <h4><%= message %></h4>
+      <%
+      }
+      %>
+    <form class="total-form" method="post" action="/forget">
+      <div class="signup-form">
+      </div>
+      <input type="email" placeholder="Email address"required class="sig-input" name="email">
+      <input type="submit" value="send reset link">
+      
+    </form>
+  </div>
+  </div>
+
+
+<%-include('../layouts/footer.ejs') %> 

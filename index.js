@@ -9,20 +9,27 @@ const app= express();
 
 app.use(express.static(path.join(__dirname,'public')))
 
-const userRoute = require('./routes/userRoute')
+
 
 // setting view engine
 app.set('view engine','ejs')
 app.set('views','./views/users')
 
-
+const userRoute = require('./routes/userRoute')
 app.use('/',userRoute)
 
-app.get('/signup',function(request,response){
+app.set('view engine','ejs')
+// app.set('views','./views/admin')
 
-    response.render('signup')
+const adminRoute=require('./routes/adminRoute')
+app.use('/admin',adminRoute)
 
-})
+
+// app.get('/signup',function(request,response){
+
+//     response.render('signup')
+
+// })
 
 app.listen(3000,function(){
     console.log('server is run..');

@@ -1,0 +1,47 @@
+<%-include('../layouts/header.ejs') %>
+
+
+<div class="preloader"></div>
+
+  
+
+  <div class="container">
+    <header>
+      <nav class="navbar-sign">
+        <img src="/image/ul2.jpg" alt="" class="UL-img"/>
+    </nav>
+    </header>
+    <div class="row">
+    <!-- <h1>Signup Form</h1> -->
+    <h1>Login</h1>   
+    <%
+         if(typeof message !=='undefined'){
+      %>
+      <h4><%= message %></h4>
+      <%
+      }
+      %>
+    <form class="total-form" method="post" action="/admin">
+      <div class="signup-form">
+      </div>
+      <input type="email" placeholder="Email address"required class="sig-input" name="email">
+      <div class="signup-form">
+      <input type="password" name="password" class="sig-input" placeholder="enter a strong password" required>   
+    </div>
+      <button type="submit" value="login">Log in</button>
+      <a href="/forget">Forget Password</a>
+      <a href="/verification">verification</a>
+    </form>
+
+    <!-- <form method="post" action="/login">
+
+      <input type="text" name="email" placeholder="email">
+      <input type="text" name="password" placeholder="Passwoer">
+      <button type="submit">login</button> -->
+
+    </form>
+  </div>
+  </div>
+
+
+  <%-include('../layouts/footer.ejs') %> 
