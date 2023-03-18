@@ -35,7 +35,35 @@ const userSchema= new mongoose.Schema({
     block:{
         type:Boolean,
         default:0
-    }
+    },
+    cart:[{
+         
+        productId:{
+        type:mongoose.Types.ObjectId,
+        ref:'Product',
+        required:true
+        },
+        Price:{
+            type:Number,
+           
+        },
+        qty:{
+
+            type:Number,
+            required:true 
+        },
+        productTotalprice:{
+            type:Number,
+            required:true
+        }
+    }],
+    whishlist:[{
+        product:{
+            type:mongoose.Types.ObjectId,
+            ref:'Product',
+            requried:true
+        }
+    }]
 
 
 })

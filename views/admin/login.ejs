@@ -1,14 +1,13 @@
-<%-include('../layouts/header.ejs') %>
+<%-include('../layouts/adminheader.ejs') %>
 
 
+<!-- <link rel="stylesheet" href="/admin/css/style.css"> -->
+<link rel="stylesheet" href="/admin/log.css">
 <div class="preloader"></div>
-
-  
-
   <div class="container">
     <header>
       <nav class="navbar-sign">
-        <img src="/image/ul2.jpg" alt="" class="UL-img"/>
+        <img src="/img/WhatsApp Image 2023-03-08 at 12.07.14.jpg" alt="" class="UL-img"/>
     </nav>
     </header>
     <div class="row">
@@ -21,7 +20,7 @@
       <%
       }
       %>
-    <form class="total-form" method="post" action="/admin">
+    <form class="total-form" method="post" action="">
       <div class="signup-form">
       </div>
       <input type="email" placeholder="Email address"required class="sig-input" name="email">
@@ -29,8 +28,8 @@
       <input type="password" name="password" class="sig-input" placeholder="enter a strong password" required>   
     </div>
       <button type="submit" value="login">Log in</button>
-      <a href="/forget">Forget Password</a>
-      <a href="/verification">verification</a>
+      <!-- <a href="/forget">Forget Password</a>
+      <a href="/verification">verification</a> -->
     </form>
 
     <!-- <form method="post" action="/login">
@@ -44,4 +43,4 @@
   </div>
 
 
-  <%-include('../layouts/footer.ejs') %> 
+  <%-include('../layouts/adminfooter.ejs') %> 

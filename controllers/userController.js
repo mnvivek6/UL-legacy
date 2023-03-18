@@ -1,13 +1,26 @@
 // setting rout
-
 const User =require('../models/usersmodel')
 const bcrypt = require('bcrypt');
 
 const nodemailer=require('nodemailer');
 const config = require('../config/config')
-const { response } = require('../routes/userRoute');
+const { res } = require('../routes/userRoute');
 const randomstring= require('randomstring');
 const { use } = require('bcrypt/promises');
+const Product = require('../models/productmodel');
+const Category = require('../models/category');
+// const Address = require('../models/addressModel');
+const Address = require('../models/addressModel');
+const { response } = require('express');
+const { default: mongoose } = require('mongoose');
+
+require('dotenv').config()
+
+const {TWILIO_SERVICE_SID,TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN} = process.env
+const client = require('twilio')(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN,{
+    lazyLoading:true
+})
+
 
 // bcrypt the password for security
 // console.log("khgfkgdkhgc");
@@ -49,7 +62,7 @@ const sendVeryfymail = async(name,email,user_id)=>{
             if (error){
                console.log(error);                
             }else{
-                console.log('Email has been sent:-',info.response);
+                console.log('Email has been sent:-',info.res);
             }
         })
     } catch (error) {
@@ -83,7 +96,7 @@ const sendResetPasswordmail = async(name,email,token)=>{
             if (error){
                console.log(error);                
             }else{
-                console.log('Email has been sent:-',info.response);
+                console.log('Email has been sent:-',info.res);
             }
         })
     } catch (error) {
@@ -92,33 +105,33 @@ const sendResetPasswordmail = async(name,email,token)=>{
 
 }
 
-const loadRegister = async(request,response)=>{
+const loadRegister = async(req,res)=>{
 
     try {
-        response.render('signup')
+        res.render('signup')
     } catch (error) {
         console.log(error.message);
     }
 }
-const insertUser = async(request,response)=>{
+const insertUser = async(req,res)=>{
 
     try {
-        // console.log(request.body.password);
-        const spassword =await Securepassword(request.body.password);
+        // console.log(req.body.password);
+        const spassword =await Securepassword(req.body.password);
         const NEwUser= new User({
-            name:request.body.name,
-            email:request.body.email,
-            mobile:request.body.mobile,
+            name:req.body.name,
+            email:req.body.email,
+            mobile:req.body.mobile,
             password:spassword,
             is_admin:0
         })
         console.log(NEwUser);
         const userData = await NEwUser.save()
         if (userData) {
-            sendVeryfymail(request.body.name,request.body.email,userData._id)
-            response.render('userlogin',{message:"your registration has been successfull"})
+            sendVeryfymail(req.body.name,req.body.email,userData._id)
+            res.render('userlogin',{message:"your registration has been successfull"})
         }else{
-            response.render('signup',{message:"your registration has been failed"})
+            res.render('signup',{message:"your registration has been failed"})
         }
     } catch (error) {
         console.log(error.message);
@@ -127,11 +140,11 @@ const insertUser = async(request,response)=>{
 }
 
 // login user method
-const loginLoad=async(request,response)=>{
+const loginLoad=async(req,res)=>{
 
        try {
 
-        response.render('userlogin')
+        res.render('userlogin')
         
        } catch (error) {
         
@@ -140,13 +153,14 @@ const loginLoad=async(request,response)=>{
 
 
 }
-const verifylogin= async (request,response)=>{
+const verifylogin= async (req,res)=>{
 
     try {
-
-        const email=request.body.email;
-        const password=request.body.password
-        // console.log(request.body.password);
+        const products = await Product.find()
+        const category = await Category.find()
+        const email=req.body.email;
+        const password=req.body.password
+        
        const userData =User.findOne({email:email})
        .then((userData)=>{
         if (userData) {
@@ -159,22 +173,24 @@ const verifylogin= async (request,response)=>{
                 
                 if (userData.is_varified==0) {
                     
-                    response.render('userlogin',{message:'please verify your mail'})
+                    res.render('userlogin',{message:'please verify your mail'})
                   
                 }else{
-                    request.session.user_id=userData._id
-                    response.redirect('userhome')
+                    req.session.user_id=userData._id
+                    console.log(req.session.user_id);
+                    
+                    res.redirect('/userhome')
                 }
                 
              }else{
-                response.render('userlogin',{message:"Email and password is incorrect"})
+                res.render('userlogin',{message:"Email and password is incorrect"})
              }
           })
          
          
          
         }else{
-            response.render('userlogin',{message:"Email and password is incorrect"})
+            res.render('userlogin',{message:"Email and password is incorrect"})
         }
        })
         
@@ -185,23 +201,45 @@ const verifylogin= async (request,response)=>{
     }
 }
 
-const loadhome = async(request,response)=>{
-
+const loadhome = async(req,res)=>{
 
     try {
-        response.render('userhome')
+        const category= await Category.find()
+       
+        const products= await Product.find()
+        const user = true
+        // console.log(products);
+        console.log("load homepage");
+        res.render('userhome',{products,category,user})
     } catch (error) {
         console.log(error.message);
     }
 }
+const homepage = async(req,res) =>{
+    try{
+        if(req.session.user_id){
+            const category= await Category.find()
+       
+            const products= await Product.find()
+            const user = false
+            // console.log(products);
+            console.log("loading userhome");
+            res.render('userhome',{products,category,user})
+        }
+        
+    }catch(error){
+        console.log();
+    }
+}
 
-const verifymail= async(request,response)=>{
+// for mailverification
+const verifymail= async(req,res)=>{
 
     try {
-      const updateinfo= await  User.updateOne({_id:request.query.id},{$set:{ is_varified:1}})
+      const updateinfo= await  User.updateOne({_id:req.query.id},{$set:{ is_varified:1}})
 
      console.log(updateinfo); 
-     response.render("email")
+     res.render("email")
 
     } catch (error) {
         console.log(error.message);
@@ -209,66 +247,75 @@ const verifymail= async(request,response)=>{
     }
 }
 
+// logout
+const userLogout = async (req,res)=>{
+    try{
+        req.session.user_id=null
+        res.redirect('/');
 
-const userlogout = async (request,response)=>{
-    try {
-        request.session.destroy()
-        response.redirect('/')
-    } catch (error) {
+    }catch(error){
         console.log(error.message);
     }
 }
+const forgetLoad = async(req,res)=>{
+    try{
+        res.render('forget')
+    }catch(error){
+        console.log(error.message);
+    }
+}
+
 // foget password
-const forgetload= async(request,response)=>{
+const forgetload= async(req,res)=>{
     console.log("hay");
     try {
 
-        response.render('forget')
+        res.render('forget')
         
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const forgetVerify = async(request,response)=>{
+const forgetVerify = async(req,res)=>{
 
     try {
         
-     const email=request.body.email
+     const email=req.body.email
     const userData= await User.findOne({email:email})
 if(userData){
 console.log(userData);
 if (userData.is_varified===0) {
-    response.render('forget',{message:"please verify your mail"})
+    res.render('forget',{message:"please verify your mail"})
 }else{
     const randomString =  randomstring.generate();
     console.log(randomString);
     const updateData = await User.updateOne({email:email},{$set:{token:randomString}})
     console.log(updateData);
     sendResetPasswordmail(userData.name,userData.email,randomString)
-    response.render('forget',{message:"Please check your mail to reset your password"})
+    res.render('forget',{message:"Please check your mail to reset your password"})
     
 }
 
 
 }else{
-    response.render('forget',{message:"user email is incorrect"})
+    res.render('forget',{message:"user email is incorrect"})
 }
     } catch (error) {
         console.log(error.message);
     }
 }
 // forget password 
-const forgetpasswordload=async(request,response)=>{
+const forgetpasswordload=async(req,res)=>{
 
     try {
-        const  token = request.query.token
+        const  token = req.query.token
        const tokenData= User.findOne({token:token})
        if (condition) {
-        response.render('forget',{user_id:tokenData._id})
+        res.render('forget',{user_id:tokenData._id})
         
        }else{
-        response.render('404',{message:"token is invalid"})
+        res.render('404',{message:"token is invalid"})
        }
     } catch (error) {
         console.log(error.message);
@@ -276,63 +323,308 @@ const forgetpasswordload=async(request,response)=>{
 }
 
 // reset password
-const resetPassword=async(request,response)=>{
+const resetPassword=async(req,res)=>{
 
     try {
         
-        const password = request.body.password
-        const user_id=request.body.user_id
+        const password = req.body.password
+        const user_id=req.body.user_id
 
         const secure_password = await Securepassword(password)
         const updateData= await  User.findByIdAndUpdate({_id:user_id},{$set:{password:secure_password,token:''}})
-        response.redirect('/')
+        res.redirect('/')
     } catch (error) {
         console.log(error.message);
     }
 }
-// verification send mail link
 
-// const verificationload = async(request,response)=>{
+const otpPage= async (req, res)=>{
 
-//     try {
-
-//         response.render('/verification')
+    try {
         
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-// verification link 
+        res.render('phoneverification')
 
-// const sentverificationlink= async(request,response)=>{
-//     try {
-//         const email=request.body.email
-//         const userData= await User.findOne({ email:email})
-//         if (userData) {
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const verifyPhone = async(req, res)=>{
+
+    try {
+        
+        const num = await req.body.number
+        const check = await User.findOne({mobile:num})
+        if (check) {
+                   
+            const otpres = await client.verify.v2.services(TWILIO_SERVICE_SID).verifications.create({
+                to:`+91${num}`,
+                channel:"sms"
+            })
+            res.render('otp',{message:"" ,number:num})
+        }else{
+            res.render('phoneverification',{message:'did not register this mobile number'})
+        }
+    } catch (error) {
+        console.log(error.message);
+        console.log('verifyPhone');
+    }
+}
+
+const verifyOtp = async(req, res)=>{
+
+    try {
+         console.log('hi');
+        const num = req.body.mno 
+        const otpp = req.body.otp  
+        const otp = otpp.join("")
+        const verifiedres = await client.verify
+        .v2.services(TWILIO_SERVICE_SID)
+        .verificationChecks.create({
+         
+            to:`+91${num}`,
+            code:otp,
+        })
+        if (verifiedres.status=='approved') {
             
-//               sendVeryfymail(userData.name,userData.email,userData._id)
-//               response.render('/verification',{message:"Reset verification mail sent your mail id,please check"})
+            const userdetails = await User.findOne({mobile:num}) 
+               
+            // req.session.user_id = userdetails
+            res.redirect('/home')
+        }
+        else{
+            res.render('otp',{message:'incorrect otp'})
+            console.log('incorrect otp');
+        }
+    } catch (error) {
+        console.log(error.message);
+        console.log('we got error from verify otp');
+    }
+}
 
-//         }else{
-//          response.render('/verification',{message:"not exist"})
-//         }
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
+const productdetail= async( req, res)=>{
+
+    try {
+        
+       const proid = req.query.id
+       const product = await Product.findOne({_id:proid})
+        console.log(product);
+        res.render('productdetails',{product})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const userProfile = async ( req, res)=>{
+
+    try {
+        
+        const userId = await req.session.user_id
+        const userData=await User.findOne({_id:req.session.user_id})
+        
+        res.render('userprofile',{userData})
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const addingAddress = async (req , res)=>{
+
+    try {
+        if (req.session.user_id) {
+            
+            const userId=await req.session.user_id
+            console.log(userId);
+            let addressObj = {
+
+                fullname:req.body.fullname,
+                mobileNumber:req.body.number,
+                pincode:req.body.zip,
+                houseAddress:req.body.houseAddress,
+                streetAdress:req.body.streetAdress,
+                landMark:req.body.landmark,
+                cityName:req.body.city,
+                state:req.body.state
+            }
+            console.log(addressObj);
+             const userAddress = await Address.findOne({userId:userId})
+             
+            if (userAddress) {
+                
+                const useraddrs= await Address.findOne({userId:userId}).populate('userId').exec()
+                console.log(useraddrs);
+                useraddrs.userAddresses.push(addressObj)
+                await useraddrs.save().then((response)=>{
+                    res.redirect('/userprofile')
+                }).catch((err)=>{
+                    res.send(err)
+                })
+                
+                
+            }else{
+                console.log('hi');
+
+                let useraddressobj = {
+
+                    userId:userId,
+                    useraddresses:[addressObj]
+                }
+             console.log(useraddressobj);
+                await Address.create(useraddressobj).then((response)=>{
+                    res.redirect('/userprofile')
+                })
+            }
+            
+        }
+      
+        
+    } catch (error) {
+        console.log(error.message);
+        console.log('error from adding address');
+    }
+}
+
+const showaddress = async (req, res)=>{
+
+    try {
+        // const userData = await User.findOne({_id:req.session.user_id})
+        const address = await Address.findOne({userId:req.session.user_id})
+       
+
+        res.render('address',{address})
+    } catch (error) {
+        console.log(error.message);
+        console.log('error from showaddress');
+
+    }
+}
+
+const editAddress = async(req,res)=>{
+
+    try {
+        
+       const adrsSchemaId = req.params.id
+       const adrsId = req.params.adrsId
+       const address = mongoose.Types.ObjectId(adrsSchemaId)
+       const addresses= mongoose.Types.ObjectId(adrsId)
+
+       const addressData = await Address.findOne({address})
+
+       const addressIndex= await addressData.userAddresses.findIndex(data=> data.id == addresses)
+
+       const editAddress= addressData.userAddresses[addressIndex]
+
+       res.render('editaddress',{editAddress,addressIndex})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const AddTowishlist = async (req, res)=>{
+
+    try {
+console.log('hi');
+        const productId = req.body.productId
+        // console.log(productId);
+        
+        let exist = await User.findOne({id:req.session.user_id,'whishlist.product':productId})
+        console.log(exist);
+        
+        if (exist) {
+            res.json({status:false})
+        }else{
+         console.log('else gotit');
+            const product = await Product.findOne({_id:req.body.productId})
+            console.log("product");
+            console.log(product);
+
+            const _id = req.session.user_id
+            console.log("user");
+             console.log(_id);
+            const userData = await User.findOne({_id})
+            
+
+            const result = await User.updateOne({_id},{$push:{whishlist:{product:product._id}}})
+               console.log(result);
+            if (result) {
+                res.json({status:true})
+                console.log('its done');
+                // res.redirect('/userhome')
+
+            }else{
+
+                  console.log('not added to whishlist ');
+            }
+        }
+       
+    } catch (error) {
+        console.log(error.message);
+
+        console.log('error from addtowishlist');
+    }
+}
+const loadwhishlist = async(req, res)=>{
+
+    try {
+         const Id= await req.session.user_id
+         console.log(Id);
+         const userData = await User.findOne({_id:Id}).populate('whishlist.product').exec()
+
+         console.log(userData);
+         
+
+        res.render('whishlist',{userData})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const deletewhishlist = async ( req, res)=>{
+
+    try {
+
+        const id = req.session.user_id
+        const deleteProId= req.body.productId
+        const deleteWishlist = await User.findByIdAndUpdate({_id:id},{$pull:{whishlist:{product:deleteProId}}})
+
+        if (deleteWishlist) {
+            
+            res.json({success:true})
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 // exporting usercontroller module   
 module.exports={
     loadRegister,
     insertUser,
     loginLoad,
     verifylogin,
+    homepage,
     loadhome,
     verifymail,
-    userlogout,
+    userLogout,
     forgetload,
     forgetVerify,
     forgetpasswordload,
     resetPassword,
+    verifyPhone,
+    verifyOtp,
+    otpPage,
+    productdetail,
+    userProfile,
+    addingAddress,
+    showaddress,
+    AddTowishlist,
+    loadwhishlist,
+    deletewhishlist,
+    editAddress
+    
+    
     // verificationload,
     // sentverificationlink
     

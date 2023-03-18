@@ -1,0 +1,309 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+html {
+  /* Set core root defaults */
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root {
+  --border-rd-sm: 0.25rem;
+  --border-rd-xxl: 2.5rem;
+  --color-neutral-300: #d0d3d9;
+  --color-neutral-400: #a9afba;
+  --color-neutral-500: #6f7585;
+  --color-neutral-700: #3c475b;
+  --color-neutral-800: #1e293d;
+  --color-blue-600: #21a7d0;
+  --color-blue-700: #1393b5;
+  --color-blue-800: #057f9c;
+  --color-blue-900: #005d6f;
+  --color-lobster-500: #d93013;
+  /* body text color */
+  --color-text: var(--color-neutral-500);
+  --white: #ffffff;
+  --font-family: "F37 Bolton", Helvetica, Arial, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.9375rem;
+  --font-weight-light: 400;
+  --font-weight-bold: 700;
+  --height-base: 2.5rem;
+  --height-md: 2.75rem;
+  --transition-property-colors: background-color, border-color, color;
+  --transition-duration-normal: 200ms;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-light);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* font-face declaration */
+@font-face {
+  font-family: "F37 Bolton";
+  font-style: normal;
+  font-weight: normal;
+  src: url("https://s.domainstatic.com.au/content/fe-static/@domain-group/fe-brary/static/fonts/bolton/F37Bolton-Regular.woff2") format("woff2"),
+    url("https://s.domainstatic.com.au/content/fe-static/@domain-group/fe-brary/static/fonts/bolton/F37Bolton-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "F37 Bolton";
+  font-style: normal;
+  font-weight: bold;
+  src: url("https://s.domainstatic.com.au/content/fe-static/@domain-group/fe-brary/static/fonts/bolton/F37Bolton-Bold.woff2") format("woff2"),
+    url("https://s.domainstatic.com.au/content/fe-static/@domain-group/fe-brary/static/fonts/bolton/F37Bolton-Bold.woff") format("woff");
+  font-display: swap;
+}
+
+/*mobile first --*/
+.grid-container {
+  display: grid;
+  grid-template-columns: min(31.25rem, 100%);
+  justify-content: center;
+}
+
+.content-wrapper {
+  display: flex;
+  background: var(--white);
+  padding-inline: 16px;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrapper::before {
+  flex-grow: 1;
+  content: "";
+  display: block;
+  min-height: 1.5rem;
+}
+
+.content-wrapper::after {
+  flex-grow: 2.25;
+  content: "";
+  display: block;
+  min-height: 1.5rem;
+}
+
+div:empty {
+  /* mobile first */
+  display: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://publicmedia-bidtracker.s3.ap-southeast-2.amazonaws.com/static/img/agent.jpg");
+}
+
+/* Util classes------------ */
+.flow {
+  --flow-space: 1.5625rem;
+}
+
+.flow>*+* {
+  margin-top: var(--flow-space);
+}
+
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ----------------------*/
+h1 {
+  color: var(--color-neutral-700);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-lg);
+  line-height: 1.03;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-blue-700);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  /* We are styling it ourselves */
+  outline: none;
+  transition-property: var(--transition-property-colors);
+  transition-duration: var(--transition-duration-normal);
+}
+
+/* to make inputs responsive */
+input[type="email"],
+input[inputmode="numeric"] {
+  width: 100%;
+  border-radius: var(--border-rd-sm);
+  border: 1px solid var(--color-neutral-300);
+}
+
+input[type="email"] {
+  --flow-space: 0;
+  background-color: var(--white);
+  font-size: var(--font-size-sm);
+  height: var(--height-base);
+  line-height: 1.57;
+  padding: 9px 18px;
+  color: var(--color-neutral-800);
+}
+
+input[type="email"]:hover {
+  border-color: var(--color-neutral-400);
+}
+
+input[type="email"]:focus {
+  border-color: var(--color-blue-900);
+}
+
+input[type="email"]:not(:placeholder-shown):not(:focus):invalid {
+  border-color: var(--color-lobster-500);
+}
+
+input::placeholder {
+  color: var(--color-neutral-400);
+}
+
+input[type="submit"] {
+  align-items: center;
+  align-self: flex-start;
+  appearance: none;
+  background-color: var(--color-blue-700);
+  border-radius: var(--border-rd-xxl);
+  border: 2px solid transparent;
+  color: var(--white);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: var(--font-weight-bold);
+  height: var(--height-md);
+  justify-content: center;
+  padding: 10px 28px;
+  width: min(100%, 13.75rem);
+}
+
+input[type="submit"]:hover {
+  background-color: var(--color-blue-800);
+}
+
+input[type="submit"]:focus,
+input[type="submit"]:active {
+  border-color: var(--color-blue-900);
+}
+
+/*Otp form ---------------- */
+input[type="submit"][data-step="otp"] {
+  width: auto;
+}
+
+input[inputmode="numeric"] {
+  height: var(--height-md);
+  text-align: center;
+}
+
+input[inputmode="numeric"]:hover {
+  border-color: var(--color-neutral-400);
+}
+
+input[inputmode="numeric"]:focus {
+  border-color: var(--color-blue-900);
+}
+
+.otp-container {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 18rem;
+}
+
+/* ----------------*/
+/* 
+* Desktop size as per fe-brary
+* Ref: https://fe-dora.domain.com.au/demo/fe-brary/26.9.0-nosass16/domain/Media%20Query/Media
+*/
+@media (min-width: 1020px) {
+  div:empty {
+    display: block;
+  }
+
+  .grid-container {
+    grid-template-columns: 25.9375rem 1fr;
+  }
+
+  .content-wrapper {
+    padding-inline: 48px;
+  }
+
+  input[type="submit"] {
+    /* make it full width of the container */
+    width: 100%;
+  }
+
+  .otp-container {
+    max-width: unset;
+  }
+}

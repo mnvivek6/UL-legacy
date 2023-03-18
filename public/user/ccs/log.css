@@ -4,7 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 99px;
-    background-color: #f3f3f3;
+    background-color:  #fffcfc;
     color: #333;
     font-family: sans-serif;
   }
@@ -17,7 +17,7 @@ body {
       padding: 32px;
       box-sizing: border-box;
       border-radius: 4px;
-      background-color: #f3f3f3;
+      background-color: #fffcfc;
     }
     
    
@@ -96,6 +96,6 @@ body {
       height: 200px;
       left: 0px;
       top: 0px;
-      background: #fafafa;
+      background: #ffffff;
       border-radius: 0px;
   }

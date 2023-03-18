@@ -1,0 +1,60 @@
+
+<%-include('../layouts/header.ejs') %>
+
+<link rel="stylesheet" href="/user/ccs/otp.css">
+  <main>
+    <div class="grid-container">
+      <div class="content-wrapper">
+        <div class="flow">
+          <h1>Enter Code</h1>
+          <p>
+            A 4-digit verification code has been sent to your email. Please
+            enter this code to proceed or <a href="#">request a new code</a>.
+          </p>
+          <form id="otp-form" accept-charset="utf-8" class="flow" action="/otp" method="post">
+            <div class="otp-container">
+              <div>
+                <% if(typeof number!=='undefined'){%>
+                <input type="hidden" name="mno" value="<%= number %>">
+                <%}%>
+                <label for="first-digit" class="sr-only">First Digit</label>
+                <input type="text" name="otp"  inputmode="numeric" maxlength="1" autofocus />
+              </div>
+              <div>
+                <label for="second-digit" class="sr-only">Second digit</label>
+                <input type="text" name="otp" inputmode="numeric"  id="second-digit" maxlength="1" />
+              </div>
+  
+              <div>
+                <label for="third-digit" class="sr-only">Third digit</label>
+                <input type="text"   inputmode="numeric"  name="otp" maxlength="1" />
+              </div>
+              <div>
+                <label for="fourth-digit" class="sr-only">Fourth digit</label>
+                <input type="text" inputmode="numeric" name="otp"  maxlength="1" />
+                <input type="hidden" name="state" id="state" value="${state}" />
+              </div>
+              <div>
+                <label for="fourth-digit" class="sr-only">Fifth digit</label>
+                <input type="text" inputmode="numeric" name="otp"  maxlength="1" />
+                <input type="hidden" name="state" id="state" value="${state}" />
+              </div>
+              <div>
+                <label for="fourth-digit" class="sr-only">sixth digit</label>
+                <input type="text" inputmode="numeric" name="otp"  maxlength="1" />
+                <input type="hidden" name="state" id="state" value="${state}" />
+              </div>
+            </div>
+            <div><button type="submit" class="btn btn-outline-secondary">Verify Otp</button></div>
+          </form>
+        </div>
+      </div>
+      <!-- <div>empty-div for the background image on the right</div> -->
+      <!-- <h4>UNTITLED LEGACY</h4> -->
+      <!-- <p>here ensure that do not share your otp with others it will harm your <br> account and also it will harmfull for your privacy-policy</p> -->
+    </div>
+  </main>
+  <script src="/user/js/otp.js">
+     
+  </script>
+  <%-include('../layouts/footer.ejs') %>

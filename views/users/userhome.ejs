@@ -1,686 +1,783 @@
-<%- include('../layouts/header.ejs') %>
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-<div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a href="/login">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
-            </div>
-        </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
+<head>
+
+    <!-- metas -->
+    <meta charset="utf-8">
+    <meta name="author" content="Chitrakoot Web" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="keywords" content="Multipurpose eCommerce Template + Admin" />
+    <meta name="description" content="Smartshop - Multipurpose eCommerce Template + Admin" />
+
+    <!-- title  -->
+    <title>UL</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="/user/img/logos/ULfavicon.jpg">
+    <link rel="apple-touch-icon" href="/user/img/logos/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/user/img/logos/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/user/img/logos/apple-touch-icon-114x114.png">
+
+    <!-- plugins -->
+    <link rel="stylesheet" href="/user/css/plugins.css">
+
+    <!-- revolution slider css -->
+    <link rel="stylesheet" href="/user/css/rev_slider/settings.css">
+    <link rel="stylesheet" href="/user/css/rev_slider/layers.css">
+    <link rel="stylesheet" href="/user/css/rev_slider/navigation.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+
+    <!-- theme core css -->
+    <link href="/user/css/styles-3.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- PAGE LOADING
+    ================================================== -->
+    <!-- <div id="preloader"></div> -->
+
+    <!-- MAIN WRAPPER
+    ================================================== -->
+    <div class="main-wrapper mp-pusher" id="mp-pusher">
+
+        <!-- HEADER
+        ================================================== -->
+        <header class="menu_area-light header-light-nav header-02">
+
+            <div class="navbar-default">
+
+                <!-- top search -->
+                <div class="top-search bg-primary">
+                    <div class="container-fluid">
+                        <form class="search-form" action="#" method="GET">
+                            <div class="input-group">
+                                <span class="input-group-addon cursor-pointer">
+                                    <button class="search-form_submit fas fa-search display-27 text-white" type="submit"></button>
+                                </span>
+                                <input type="text" class="search-form_input form-control" name="s" autocomplete="off" placeholder="Type & hit enter...">
+                                <span class="input-group-addon close-search"><i class="fas fa-times display-27 mt-2"></i></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- end top search -->
+
+                <div class="container">
+                    <div class="row align-items-center g-0">
+                        <div class="col-12 col-lg-12">
+                            <div class="menu_area alt-font">
+                                <nav class="navbar navbar-expand-lg navbar-light p-0">
+
+                                    <div class="navbar-header navbar-header-custom">
+                                        <!-- logo -->
+                                        <!-- <a href="home-shop-1.html" class="navbar-brand logodefault"><img id="logo" src="user/img/logos/logo-color3.png" alt="logo"></a> -->
+                                        <!-- end logo -->
+                                    </div>
+
+                                    <!-- menu toggler -->
+                                    <div class="navbar-toggler"></div>
+                                    <!-- end menu toggler -->
+
+                                    <!-- menu area -->
+                                    <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
+
+                                        <li><a href="/userhome">Home</a>
+                                            <!-- <ul> -->
+                                                <!-- <li><a href="home-shop-1.html">Home 01</a></li> -->
+                                                <!-- <li><a href="home-shop-2.html">Home 02</a></li> -->
+                                                <!-- <li><a href="home-shop-3.html">Home 03</a></li> -->
+                                                <!-- <li><a href="">Home </a></li> -->
+                                                <!-- <li><a href="admin/index.html" target="_blank">Admin Dashboard</a></li> -->
+                                            <!-- </ul> -->
+                                        </li>
+                                        <%if(user == false){%>
+                                          
+                                                <li><a href="/logout">logout</a></li>
+                                        <%}else{%>
+                                            <li><a href="/login">login</a>
+                                            
+                                           
+                                        <%}%>
+                                        </li>
+                                        <li><a href="#">Account</a>
+                                            <ul>
+                                                <li><a href="/login">Login / Register</a></li>
+                                                <li><a href="account-password-recovery.html">Password Recovery</a></li>
+                                                <li><a href="account-orders.html">Orders List</a></li>
+                                                <li><a href="account-wishlist.html">Wishlist</a></li>
+                                                <li><a href="/userprofile">Profile Page</a></li>
+                                                <li><a href="account-address.html">Contact / Shipping Address</a></li>
+                                                <li><a href="account-tickets.html">My Tickets</a></li>
+                                                <li><a href="account-single-ticket.html">Single Ticket</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Mega Menu</a>
+                                            <ul class="row megamenu">
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 01</span>
+                                                    <ul>
+                                                        <li><a href="#">Internal SSD</a></li>
+                                                        <li><a href="#">Memory Cards</a></li>
+                                                        <li><a href="#">Home Theatres</a></li>
+                                                        <li><a href="#">Unique Routers</a></li>
+                                                        <li><a href="#">Security cameras</a></li>
+                                                        <li><a href="#">Effective Laptops</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 02</span>
+                                                    <ul>
+                                                        <li><a href="#">Winterwear</a></li>
+                                                        <li><a href="#">Sportswear</a></li>
+                                                        <li><a href="#">Innerwear</a></li>
+                                                        <li><a href="#">Ethnic Wear</a></li>
+                                                        <li><a href="#">Cotton Lounge Wear</a></li>
+                                                        <li><a href="#">Essential Swimwear</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 03</span>
+                                                    <ul>
+                                                        <li><a href="#">Computer Speakers</a></li>
+                                                        <li><a href="#">Compact Headphones</a></li>
+                                                        <li><a href="#">Best Choice Printers</a></li>
+                                                        <li><a href="#">PC Gaming</a></li>
+                                                        <li><a href="#">Power banks</a></li>
+                                                        <li><a href="#">Musical Instruments</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12 d-none d-lg-block">
+                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Current Offers</span>
+
+                                                    <div class="offer-slider owl-carousel owl-theme">
+
+                                                        <div class="offer-banner-slider" style="background-image:url(/user/img/offer-banner/offer-slide-01.jpg);">
+                                                            <div class="offer-text">
+                                                                <h6 class="mb-1 text-white font-weight-500">Men's</h6>
+                                                                <h4 class="font-weight-500"><a href="#">Up to 50% Off</a></h4>
+                                                                <p>Lorem ipsum dolor sit amet consectetur</p>
+                                                                <a class="butn-style1 fill small" href="#"><span>Buy Now</span></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="offer-banner-slider" style="background-image:url(/user/img/offer-banner/offer-slide-02.jpg);">
+                                                            <div class="offer-text">
+                                                                <h6 class="mb-1 text-white font-weight-500">Women's</h6>
+                                                                <h4 class="font-weight-500"><a href="#" class="text-white">Up to 70% Off</a></h4>
+                                                                <p>Lorem ipsum dolor sit amet consectetur</p>
+                                                                <a class="butn-style1 fill small" href="#"><span>Buy Now</span></a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="offer-banner-slider" style="background-image:url(/user/img/offer-banner/offer-slide-03.jpg);">
+                                                            <div class="offer-text">
+                                                                <h6 class="mb-1 text-white font-weight-500">Electronics</h6>
+                                                                <h4 class="font-weight-500"><a href="#" class="text-white">Mega Sale</a></h4>
+                                                                <p>Lorem ipsum dolor sit amet consectetur</p>
+                                                                <a class="butn-style1 fill small" href="#"><span>Buy Now</span></a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Blog</a>
+                                            <ul>
+                                                <li><a href="blog-grid.html">Blog Grid</a></li>
+                                                <li><a href="blog-right-sidebar.html">Blog List Right Sidebar</a></li>
+                                                <li><a href="blog-left-sidebar.html">Blog List Left Sidebar</a></li>
+                                                <li><a href="blog-full-width.html">Blog Full Width</a></li>
+                                                <li><a href="blog-post.html">Blog Post</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Shop</a>
+                                            <ul>
+                                                <li><a href="shop-categories.html">Shop Categories</a></li>
+                                                <li><a href="shop-product-grid.html">Product Grid</a></li>
+                                                <li><a href="shop-product-list.html">Product List</a></li>
+                                                <li><a href="shop-product-full-three-coulmn.html">Product Three Coulmns</a></li>
+                                                <li><a href="shop-product-full-four-coulmn.html">Product Four Coulmns</a></li>
+                                                <li><a href="shop-product-detail.html">Product Detail</a></li>
+                                                <li><a href="shop-cart.html">Shop Cart</a></li>
+                                                <li><a href="shop-checkout-address.html">Shop Checkout</a>
+                                                    <ul>
+                                                        <li><a href="shop-checkout-address.html">Address</a></li>
+                                                        <li><a href="shop-checkout-shipping.html">Shipping</a></li>
+                                                        <li><a href="shop-checkout-payment.html">Payment</a></li>
+                                                        <li><a href="shop-checkout-review.html">Review</a></li>
+                                                        <li><a href="checkout-complete.html">Complete</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#!">Elements</a>
+                                            <ul class="row megamenu">
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 01</span>
+                                                    <ul>
+                                                        <li><a href="accordions.html"><i class="fas fa-sliders-h me-2"></i>Accordions</a></li>
+                                                        <li><a href="alerts.html"><i class="far fa-bell me-2"></i>Alerts</a></li>
+                                                        <li><a href="blockquote.html"><i class="fas fa-vector-square me-2"></i>Blockquote</a></li>
+                                                        <li><a href="buttons.html"><i class="fas fa-link me-2"></i>Buttons</a></li>
+                                                        <li><a href="call-to-action.html"><i class="far fa-square me-2"></i>Call to Action</a></li>
+                                                        <li><a href="carousel-slider.html"><i class="far fa-images me-2"></i>Carousel Slider</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 02</span>
+                                                    <ul>
+                                                        <li><a href="countdown.html"><i class="far fa-flag me-2"></i>Count Down</a></li>
+                                                        <li><a href="counters.html"><i class="fas fa-compress me-2"></i>Counters</a></li>
+                                                        <li><a href="dropcaps.html"><i class="far fa-closed-captioning me-2"></i>Dropcaps</a></li>
+                                                        <li><a href="forms.html"><i class="fab fa-wpforms me-2"></i>Forms</a></li>
+                                                        <li><a href="form-elements.html"><i class="fas fa-cubes me-2"></i>Form Elements</a></li>
+                                                        <li><a href="font-icons.html"><i class="far fa-check-square me-2"></i>Font Icons</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 03</span>
+                                                    <ul>
+                                                        <li><a href="grid-system.html"><i class="fas fa-th me-2"></i>Grid System</a></li>
+                                                        <li><a href="highlights.html"><i class="fas fa-highlighter me-2"></i>Highlights</a></li>
+                                                        <li><a href="icon-with-text.html"><i class="fab fa-fonticons-fi me-2"></i>Icon With Text</a></li>
+                                                        <li><a href="list-styles.html"><i class="fas fa-list-ul me-2"></i>List Styles</a></li>
+                                                        <li><a href="media-object.html"><i class="fas fa-photo-video me-2"></i>Media Object</a></li>
+                                                        <li><a href="modal.html"><i class="fas fa-expand me-2"></i>Modal</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="col-lg-3 col-sm-12">
+                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 04</span>
+                                                    <ul>
+                                                        <li><a href="pagination.html"><i class="far fa-caret-square-right me-2"></i>Pagination</a></li>
+                                                        <li><a href="progress-bars.html"><i class="fas fa-tasks me-2"></i>Progress Bars</a></li>
+                                                        <li><a href="tables.html"><i class="fas fa-table me-2"></i>Tables</a></li>
+                                                        <li><a href="tabs.html"><i class="fas fa-sliders-h me-2"></i>Tabs</a></li>
+                                                        <li><a href="typography.html"><i class="fas fa-text-height me-2"></i>Typography</a></li>
+                                                        <li><a href="responsive-videos.html"><i class="fas fa-video me-2"></i>Videos</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <!-- end menu area -->
+
+                                    <!-- attribute navigation -->
+                                    <div class="attr-nav">
+                                        <ul>
+                                            <li class="dropdown me-3 me-lg-0">
+                                                <a href="/listcart" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                    <i class="ti-bag"></i>
+                                                    <span class="badge bg-primary">3</span>
+                                                </a>
+                                                <ul class="dropdown-menu cart-list">
+                                                    <li>
+                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-01.jpg" class="cart-thumb" alt="..." /></a>
+                                                        <h6><a href="#">Men's Football Boots </a></h6>
+                                                        <p>2x - <span class="price">$30.00</span></p>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-02.jpg" class="cart-thumb" alt="..." /></a>
+                                                        <h6><a href="#">Sun Protection Cap</a></h6>
+                                                        <p>1x - <span class="price">$10.20</span></p>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-03.jpg" class="cart-thumb" alt="..." /></a>
+                                                        <h6><a href="#">Heel Character Shoes</a></h6>
+                                                        <p>2x - <span class="price">$39.00</span></p>
+                                                    </li>
+                                                    <li class="total bg-primary">
+                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
+                                                        <a href="/listcart" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="search"><a href="#"><i class="ti-search"></i></a></li>
+                                            <li class="heart"> <a href="/whishlist"><i class="ti-heart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- end attribute navigation -->
+
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- BANNER
+        ================================================== -->
+        <section class="full-screen p-0 top-position">
+            <div class="slider-fade2 owl-carousel owl-theme w-100">
+                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/ulimage3.jpg">
+                    <div class="container h-100 d-table">
+                        <div class="row d-table-cell align-middle h-100">
+                            <div class="col-lg-5">
+                                <h3 class="alt-font mb-2 h6 text-uppercase">New Arrivals</h3>
+                                <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9"style="color: aliceblue;">NEW ARRIVALS</h1>
+                                <a href="shop-product-grid.html" class="butn-style4">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/ulimage4.jpg">
+                    <div class="container h-100 d-table">
+                        <div class="row d-table-cell align-middle h-100">
+                            <div class="col-lg-5">
+                                <h3 class="alt-font mb-2 h6 text-uppercase">Offer</h3>
+                                <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9 " style="color: rgb(255, 0, 0);">OVERSIZED UP  to 50% OFF</h1>
+                                <a href="shop-product-grid.html" class="butn-style4">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/ulimage5.jpg">
+                    <div class="container h-100 d-table">
+                        <div class="row d-table-cell align-middle h-100">
+                            <div class="col-lg-5">
+                                <h3 class="alt-font mb-2 h6 text-uppercase">Collection</h3>
+                                <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9 "style="color: aliceblue;">Special Collection</h1>
+                                <a href="shop-product-grid.html" class="butn-style4">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CATEGORY
+        ================================================== -->
+        <!-- <section> -->
+            <!-- <div class="container">
+                <div class="row mt-n1-9 text-center">
+                   
+                    <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-4.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0"></h3>
+                        </a>
+                    </div> -->
+                    
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-5.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0">Dining Table</h3>
+                        </a>
+                    </div> -->
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-6.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0">Chair</h3>
+                        </a>
+                    </div> -->
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-7.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0">Sofas & Sectionals</h3>
+                        </a>
+                    </div> -->
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-8.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0">Cupboard</h3>
+                        </a>
+                    </div> -->
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-2 mt-1-9">
+                        <a href="shop-categories.html" class="categoty-style2">
+                            <div class="category-icon mb-4">
+                                <img src="user/img/icons/icon-9.png" alt="...">
+                            </div>
+                            <h3 class="font-weight-500 mb-0">Bedroom</h3>
+                        </a>
+                    </div> -->
+                <!-- </div>
+            </div>
+        </section> -->
+
+        <!-- BY STYLE
+        ================================================== -->
+        <section class="bg-trend">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-7">
-                        <div class="header__top__left">
-                            <p>Free shipping, 30-day return or refund guarantee.</p>
+                <div class="row align-items-center">
+                    <div class="col-lg-3 mb-1-9 mb-lg-0">
+                        <div class="pe-xl-6">
+                            <h2 class="h1 mb-1-6 mb-lg-1-9">Shop <br>By Style</h2>
+                            <p class="mb-1-6 mb-lg-1-9">Style any open air region with a few cautious review and cool headed choices.</p>
+                            <a href="/productdetail" class="text-uppercase small font-weight-600 border-bottom border-color-black text-dark">All Categories</a>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-5">
-                        <div class="header__top__right">
-                            <div class="header__top__links">
-                                <a href="#">Sign in</a>
-                                <a href="#">FAQs</a>
-                            </div>
-                            <div class="header__top__hover">
-                                <span>Usd <i class="arrow_carrot-down"></i></span>
-                                <ul>
-                                    <li>USD</li>
-                                    <li>EUR</li>
-                                    <li>USD</li>
-                                </ul>
-                            </div>
+                    <div class="col-lg-9">
+                        <div class="owl-carousel owl-theme by-trend-carousel text-center">
+                            <% category.forEach((value,index)=>{%>
+                                <a href="">
+                                <img src="/category-img/<%=value.image %>" alt="...">
+                                <h3 class="h5 mb-0 mt-3"><%= value.name%></h3>
+                            </a>
+                           <% }) %>
+                            
+                            
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop.html">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="./about.html">About Us</a></li>
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contacts</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
-                    </div>
-                </div>
-            </div>
-            <div class="canvas__open"><i class="fa fa-bars"></i></div>
-        </div>
-    </header>
-    <!-- Header Section End -->
+        </section>
 
-    <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="hero__slider owl-carousel">
-            <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
+        <!-- FEATURED PRODUCTS
+        ================================================== -->
+        <section>
+            <div class="container">
+                <div class="text-center mb-1-9 mb-lg-2-3">
+                    <h2 class="mb-0">Featured Products</h2>
+                </div>
+                <div class="row justify-content-center">
+                    
+                    <% products.forEach((value,index)=>{%>
+                    <div class="col-sm-6 col-lg-3 mb-4">
+                        <div class="product-grid-four">
+                            <div class="product-img">
+                                <a href="/productdetail?id=<%= value._id %>"><img src="/img/<%=value.image[0] %>" alt="..."></a>
+                                <span class="product-label bg-primary">new</span>
+                                <div class="action-butn">
+                                    <a onclick="addToCart('<%=value._id%>')"><i class="ti-shopping-cart"></i></a>
+                                    <a href="#!"><i class="ti-eye"></i></a>
+                                    <a onclick="addtowhishlist('<%=value._id%>')"><i class="ti-heart"></i></a>
+                                </div>
+                            </div>
+                            <h3 class="h6"><a href="/user/productdetail?id=<%= value._id %>"><%= value.productname %></a></h3>
+                            <span class="font-weight-600 display-29 text-muted"><%= value.price%></span>
+                        </div>
+                    </div>
+                    <%})%>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- OFFER BANNER
+        ================================================== -->
+        <section class="pt-0">
+            <div class="container-fluid px-lg-1-9 px-xl-6 px-xxl-13">
+                <div class="row mt-n4">
+                    <div class="col-md-6 mt-4">
+                        <div class="offer-style02">
+                            <img src="/img/skatebanner2.png" alt="...">
+                            <div class="text-center position-absolute top-10 start-0 end-0">
+                                <span class="text-uppercase font-weight-500 text-white letter-spacing-2 d-block mb-2 mb-sm-3">new arrivals</span>
+                                <h2 class="h1 mb-2 text-white">Featured Deals</h2>
+                                <p class="text-white font-weight-600 display-29 d-none d-sm-block">Save on what's hot right now.</p>
+                                <a href="shop-product-grid.html" class="butn-style4 sm">Shop Now<span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <div class="offer-style02">
+                            <img src="/img/onthedress1.jpeg" alt="...">
+                            <div class="text-center position-absolute top-10 start-0 end-0">
+                                <span class="text-uppercase font-weight-600 text-white letter-spacing-2 d-block mb-2 mb-sm-3">up to 50% off</span>
+                                <h2 class="h1 mb-2 text-white">Summer Sale</h2>
+                                <p class="text-white font-weight-600 display-29 d-none d-sm-block">Save on what's hot right now.</p>
+                                <a href="shop-product-grid.html" class="butn-style4 sm">Shop Now<span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES
+        ================================================== -->
+        <section class="p-0">
+            <div class="container">
+                <div class="row mt-n4">
+                    <div class="col-sm-6 col-lg-3 mt-4">
+                        <div class="text-center">
+                            <img src="user/img/icons/icon-10.png" class="mb-3" alt="...">
+                            <h3 class="h5">Free Shipping</h3>
+                            <p class="mb-0">Free shipping over $100</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mt-4">
+                        <div class="text-center">
+                            <img src="user/img/icons/icon-11.png" class="mb-3" alt="...">
+                            <h3 class="h5">Money Return</h3>
+                            <p class="mb-0">Guarantee under 7 days</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mt-4">
+                        <div class="text-center">
+                            <img src="user/img/icons/icon-12.png" class="mb-3" alt="...">
+                            <h3 class="h5">Gift Voucher</h3>
+                            <p class="mb-0">Get $15 off your order</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 mt-4">
+                        <div class="text-center">
+                            <img src="user/img/icons/icon-13.png" class="mb-3" alt="...">
+                            <h3 class="h5">Support 24 / 7</h3>
+                            <p class="mb-0">Support online 24 hours a day</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOOKBOOk
+        ================================================== -->
+        <section>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 mb-1-9 mb-lg-0">
+                        <div class="pe-xl-1-9 position-relative">
+                            <img src="user/img/content/01.jpg" alt="...">
+                            <div class="lookbook d-none d-sm-block">
+                                <span class="lookbook-icon"><i class="fa-solid fa-plus"></i></span>
+                                <div class="lookbook-content">
+                                    <div class="d-flex">
+                                        <img src="user/img/content/lookbook-01.jpg" alt="...">
+                                        <div class="ms-3">
+                                            <h3 class="h6 mb-0"><a href="shop-product-detail.html">Light Lamp</a></h3>
+                                            <p class="mb-0">$100.00</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lookbook second">
+                                <span class="lookbook-icon"><i class="fa-solid fa-plus"></i></span>
+                                <div class="lookbook-content">
+                                    <div class="d-flex">
+                                        <img src="user/img/content/lookbook-02.jpg" alt="...">
+                                        <div class="ms-3">
+                                            <h3 class="h6 mb-0"><a href="shop-product-detail.html">Dining Chair</a></h3>
+                                            <p class="mb-0">$200.00</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-5">
+                        <div class="ps-xl-6">
+                            <h2 class="h1 w-xl-80 mb-1-6 mb-lg-1-9">Discover the furniture design of your dreams</h2>
+                            <p class="mb-1-6 mb-lg-1-9">From curvaceous armchairs finished in sumptuous soft velvet, to statement art deco inspired console tables, bar trolleys and stylish side tables</p>
+                            <a href="shop-product-detail.html" class="text-uppercase small border-bottom border-color-black text-dark">shop the look</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
+        </section>
+
+        <!-- INSTAGRAM IMAGES
+        ================================================== -->
+        <section class="p-0">
+            <div class="container-fluid px-0">
+                <div class="row g-0 portfolio-gallery">
+                    <div class="col-sm-4 col-lg" data-src="user/img/gallery/06.jpg" data-sub-html="<h4 class='text-white'>#01</h4>">
+                        <div class="instagram-block rounded-0">
+                            <img src="user/img/gallery/06.jpg" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg" data-src="user/img/gallery/07.jpg" data-sub-html="<h4 class='text-white'>#02</h4>">
+                        <div class="instagram-block rounded-0">
+                            <img src="user/img/gallery/07.jpg" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg" data-src="user/img/gallery/08.jpg" data-sub-html="<h4 class='text-white'>#03</h4>">
+                        <div class="instagram-block rounded-0">
+                            <img src="user/img/gallery/08.jpg" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg" data-src="user/img/gallery/09.jpg" data-sub-html="<h4 class='text-white'>#04</h4>">
+                        <div class="instagram-block rounded-0">
+                            <img src="user/img/gallery/09.jpg" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg" data-src="user/img/gallery/10.jpg" data-sub-html="<h4 class='text-white'>#05</h4>">
+                        <div class="instagram-block rounded-0">
+                            <img src="user/img/gallery/10.jpg" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER
+        ================================================== -->
+        <footer class="pb-0 pt-6 pt-md-10 pt-lg-13 classic-footer">
+            <div class="container">
+                <div class="row mb-6 mb-md-10">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h2>Newsletter</h2>
+                        <p class="mb-0">Get timely updates from your favorite products</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="subscribe-style3">
+                            <form>
+                                <div class="form-group">
+                                    <input type="email" placeholder="Enter your email..." id="email" class="form-control">
+                                    <a href="#" class="subscribe-butn">Subscribe<span></span></a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
-
-    <!-- Banner Section Begin -->
-    <section class="banner spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 offset-lg-4">
-                    <div class="banner__item">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-1.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Clothing Collections 2030</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="banner__item banner__item--middle">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-2.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Accessories</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="banner__item banner__item--last">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-3.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Shoes Spring 2030</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Banner Section End -->
-
-    <!-- Product Section Begin -->
-    <section class="product spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="filter__controls">
-                        <li class="active" data-filter="*">Best Sellers</li>
-                        <li data-filter=".new-arrivals">New Arrivals</li>
-                        <li data-filter=".hot-sales">Hot Sales</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row product__filter">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                            <span class="label">New</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-4">
-                                    <input type="radio" id="pc-4">
-                                </label>
-                                <label class="active black" for="pc-5">
-                                    <input type="radio" id="pc-5">
-                                </label>
-                                <label class="grey" for="pc-6">
-                                    <input type="radio" id="pc-6">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
-                            <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Multi-pocket Chest Bag</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$43.48</h5>
-                            <div class="product__color__select">
-                                <label for="pc-7">
-                                    <input type="radio" id="pc-7">
-                                </label>
-                                <label class="active black" for="pc-8">
-                                    <input type="radio" id="pc-8">
-                                </label>
-                                <label class="grey" for="pc-9">
-                                    <input type="radio" id="pc-9">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-4.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Diagonal Textured Cap</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$60.9</h5>
-                            <div class="product__color__select">
-                                <label for="pc-10">
-                                    <input type="radio" id="pc-10">
-                                </label>
-                                <label class="active black" for="pc-11">
-                                    <input type="radio" id="pc-11">
-                                </label>
-                                <label class="grey" for="pc-12">
-                                    <input type="radio" id="pc-12">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-5.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Lether Backpack</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$31.37</h5>
-                            <div class="product__color__select">
-                                <label for="pc-13">
-                                    <input type="radio" id="pc-13">
-                                </label>
-                                <label class="active black" for="pc-14">
-                                    <input type="radio" id="pc-14">
-                                </label>
-                                <label class="grey" for="pc-15">
-                                    <input type="radio" id="pc-15">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item sale">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-6.jpg">
-                            <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Ankle Boots</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$98.49</h5>
-                            <div class="product__color__select">
-                                <label for="pc-16">
-                                    <input type="radio" id="pc-16">
-                                </label>
-                                <label class="active black" for="pc-17">
-                                    <input type="radio" id="pc-17">
-                                </label>
-                                <label class="grey" for="pc-18">
-                                    <input type="radio" id="pc-18">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-7.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>T-shirt Contrast Pocket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$49.66</h5>
-                            <div class="product__color__select">
-                                <label for="pc-19">
-                                    <input type="radio" id="pc-19">
-                                </label>
-                                <label class="active black" for="pc-20">
-                                    <input type="radio" id="pc-20">
-                                </label>
-                                <label class="grey" for="pc-21">
-                                    <input type="radio" id="pc-21">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-8.jpg">
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6>Basic Flowing Scarf</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$26.28</h5>
-                            <div class="product__color__select">
-                                <label for="pc-22">
-                                    <input type="radio" id="pc-22">
-                                </label>
-                                <label class="active black" for="pc-23">
-                                    <input type="radio" id="pc-23">
-                                </label>
-                                <label class="grey" for="pc-24">
-                                    <input type="radio" id="pc-24">
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Product Section End -->
-
-    <!-- Categories Section Begin -->
-    <section class="categories spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="categories__text">
-                        <h2>Clothings Hot <br /> <span>Shoe Collection</span> <br /> Accessories</h2>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="categories__hot__deal">
-                        <img src="img/product-sale.png" alt="">
-                        <div class="hot__deal__sticker">
-                            <span>Sale Of</span>
-                            <h5>$29.99</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-1">
-                    <div class="categories__deal__countdown">
-                        <span>Deal Of The Week</span>
-                        <h2>Multi-pocket Chest Bag Black</h2>
-                        <div class="categories__deal__countdown__timer" id="countdown">
-                            <div class="cd-item">
-                                <span>3</span>
-                                <p>Days</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>1</span>
-                                <p>Hours</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>50</span>
-                                <p>Minutes</p>
-                            </div>
-                            <div class="cd-item">
-                                <span>18</span>
-                                <p>Seconds</p>
-                            </div>
-                        </div>
-                        <a href="#" class="primary-btn">Shop now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Categories Section End -->
-
-    <!-- Instagram Section Begin -->
-    <section class="instagram spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-1.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-2.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-3.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-4.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-5.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="img/instagram/instagram-6.jpg"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="instagram__text">
-                        <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                        <h3>#Male_Fashion</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Instagram Section End -->
-
-    <!-- Latest Blog Section Begin -->
-    <section class="latest spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Latest Blog Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>NewLetter</h6>
-                        <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <div class="row align-items-center border-top py-1-9">
+                    <div class="col-md-5 col-lg-4 col-xl-3 mb-4 mb-lg-0 text-center text-md-start">
+                        <div>
+                            <ul class="list-style-17">
+                                <li><img src="user/img/content/payment-options/visa.png" alt="..."></li>
+                                <li><img src="user/img/content/payment-options/mastercard.png" alt="..."></li>
+                                <li><img src="user/img/content/payment-options/paypal.png" alt="..."></li>
+                                <li><img src="user/img/content/payment-options/amex.png" alt="..."></li>
+                                <li><img src="user/img/content/payment-options/discover.png" alt="..."></li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="col-md-7 col-lg-5 col-xl-6 text-center text-md-end text-lg-center mb-4 mb-lg-0">
+                        <p class="mb-0 font-weight-600">&copy; <span class="current-year"></span>UL<a href="https://www.chitrakootweb.com/" target="_blank"></a></p>
+                    </div>
+                    <div class="col-lg-3 text-center text-lg-end">
+                        <ul class="social-icon-style2 mb-0 ps-0">
+                            <li>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
 
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
+        </footer>
+        
+            <script>
+        function addtowhishlist(prodId) {
+            console.log('hi');
+            $.ajax({
+                url: '/addtowhishlist',
+                data: {
+                    productId: prodId
+                },
+                method: 'post',
+                success: (res) => {
+                    if(res.status){
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Your product added to wishlist',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Item already exist',
+                           
+                          
+                        })
+
+                    }   
+                }
+            })
+        }
+
+    </script>
+         <script>
+            function addToCart(prodId){
+              
+                $.ajax({
+                    url:'/add-to-cart',
+                    data:{
+                        productId:prodId
+                    },
+                    method:'post',
+                    success:(res)=>{
+                        if (res) {
+                            swal.fire({
+                                position:'center',
+                                icon:'success',
+                                title:'your product added to cart',
+                                showConfirmButton: false,
+                                timer:1000
+                            })
+                        }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Item already exist',
+                           
+                          
+                        })
+                        }
+                    }
+                })
+               
+            }
+        </script>
+
     </div>
 
-  <%- include('../layouts/footer.ejs') %>
+    <!-- BUY TEMPLATE
+    ================================================== -->
+    <!-- <div class="buy-theme alt-font d-none d-lg-inline-block"><a href="https://wrapbootstrap.com/theme/smartshop-multipurpose-ecommerce-template-WB0N7CT4D" target="_blank"><i class="fas fa-cart-plus"></i><span>Buy Template</span></a></div>
+
+    <div class="all-demo alt-font d-none d-lg-inline-block"><a href="https://www.chitrakootweb.com/contact.html" target="_blank"><i class="far fa-envelope"></i><span>Quick Question?</span></a></div>
+     -->
+    <!-- SCROLL TO TOP
+    ================================================== -->
+    <a href="#" class="scroll-to-top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>
+
+    <!-- all js include start -->
+
+    <!-- jQuery -->
+    <script src="/user/js/jquery.min.js"></script>
+
+    <!-- popper js -->
+    <script src="/user/js/popper.min.js"></script>
+
+    <!-- bootstrap -->
+    <script src="/user/js/bootstrap.min.js"></script>
+
+    <!-- core.min.js -->
+    <script src="/user/js/core.min.js"></script>
+   
+    <!-- custom scripts -->
+    <script src="/user/js/main.js"></script>
+	
+	<!-- all js include end -->
+
+</body>
+
+</html>
