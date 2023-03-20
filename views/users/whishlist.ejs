@@ -444,8 +444,8 @@
                                     <div class="pb-3">
                                         <!-- <img class="img-fluid rounded-circle img-thumbnail" src="user/img/avatar/t-3.jpg" alt="..."> -->
                                     </div>
-                                    <h6 class="mb-0 display-28">Peter Parker</h6>
-                                    <small>Joined February 06, 2017</small>
+                                    <h6 class="mb-0 display-28"><%=userData.name%></h6>
+                                    <small></small>
                                     <div class="reward-points">
                                         <i class="ti-star text-primary pe-1"></i> Points: 7386
                                     </div>
@@ -509,7 +509,7 @@
                                 </table>
                             </div>
                             <% } %>
-                            <a class="butn-style2 mt-3" href="#"><span>Clear Wishlist</span></a>
+                            <!-- <a class="butn-style2 mt-3" href="#"><span>Clear Wishlist</span></a> -->
                         </div>
 
                     </div>
@@ -671,7 +671,7 @@
                     success: (response) => {
                         console.log("waoring")
         
-                        $('#table').load('/whishlist #table')
+                        $('#table-responsive').load('/whishlist #table-responsive')
                         console.log(response);
                         Swal.fire({
                             title: 'deleted!',
@@ -696,9 +696,7 @@
     
     <!-- BUY TEMPLATE
     ================================================== -->
-    <div class="buy-theme alt-font d-none d-lg-inline-block"><a href="https://wrapbootstrap.com/theme/smartshop-multipurpose-ecommerce-template-WB0N7CT4D" target="_blank"><i class="fas fa-cart-plus"></i><span>Buy Template</span></a></div>
-
-    <div class="all-demo alt-font d-none d-lg-inline-block"><a href="https://www.chitrakootweb.com/contact.html" target="_blank"><i class="far fa-envelope"></i><span>Quick Question?</span></a></div>
+    
     
     <!-- SCROLL TO TOP
     ================================================== -->

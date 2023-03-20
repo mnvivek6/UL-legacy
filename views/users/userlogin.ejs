@@ -18,16 +18,16 @@
     <% 
          if(typeof message !=='undefined'){
       %>
-      <h4><%= message %></h4>
+      <h4 style="color: red;" ><%= message %></h4>
       <%
       }
       %>
     <form class="total-form" method="post" action="/login">
       <div class="signup-form">
       </div>
-      <input type="email" placeholder="Email address"required class="sig-input" name="email">
+      <input type="email" placeholder="Email address" class="sig-input" name="email">
       <div class="signup-form">
-      <input type="password" name="password" class="sig-input" placeholder="enter a strong password" required>   
+      <input type="password" name="password" class="sig-input" placeholder="enter a strong password" >   
     </div>
       <button type="submit" value="login">Log in</button>
       <a href="/signup">Signup </a>

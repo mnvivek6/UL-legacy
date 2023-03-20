@@ -2,15 +2,15 @@
 const { config } = require('nodemon');
 const category = require('../models/category');
 const Product = require('../models/productmodel');
-const user = require ('../models/usersmodel')
+const user = require('../models/usersmodel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
-const configg = require ('../config/config')
+const configg = require('../config/config')
 
 
 
 // loginpage render 
-const loadlogin = async(req,res)=>{
+const loadlogin = async (req, res) => {
     try {
         res.render('login')
     } catch (error) {
@@ -21,34 +21,34 @@ const loadlogin = async(req,res)=>{
 
 
 // verify login 
-const verifylogin = async(req,res)=>{
+const verifylogin = async (req, res) => {
     // res.send('hi')
     try {
 
-     const email = req.body.email;
-     console.log(req.body.email);
-     const password = req.body.password
-     const userData=await user.findOne({email:email})
-        
-     if (userData) {
-        console.log(userData);
+        const email = req.body.email;
+        console.log(req.body.email);
+        const password = req.body.password
+        const userData = await user.findOne({ email: email })
 
-       const passwordMatch = await bcrypt.compare(password,userData.password)
-        if ( passwordMatch) {
-            
-            if (userData.is_admin===0) {
-               
-                res.render('login',{message:'not admin'})
-            }else{
-                req.session.admin_id=userData._id
-                console.log(req.session.user_id);
-                res.render('home')
-               
-            }           
+        if (userData) {
+            console.log(userData);
+
+            const passwordMatch = await bcrypt.compare(password, userData.password)
+            if (passwordMatch) {
+
+                if (userData.is_admin === 0) {
+
+                    res.render('login', { message: 'not admin' })
+                } else {
+                    req.session.admin_id = userData._id
+                    console.log(req.session.user_id);
+                    res.render('home')
+
+                }
+            }
+        } else {
+            res.render('login', { message: 'email and password is incorrect' })
         }
-     }else{
-        res.render('login',{message:'email and password is incorrect'})
-     }
     } catch (error) {
         console.log(error.message);
     }
@@ -56,13 +56,13 @@ const verifylogin = async(req,res)=>{
 
 
 // loadDashboard
-const loadDashboard= async(requset,res)=>{
+const loadDashboard = async (requset, res) => {
 
     try {
         // const userData=  await  user.findById({_id:req.session.user_id})
         res.render('home')
-      
-       
+
+
     } catch (error) {
         console.log(error.message);
     }
@@ -70,7 +70,7 @@ const loadDashboard= async(requset,res)=>{
 
 
 // logout
-const logout = async(req,res)=>{
+const logout = async (req, res) => {
 
     try {
         req.session.destroy()
@@ -79,10 +79,10 @@ const logout = async(req,res)=>{
         console.log(error.message);
     }
 }
-const userTable = async(req,res)=>{
+const userTable = async (req, res) => {
     try {
-        const userData = await user.find({is_admin:0})
-        res.render('list-user',{users:userData})
+        const userData = await user.find({ is_admin: 0 })
+        res.render('list-user', { users: userData })
     } catch (error) {
         console.log(error.message);
     }
@@ -90,39 +90,39 @@ const userTable = async(req,res)=>{
 
 
 // blocking user
-const blockUser = async(req,res)=>{
+const blockUser = async (req, res) => {
 
     try {
         const userId = req.query.id
         console.log(userId);
-        const userData= await user.findByIdAndUpdate({_id:userId},{$set:{block:true}})
+        const userData = await user.findByIdAndUpdate({ _id: userId }, { $set: { block: true } })
         if (userData) {
             console.log(userData);
-            sendblockmail(userData.name,userData.email)
+            sendblockmail(userData.name, userData.email)
             res.redirect('/admin/useredit')
-        }     
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
 // unblock User
-const unblockUser = async (req,res)=>{
+const unblockUser = async (req, res) => {
     const userId = req.query.id
     console.log(userId);
-    const userData = await user.findByIdAndUpdate({_id:userId},{$set:{block:false}})
+    const userData = await user.findByIdAndUpdate({ _id: userId }, { $set: { block: false } })
     if (userData) {
-        sendunblockmail(userData.name,userData.email)
+        sendunblockmail(userData.name, userData.email)
         res.redirect('/admin/useredit')
     }
 }
 
 
 // loaduser
-const loaduser= async (req,res)=>{
+const loaduser = async (req, res) => {
     try {
-        const userData = await user.find({is_admin:0})
-        res.render('list-user',{users:userData})
+        const userData = await user.find({ is_admin: 0 })
+        res.render('list-user', { users: userData })
     } catch (error) {
         console.log(error.message);
     }
@@ -130,34 +130,34 @@ const loaduser= async (req,res)=>{
 
 
 // send blocking mail
-const sendblockmail = async (name, email , user_id)=>{
-    try {     
+const sendblockmail = async (name, email, user_id) => {
+    try {
         const transporter = nodemailer.createTransport({
 
-            host : 'smtp.gmail.com',
-            port:587,
-            secure:false,
-            requireTLS:true,
-            auth:{
-                user:configg.emailUser,
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: configg.emailUser,
                 pass: configg.emailPassword
             }
         })
         const mailOptions = {
-            from :"vivekmn04@gmail.com",
-            to:email,
-            subject:'verify your Email',
-            html:'<p>Hey'+name+'your blocked'
+            from: "vivekmn04@gmail.com",
+            to: email,
+            subject: 'verify your Email',
+            html: '<p>Hey' + name + 'your blocked'
         }
-        transporter.sendMail(mailOptions,(error,info)=>{
+        transporter.sendMail(mailOptions, (error, info) => {
 
 
             if (error) {
 
                 console.log(error);
-                
-            }else{
-                console.log("email has been sent ",info.res);
+
+            } else {
+                console.log("email has been sent ", info.res);
             }
         })
     } catch (error) {
@@ -167,49 +167,51 @@ const sendblockmail = async (name, email , user_id)=>{
 
 }
 
-const sendunblockmail = async(name , email , user_id)=>{
+const sendunblockmail = async (name, email, user_id) => {
 
 
     try {
 
         const transporter = nodemailer.createTransport({
-            host:'smtp.gmail.com',
-            port:587,
-            secure:false,
-            requireTLS:true,
-            auth:{
-                user:configg.emailUser,
-                pass:configg.emailPassword
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            requireTLS: true,
+            auth: {
+                user: configg.emailUser,
+                pass: configg.emailPassword
             }
         })
         const mailOptions = {
-            from :'vivekmn04@gamil.com',
-            to :email,
-            subject:'verify your  Email',
-            html:"<p> Hey  "+name+ ', now you can access our website'
+            from: 'vivekmn04@gamil.com',
+            to: email,
+            subject: 'verify your  Email',
+            html: "<p> Hey  " + name + ', now you can access our website'
         }
 
-        transporter.sendMail(mailOptions,(error,info)=>{
+        transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                
+
                 console.log(error);
             }
-            else{
-                console.log("email has been sent:-",info.res);
+            else {
+                console.log("email has been sent:-", info.res);
             }
         })
     } catch (error) {
         console.log(error.message);
     }
-   
+
 }
-module.exports={
+
+
+module.exports = {
     loadlogin,
     verifylogin,
     loadDashboard,
-    logout ,
+    logout,
     userTable,
-    unblockUser ,
+    unblockUser,
     blockUser,
     loaduser,
     sendunblockmail,

@@ -1,19 +1,19 @@
-const islogin = async(req,res,next)=>{
+const islogin = async (req, res, next) => {
     try {
 
         if (req.session.admin_id) {
-            
-        }else{
+
+        } else {
             res.redirect('/admin')
         }
         next()
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const islogout = async(req,res,next)=>{
+const islogout = async (req, res, next) => {
 
     try {
         if (req.session.admin_id) {
@@ -25,7 +25,7 @@ const islogout = async(req,res,next)=>{
     }
 }
 
-module.exports ={
+module.exports = {
     islogin,
     islogout
 }
