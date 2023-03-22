@@ -34,30 +34,46 @@ const add_product = async (req, res) => {
 const addproduct = async (req, res) => {
 
     try {
-        const images = []
-        for (file of req.files) {
-            images.push(file.filename)
-        }
-        const Newproduct = new Product({
-
-            productname: req.body.name,
-            quantity: req.body.quantity,
-            price: req.body.price,
-            description: req.body.description,
-            category: req.body.category,
-            image: images
-
-        })
-
+        const productname=  req.body.name
+        const quantity= req.body.quantity
+        const price= req.body.price
+        const description= req.body.description
+        const category= req.body.category
+        
+       
+        // console.log(productname);
+        if (productname==''||quantity==''||price==''||description==''||category== ''||req.files=='') {
+            console.log("ii if");
+            const category = await Category.find({})
+            res.render('add-product',{message:'please fill the field', category })
+        }else{
+            console.log("inn ekse");
+            const images = []
+            for (file of req.files) {
+                images.push(file.filename)
+            }
+            const Newproduct = new Product({
+    
+                productname: req.body.name,
+                quantity: req.body.quantity,
+                price: req.body.price,
+                description: req.body.description,
+                category: req.body.category,
+                image: images
+    
+            })
+                
         const result = await Newproduct.save()
         console.log(result);
         if (result) {
             res.redirect('/admin/add-product')
-        } else if (productname == null || quantity == null || price == null || description == null || category == null || image == null) {
-            res.render('add-product', { message: 'Please fill the fields' })
-        } else {
-            res.render('add-product', { message: 'please try to enter valid product' })
+        } 
+                
         }
+       
+       
+        
+
 
     } catch (error) {
         console.log(error.message);
@@ -191,7 +207,7 @@ const ListCart = async (req, res) => {
 
             const cartTotal = usercart[0].totalcart
 
-            const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalUpdate: cartTotal } })
+            const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })
 
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
 
@@ -235,7 +251,7 @@ const cartquantityupdation = async (req, res) => {
         const { user, product, count, Quantity, proPrice } = req.body
 
         const producttemp = mongoose.Types.ObjectId(product)
-        console.log(producttemp);
+    
         const usertemp = mongoose.Types.ObjectId(user)
 
         const updateQTY = await User.findOneAndUpdate({ _id: usertemp, 'cart.productId': producttemp }, { $inc: { 'cart.$.qty': count } })
@@ -245,21 +261,30 @@ const cartquantityupdation = async (req, res) => {
         const qty = currentqty.cart[0].qty
 
         const singleproductprice = proPrice * qty
-        console.log(proPrice);
+        console.log("hai");
         console.log(singleproductprice);
-        await User.updateOne({ _id: usertemp, 'cart.productId': producttemp }, { $set: { 'cart.$.productTotalPrice': singleproductprice } })
+        
+      
+        await User.updateOne({ _id: usertemp, 'cart.productId': producttemp }, { $set: { 'cart.$.productTotalprice':singleproductprice } })
+
+       
+
 
         const cart = await User.findOne({ _id: usertemp })
-
+        
         let sum = 0
         for (let i = 0; i < cart.cart.length; i++) {
             sum = sum + cart.cart[i].productTotalprice
+            console.log( cart.cart[i].productTotalprice);
         }
+
+      
 
         const update = await User.updateOne({ _id: usertemp }, { $set: { cartTotalPrice: sum } })
             .then(async (response) => {
                 res.json({ response: true, singleproductprice, sum })
                 console.log(sum);
+                console.log(singleproductprice);
             })
     } catch (error) {
         console.log(error.message);

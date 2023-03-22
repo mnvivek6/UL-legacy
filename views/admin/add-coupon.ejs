@@ -132,7 +132,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/admin/home" class="menu-link" >
+                  <a href="/admin/loadcoupon" class="menu-link" >
                     <div data-i18n="Basic">Add Coupon</div>
                   </a>
                 </li>
@@ -306,92 +306,160 @@
 <div class="content-wrapper">
   <!-- Content -->
   
-  <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product/</span> Add Product </h4>
+  <div class="content-wrapper">
+    <!-- Content -->
 
-    <!-- Basic Layout & Basic with Icons -->
-    <div class="row">
-      <!-- Basic Layout -->
-     
-      <div class="col-xxl">
-        <div class="card mb-4">
-          <div class="card-body">
-            <form method="post" action="/admin/add-product" enctype="multipart/form-data">
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
-                <p id="productname1"></p>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="basic-default-name" name="name" placeholder="" />
-                </div>
-              </div>
-              <div class="row mb-2">
-                 <div class="mb-2">
-                <!-- <label for="defaultSelect" class="form-label">Category</label> -->
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label" for="basic-default-phone">Description</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="description" id="basic-default-phone" class="form-control phone-mask" aria-describedby="basic-default-phone" />
-                  </div>
-                </div>
-                  <!-- <select name="category" id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select> -->
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-email">Quantity</label>
-                <div class="col-sm-10">
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="number"
-                      name="quantity"
-                      id="basic-default-email"
-                      class="form-control"
-                      placeholder="john.doe"
-                      aria-label="john.doe"
-                      aria-describedby="basic-default-email2"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-phone">Price</label>
-                <div class="col-sm-10">
-                  <input type="number" name="price" id="basic-default-phone" class="form-control phone-mask" aria-describedby="basic-default-phone" />
-                </div>
-              </div>
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+
+      <!-- Basic Bootstrap Table -->
+      <div class="card">
+        <h5 class="card-header">Table Basic</h5>
+        <div class="table-responsive text-nowrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Coupon Code</th>
+                <th>Amount</th>
+                <th>Min.Cart Amount</th>
+                <th>Min.Radeem Amount</th>
+                <th>Start Date</th>
+                <th>Expiry Date</th>
+                <th>Usage Limit</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <% if (couponsData.length >0) { %>
+                         
+              <% for( let i = 0; i < couponsData.length; i++ ) { %>
+                <% console.log(couponsData[i].minRedeemAmount) %>
+                <% console.log(couponsData[i].expiryDate ) %>
               
-              <div class="mb-3">
-                <label for="exampleFormControlSelect1" class="form-label">category</label>
-                <div class="col-sm-10">
-                  <select id="Select Category" name="category" class="form-select">
-                    <%
-                   if(category.length > 0){
-
-                  for(let i=0; i<category.length; i++){
-                      %>
-                    <option  value= <%= category[i]._id %> ><%= category[i].name %></option>
-                    <% }} %>
-                  </select>
-                </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-message">image</label>
-                
-                <div class="col-sm-10">
-                  <input type="file" name="image" id="basic-default-phone" class="form-control phone-mask" multiple  />
-                </div>
-              </div>
-              <div class="row justify-content-end">
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary" onsubmit="validate(event)">Send</button>
-                </div>
-              </div>
-            </form>
-          </div>
+              
+            <tbody class="table-border-bottom-0">
+              <tr>
+                <td>
+                  <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong><%=couponsData[i].couponCode %> </strong>
+                </td>
+                <td><%=couponsData[i].couponAmount %>(<%=couponsData[i].couponAmountType %>)</td>
+                <td><span class="badge bg-label-warning me-1"><%=couponsData[i].minCartAmount %></span></td>
+                <td><%= couponsData[i].minRedeemAmount %> </td>
+                <td><%=couponsData[i].startDate %> </td>
+                <td><%=couponsData[i].expiryDate%> </td>
+                <td><%=couponsData[i].limit %></td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="javascript:void(0);"
+                        ><i class="bx bx-edit-alt me-2"></i> Edit</a
+                      >
+                      <a class="dropdown-item" href="javascript:void(0);"
+                        ><i class="bx bx-trash me-2"></i> Delete</a
+                      >
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <% } %>
+        
+          <% }else{ %> 
         </div>
+      </div>
+      <div >
+        <% } %>  
+      <button style="margin-top: 5px;"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Add Coupon
+      </button>
+    </div>
+  <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form  action="/admin/addcoupon" method="post" >
+              <%if(typeof message!=='undefined'){%>
+
+                <p style="color: red;"><%=message%></p>
+              <%}%>
+                <div class="form-group">
+                  <label for="">Coupon code</label>
+                  <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="coupon code" name="coupon_code" required>
+                </div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="fixed" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Fixed
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="percentage" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Percentage
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Amount</label>
+                    <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="coupon amount" name="couponamount" required>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Min.Cart amount</label>
+                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.cart amount" name="cartamount" required>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Min.Radeem amount</label>
+                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.radeem amount" name="radeemamount" required>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Start date</label>
+                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="start date" name="startdate" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Expiry date</label>
+                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="expiry date" name="expirydate" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Usage limit</label>
+                    <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="limit" name="usagelimit" required>
+                </div>
+
+
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                </div>
+              </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div> -->
       </div>
     </div>
   </div>

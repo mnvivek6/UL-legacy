@@ -449,6 +449,7 @@
                         <%console.log(address)%>
                         <%if(address == null){ %>
                             <%}else{ %> 
+                                <% address.userAddresses.forEach((value)=> { %> 
                         <div class="common-block">
 
                             <div class="inner-title">
@@ -463,7 +464,7 @@
 
                                         <div class="form-group">
                                             <label>First Name</label>
-                                            <input type="text" class="form-control" name="name" placeholder="Your name here" value="<%=address.fullname%>">
+                                            <input type="text" class="form-control" name="name" placeholder="Your name here" value="<%=value.fullname%>">
                                         </div>
 
                                     </div>
@@ -471,8 +472,8 @@
                                     <div class="col-sm-6">  
 
                                         <div class="form-group">
-                                            <label>Last Name</label>
-                                            <input type="text" class="form-control" name="lastname" placeholder="Your last name here">
+                                            <label>Mobile Number</label>
+                                            <input type="text" class="form-control" name="number" placeholder="Your last name here" value="<%=value.mobileNumber%>">
                                         </div>
 
                                     </div>
@@ -484,8 +485,8 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" class="form-control" name="email" placeholder="Your email address here">
+                                            <label>House Address</label>
+                                            <input type="email" class="form-control" name="houseAddress" placeholder="Your email address here" value="<%=value.houseAddress%>">
                                         </div>
 
                                     </div>
@@ -493,8 +494,8 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>Phone</label>
-                                            <input type="text" class="form-control" name="state" placeholder="Your phone number here">
+                                            <label>LandMark</label>
+                                            <input type="text" class="form-control" name="landMark" placeholder="Your phone number here" value="<%=value.landMark%>">
                                         </div>
 
                                     </div>
@@ -506,8 +507,8 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>Company Name</label>
-                                            <input type="text" class="form-control" name="companyname" placeholder="Your company name here">
+                                            <label>City Name</label>
+                                            <input type="text" class="form-control" name="cityname" placeholder="Your company name here" value="<%=value.cityName%>">
                                         </div>
 
                                     </div>
@@ -521,8 +522,8 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>City / Town </label>
-                                            <input type="text" class="form-control" name="city" placeholder="Your city name here">
+                                            <label>State</label>
+                                            <input type="text" class="form-control" name="state" placeholder="Your city name here" value="<%=value.state%>">
                                         </div>
 
                                     </div>
@@ -530,35 +531,15 @@
                                     <div class="col-sm-6">
 
                                         <div class="form-group">
-                                            <label>Zip Code</label>
-                                            <input type="text" class="form-control" name="zipcode" placeholder="Your zip code here">
+                                            <label>Zip Code/pincode</label>
+                                            <input type="text" class="form-control" name="zipcode" placeholder="Your zip code here"value="<%=value.pincode%>">
                                         </div>
 
                                     </div>
 
                                 </div>
 
-                                <div class="row">
-
-                                    <div class="col-sm-6">
-
-                                        <div class="form-group">
-                                            <label>Address 1 </label>
-                                            <input type="text" class="form-control" name="address1" placeholder="Your address here">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-sm-6">
-
-                                        <div class="form-group">
-                                            <label>Address 2 </label>
-                                            <input type="text" class="form-control" name="address2" placeholder="Your address here">
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                
 
                                 <div class="inner-title mt-1-9">
                                     <h4 class="mb-0">Shipping Address</h4>
@@ -582,7 +563,9 @@
                             </form>
 
                         </div>
-                        <%}%>
+                        <% 
+                    }  )
+                }%>
                     </div>
                     <!-- end left pannel section -->
 

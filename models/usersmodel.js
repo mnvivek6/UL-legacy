@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }],
+    cartTotalPrice:{
+        type:Number,
+       
+    },
     whishlist: [{
         product: {
             type: mongoose.Types.ObjectId,

@@ -542,7 +542,7 @@
                                         onclick="cartquantityupdation('<%= userData._id %>','<%= cart.productId._id %>',1,'<%= cart.productId.price %>')">+</button>
                                       
                                     </td>
-                                    <td class="product-subtotal text-start" ><h5 class="<%= cart.productId._id%>"><%=cart.productId.price%></h5></td>
+                                    <td class="product-subtotal text-start" ><h5 class="<%= cart.productId._id%>"><%=cart.productTotalprice%></h5></td>
                                     <td class="product-remove text-center">
                                         <!-- <a href="/deletecartproduct"><i class="fas fa-times"></i></a> -->
                                         <td><button class="butn-style2 small bg-color mb-2 mb-md-0" onclick="deleteCartProduct('<%= userData._id %>','<%= cart.productId._id%>')">Remove cart</button></td>
@@ -662,22 +662,22 @@
                             <div class="col-lg-6 offset-lg-1 col-md-7 offset-md-0">
                                 <table class="table cart-sub-total">
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <th class="text-end pe-0 text-uppercase">Cart Subtotal</th>
                                             <td class="text-uppercase text-end pe-0">$44.70</td>
-                                        </tr>
-                                        <tr>
+                                        </tr> -->
+                                        <!-- <tr>
                                             <th class="text-end pe-0 text-uppercase">Shipping and Handling</th>
                                             <td class="text-uppercase text-end pe-0">Free</td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <td class="pe-0 p-0" colspan="2">
                                                 <hr>
                                             </td>
                                         </tr>
                                         <tr class="total">
-                                            <th class="text-uppercase text-end pe-0 p-0">Order Total</th>
-                                            <td class="text-uppercase text-end pe-0 p-0">$44.70</td>
+                                            <th class="text-uppercase text-end pe-0 p-0">Cart Total Price</th>
+                                            <td class="text-uppercase text-end pe-0 p-0"><%=userData.productTotalPrice%></td>
                                         </tr>
                                         <tr>
                                             <td class="pe-0 p-0" colspan="2">
@@ -848,6 +848,8 @@
 
             method: 'post',
             success: (response) => {
+                console.log(response.singleproductprice);
+                console.log(response.sum);
               document.getElementById(productId).innerHTML = quantity+count
               document.getElementsByClassName(productId)[0].innerHTML = response.singleproductprice
               document.getElementById('total').innerHTML = response.sum

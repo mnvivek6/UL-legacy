@@ -83,6 +83,10 @@ admin_route.get('/edit-category', category_Controller.updatecategory)
 admin_route.post('/edit-category', category_Controller.editcategory)
 admin_route.get('/delete-category', category_Controller.deletecategory)
 
+//coupon 
+admin_route.get('/loadcoupon',adminController.loadCoupon)
+admin_route.post('/addcoupon',adminController.addCoupon)
+
 
 // admin_route.get('/')
 admin_route.get('*', function (request, response) {

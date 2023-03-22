@@ -172,8 +172,11 @@ const verifylogin = async (req, res) => {
 
                             if (userData.is_varified == 0) {
 
-                                res.render('userlogin', { message: 'please verify your mail' })
+                                res.render('userlogin', { message: 'Please Verify Your Mail' })
 
+                            }else if (userData.is_admin==1) {
+                                res.render('userlogin',{message:'Admins Cannot access user side'})
+                            
                             } else {
                                 req.session.user_id = userData._id
                                 console.log(req.session.user_id);

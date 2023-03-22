@@ -6,6 +6,7 @@ const user = require('../models/usersmodel')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const configg = require('../config/config')
+const Coupon = require('../models/couponModel')
 
 
 
@@ -204,6 +205,60 @@ const sendunblockmail = async (name, email, user_id) => {
 
 }
 
+const loadCoupon = async(req , res)=>{
+
+
+    try {
+       const couponsData =await Coupon.find({disable:false})
+        res.render('add-coupon',{couponsData})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const addCoupon = async(req, res)=>{
+
+
+
+    try {
+        const couponData = {...req.body}
+       const  couponCode= couponData.coupon_code
+       const   couponAmountType= couponData.fixedandpercentage
+       const couponAmount= couponData.couponamount
+       const minRedeemAmount= couponData.radeemamount
+       const minCartAmount= couponData.cartamount
+       const startDate=couponData.startdate
+       const expiryDate= couponData.expirydate
+       const limit= couponData.usagelimit
+if (couponCode==''||couponAmountType==''||couponAmount==''||minRedeemAmount==''||minCartAmount==''||startDate==''||expiryDate==''||limit=='') {
+    
+    res.render('addcoupon',{message:'Please fill the blank field'})
+}
+   
+       
+        const couponAdd = new Coupon({
+
+            couponCode: couponData.coupon_code,
+            couponAmountType: couponData.fixedandpercentage,
+            couponAmount: couponData.couponamount,
+            minRedeemAmount: couponData.radeemamount,
+            minCartAmount: couponData.cartamount,
+            startDate:couponData.startdate,
+            expiryDate: couponData.expirydate,
+            limit: couponData.usagelimit,
+
+        })
+        console.log(couponAdd);
+        const inser = await couponAdd.save()
+
+        res.send('success')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 module.exports = {
     loadlogin,
@@ -215,5 +270,7 @@ module.exports = {
     blockUser,
     loaduser,
     sendunblockmail,
-    sendblockmail
+    sendblockmail,
+    loadCoupon,
+    addCoupon
 }
