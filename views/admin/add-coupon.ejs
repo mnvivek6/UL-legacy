@@ -311,7 +311,11 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+     
+      <%if(typeof message !=='undefined'){%>
 
+        <p style="color: red;"><%=message%></p>
+      <%}%>
       <!-- Basic Bootstrap Table -->
       <div class="card">
         <h5 class="card-header">Table Basic</h5>
@@ -386,10 +390,7 @@
         </div>
         <div class="modal-body">
             <form  action="/admin/addcoupon" method="post" >
-              <%if(typeof message!=='undefined'){%>
-
-                <p style="color: red;"><%=message%></p>
-              <%}%>
+            
                 <div class="form-group">
                   <label for="">Coupon code</label>
                   <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="coupon code" name="coupon_code" required>

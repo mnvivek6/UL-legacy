@@ -9,6 +9,7 @@ const randomstring = require('randomstring');
 const { use } = require('bcrypt/promises');
 const Product = require('../models/productmodel');
 const Category = require('../models/category');
+const Order = require('../models/orderModel')
 // const Address = require('../models/addressModel');
 const Address = require('../models/addressModel');
 const { response } = require('express');
@@ -652,9 +653,130 @@ const loadCheckout = async( req, res)=>{
 
     try {
         const userId = req.session.user_id
-        const userData = await User.findOne({_Id:userId}).populate('cart.productId').exec()
+        const userData = await User.findOne({_id:userId}).populate('cart.productId').exec()
+        console.log(userData);
         const address = await Address.findOne({userId:userId})
+       
         res.render('checkout',{userData,address})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const addAddressCheckout = async(req, res)=>{
+
+    try {
+
+        if (req.session.user_id) {
+
+            const userId=req.session.user_id
+
+            let AddressObj = {
+
+                fullname:req.body.fullname,
+                mobileNumber:req.body.number,
+                pincode:req.body.zip,
+                houseAddress:req.body.houseAddress,
+                streetAdress:req.body.streetAdress,
+                landMark:req.body.landmark,
+                cityName:req.body.city,
+                state:req.body.state
+            }
+
+            const userAddress = await Address.findOne({userId:userId})
+
+            if (userAddress) {
+
+                const userAdrs = await Address.findOne({userId:userId}).populate('userId').exec()
+                userAdrs.userAddresses.push(AddressObj)
+            
+                await userAdrs .save().then((reps)=>{
+                    res.redirect('/checkout')
+                }).catch((err)=>{
+                    console.log(err);
+                })
+                console.log(userAdrs+"save aayi");
+            }else{
+                let userAddressObj ={
+
+                    userId:userId,
+                    userAddresses:[AddressObj]
+                }
+                await Address.create(userAddressObj).then((res)=>{
+                    res.redirect('/checkout')
+                })
+            }
+            
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const placeorder = async( req , res)=>{
+
+    try {
+        console.log('orderplacing first part ');
+           const index = req.body.address
+           console.log(index);
+           const userId = req.session.user_id
+           console.log(userId);
+           const address = await Address.findOne({userId:userId})
+           console.log(address);
+           const userAddress = address.userAddresses[index]
+           console.log(userAddress);
+
+           const cartData = await User.findOne({_id:userId}).populate('cart.productId')
+           console.log(cartData);
+
+           const total = cartData.cartTotalPrice
+           console.log(total);
+             
+           const payment = req.body.payment
+           console.log(payment);
+           let status = payment ===' COD'?'placed':'pending'
+           let orderObj = {
+            userId:userId,
+            address:{
+
+                fullname:userAddress.fullname,
+                mobileNumber:userAddress.mobileNumber,
+                pincode:userAddress.pincode,
+                houseAddress:userAddress.houseAddress,
+                landMark:userAddress.landMark,
+                cityName:userAddress.cityName,
+                state:userAddress.state
+            
+            },
+            paymentMethod:payment,
+            orderStatus:status,
+            items:cartData.cart,
+            totalAmount:total
+           }
+           console.log(orderObj);
+           await Order.create(orderObj)
+           .then(async(data)=>{
+            const orderId = data._id.toString()
+            if (payment == 'COD') {
+                await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
+                res.json({status:true})
+            }
+           })
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const ordersuccess = async (req , res)=>{
+    try {
+
+        const userId = req.session.user_id
+
+        const userData = await User.findOne({_id:userId})
+        const orderData= await Order.findOne({userId:userId}).populate({path:'items',populate:{path:'productId',model:'product'}}).sort({createdAt:-1}).limit(1)
+        res.render('orderconfirmation',{orderData})
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -699,6 +821,9 @@ module.exports = {
     editandupdateaddress,
     DeleteAddress ,
     loadCheckout,
-    shipping
+    shipping,
+    addAddressCheckout ,
+    placeorder,
+    ordersuccess
     
 }

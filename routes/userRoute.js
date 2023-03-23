@@ -83,6 +83,9 @@ user_route.get('/deletewhishlist', userController.deletewhishlist)
 // checkout
 user_route.get('/checkout',auth.isLogin,userController.loadCheckout)
 user_route.get('/shipping',auth.isLogin,userController.shipping)
+user_route.post('/add-checkout-address',auth.isLogin,userController.addAddressCheckout)
+user_route.post('/placeorder',auth.isLogin,userController.placeorder)
+user_route.get('/ordersuccess',auth.isLogin,userController.ordersuccess)
 
 
 

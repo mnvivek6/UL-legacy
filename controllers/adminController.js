@@ -233,26 +233,28 @@ const addCoupon = async(req, res)=>{
        const limit= couponData.usagelimit
 if (couponCode==''||couponAmountType==''||couponAmount==''||minRedeemAmount==''||minCartAmount==''||startDate==''||expiryDate==''||limit=='') {
     
-    res.render('addcoupon',{message:'Please fill the blank field'})
+    res.render('add-coupon',{message:'Please fill the blank field'})
+}else{
+    const couponAdd = new Coupon({
+
+        couponCode: couponData.coupon_code,
+        couponAmountType: couponData.fixedandpercentage,
+        couponAmount: couponData.couponamount,
+        minRedeemAmount: couponData.radeemamount,
+        minCartAmount: couponData.cartamount,
+        startDate:couponData.startdate,
+        expiryDate: couponData.expirydate,
+        limit: couponData.usagelimit,
+
+    })
+    console.log(couponAdd);
+    const inser = await couponAdd.save()
+
+    res.redirect('/admin/add-coupon')
 }
    
        
-        const couponAdd = new Coupon({
-
-            couponCode: couponData.coupon_code,
-            couponAmountType: couponData.fixedandpercentage,
-            couponAmount: couponData.couponamount,
-            minRedeemAmount: couponData.radeemamount,
-            minCartAmount: couponData.cartamount,
-            startDate:couponData.startdate,
-            expiryDate: couponData.expirydate,
-            limit: couponData.usagelimit,
-
-        })
-        console.log(couponAdd);
-        const inser = await couponAdd.save()
-
-        res.send('success')
+       
 
     } catch (error) {
         console.log(error.message);

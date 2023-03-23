@@ -253,6 +253,7 @@ const cartquantityupdation = async (req, res) => {
         const producttemp = mongoose.Types.ObjectId(product)
     
         const usertemp = mongoose.Types.ObjectId(user)
+        console.log(usertemp,"this is user temp");
 
         const updateQTY = await User.findOneAndUpdate({ _id: usertemp, 'cart.productId': producttemp }, { $inc: { 'cart.$.qty': count } })
 
@@ -263,29 +264,29 @@ const cartquantityupdation = async (req, res) => {
         const singleproductprice = proPrice * qty
         console.log("hai");
         console.log(singleproductprice);
-        
-      
+
         await User.updateOne({ _id: usertemp, 'cart.productId': producttemp }, { $set: { 'cart.$.productTotalprice':singleproductprice } })
-
-       
-
-
         const cart = await User.findOne({ _id: usertemp })
         
         let sum = 0
         for (let i = 0; i < cart.cart.length; i++) {
             sum = sum + cart.cart[i].productTotalprice
-            console.log( cart.cart[i].productTotalprice);
+          
         }
+        console.log(sum+"hi");
+       
 
       
 
-        const update = await User.updateOne({ _id: usertemp }, { $set: { cartTotalPrice: sum } })
+        const update = await User.findByIdAndUpdate({ _id: usertemp }, { $set: { cartTotalPrice: sum } })
+        
             .then(async (response) => {
                 res.json({ response: true, singleproductprice, sum })
                 console.log(sum);
                 console.log(singleproductprice);
+                console.log(cartTotalPrice);
             })
+            
     } catch (error) {
         console.log(error.message);
     }
