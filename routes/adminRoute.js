@@ -18,8 +18,8 @@ admin_route.set('view engine', 'ejs')
 admin_route.set('views', './views/admin')
 
 const auth = require('../middleware/adminauthe');
-const product_Controller = require('../controllers/product_controller');
-const category_Controller = require('../controllers/category_controller');
+const product_Controller = require('../controllers/productcontroller');
+const category_Controller = require('../controllers/categorycontroller');
 const adminController = require('../controllers/adminController')
 const multer = require('multer')
 
@@ -68,6 +68,8 @@ admin_route.get('/list-user', auth.islogin, adminController.loaduser);
 admin_route.get('/list-product', product_Controller.list_product);
 admin_route.get('/add-product', product_Controller.add_product);
 admin_route.post('/add-product', upload.array('image', 4), product_Controller.addproduct)
+admin_route.get('/delete-product-image/:imgid/:prodid',adminController.deleteImage)
+admin_route.post("/edit-image/:id",upload.array('image'), adminController.updateImage)
 admin_route.get('/delete-product', product_Controller.deleteproduct)
 admin_route.get('/productupdate', product_Controller.productupdate)
 admin_route.post('/productupdate', product_Controller.editproduct)
@@ -78,6 +80,7 @@ admin_route.post('/productupdate', product_Controller.editproduct)
 //category management
 admin_route.get('/add-category', category_Controller.formcategory)
 admin_route.post('/add-category', cateupload.single('image'), category_Controller.addcategory)
+admin_route.get('/delete-category-img/:image/:id',adminController.categoryimgdelete)
 admin_route.get('/category-list', category_Controller.showcategory)
 admin_route.get('/edit-category', category_Controller.updatecategory)
 admin_route.post('/edit-category', category_Controller.editcategory)

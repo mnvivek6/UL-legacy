@@ -498,6 +498,7 @@
                                                 <col width="100">
                                                     <col width="1">
                             </colgroup>
+                           
                             <% if(userData.cart.length == 0){%>
                                 <h4 style="color: red;">ooops there is nothing in your cart..!!!</h4>
                           <%  }else{%>
@@ -549,7 +550,7 @@
                                     </td>
                                 </tr>
                             <%})%>
-                             
+                            
                                 
                             </tbody>
                         </table>
@@ -559,9 +560,9 @@
 
                     <!-- button set -->
                     <div class="col-12 border-bottom py-1-9 py-lg-2-3 mb-3 mb-md-4 mb-lg-0">
-                        <button class="butn-style2 small bg-color mb-2 mb-md-0"><span>Empty Cart</span></button>
-                        <button class="butn-style2 small bg-color float-end ms-2 mb-2 mb-md-0"><span>Continue Shopping</span></button>
-                        <button class="butn-style2 dark"><span><i class="fas fa-heart me-1"></i><a href="/checkout">Buy Now</a> </span></button>
+                        <!-- <button class="butn-style2 small bg-color mb-2 mb-md-0"><span>Empty Cart</span></button> -->
+                        <!-- <a href="/checkout"><button class="butn-style2 small bg-color float-end ms-2 mb-2 mb-md-0"><span>BUY NOW</span></button></a> -->
+                        <!-- <button class="butn-style2 dark"><span><i class="fas fa-heart me-1"></i><a href="">Buy Now</a> </span></button> -->
 
                     </div>
                     <!-- end button set -->
@@ -663,14 +664,7 @@
                             <div class="col-lg-6 offset-lg-1 col-md-7 offset-md-0">
                                 <table class="table cart-sub-total">
                                     <tbody>
-                                        <!-- <tr>
-                                            <th class="text-end pe-0 text-uppercase">Cart Subtotal</th>
-                                            <td class="text-uppercase text-end pe-0">$44.70</td>
-                                        </tr> -->
-                                        <!-- <tr>
-                                            <th class="text-end pe-0 text-uppercase">Shipping and Handling</th>
-                                            <td class="text-uppercase text-end pe-0">Free</td>
-                                        </tr> -->
+                                        
                                         <tr>
                                             <td class="pe-0 p-0" colspan="2">
                                                 <hr>
@@ -687,7 +681,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a class="butn-style2 float-end" href="shop-checkout-address.html"><span>Proceed to Checkout</span></a>
+                                <a class="butn-style2 float-end" href="/checkout"><span>Proceed to Checkout</span></a>
                             </div>
                         </div>
                     </div>

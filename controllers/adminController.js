@@ -7,6 +7,9 @@ const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const configg = require('../config/config')
 const Coupon = require('../models/couponModel')
+const fs = require('fs');
+const path = require('path');
+const Category = require('../models/category');
 
 
 
@@ -220,23 +223,12 @@ const loadCoupon = async(req , res)=>{
 const addCoupon = async(req, res)=>{
 
 
-
     try {
         const couponData = {...req.body}
-       const  couponCode= couponData.coupon_code
-       const   couponAmountType= couponData.fixedandpercentage
-       const couponAmount= couponData.couponamount
-       const minRedeemAmount= couponData.radeemamount
-       const minCartAmount= couponData.cartamount
-       const startDate=couponData.startdate
-       const expiryDate= couponData.expirydate
-       const limit= couponData.usagelimit
-if (couponCode==''||couponAmountType==''||couponAmount==''||minRedeemAmount==''||minCartAmount==''||startDate==''||expiryDate==''||limit=='') {
-    
-    res.render('add-coupon',{message:'Please fill the blank field'})
-}else{
-    const couponAdd = new Coupon({
+      
 
+    const couponAdd = new Coupon({
+    
         couponCode: couponData.coupon_code,
         couponAmountType: couponData.fixedandpercentage,
         couponAmount: couponData.couponamount,
@@ -249,16 +241,84 @@ if (couponCode==''||couponAmountType==''||couponAmount==''||minRedeemAmount==''|
     })
     console.log(couponAdd);
     const inser = await couponAdd.save()
-
-    res.redirect('/admin/add-coupon')
-}
-   
-       
-       
+    res.redirect('/admin/loadcoupon')
+  
 
     } catch (error) {
         console.log(error.message);
     }
+}
+
+const deleteImage = async( req, res)=>{
+
+    try {
+        
+        const imgId = req.params.imgid
+        console.log(imgId);
+        const prodid = req.params.prodid
+        fs.unlink(path.join(__dirname,'../public/img',imgId),()=>{})
+        const productImg = await Product.updateOne({_id:prodid},{$pull:{image:imgId}})
+     
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const updateImage = async( req, res)=>{
+
+
+    try {
+        
+        const id= req.params.id
+        console.log(id);
+        const proData= await Product.findOne({_id:id})
+        console.log(proData);
+        imagelength = proData.image.length
+        console.log(imagelength);
+        if (imagelength<=4) {
+            let images =[]
+            for(file of req.files){
+
+                images.push(file.filename)
+            }
+            if (imagelength+images.length<=4) {
+
+                const updateData = await Product.updateOne({_id:id},{$addToSet:{image:{$each:images}}})
+                res.redirect('/admin/productupdate/'+id)     
+            }else{
+
+                const productData = await Product.findOne({_id:id})
+
+                const categoryData = await Category.find()
+
+                res.render("productupdate",{productData,categoryData})
+            }
+        }else{
+
+            res.redirect('/admin/productupdate/')
+        }
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const categoryimgdelete = async (req, res)=>{
+
+   try {
+  console.log(' first part here categoryimgdelete');
+  const imgId = req.params.image
+  console.log(imgId);
+    const categoryId= req.params.id
+    console.log(categoryId);
+    fs.unlink(path.join(__dirname,'../public/img',imgId),()=>{})
+    const categoryimg = await Category.updateOne({_id:categoryId},{$unset:{image:imgId}})   
+    res.redirect('/admin/edit-category') 
+   } catch (error) {
+    console.log(error.message);
+   }
 }
 
 
@@ -274,5 +334,9 @@ module.exports = {
     sendunblockmail,
     sendblockmail,
     loadCoupon,
-    addCoupon
+    addCoupon,
+    deleteImage,
+    updateImage,
+    categoryimgdelete,
+    
 }

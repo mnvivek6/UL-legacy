@@ -354,7 +354,7 @@
                          
                             
                             <% 
-                            if(users[i].block== true){
+                            if(users[i].block== false){
                               %>
                               <td><span class="badge bg-label-primary me-1">Active</span></td>
                               <%
@@ -382,7 +382,7 @@
                             if(users[i].block== false){
                               %>
                                   <a class="dropdown-item" href="/admin/block-user?id=<%= users[i]._id %>"
-                                    ><i class="bx bx-block me-1"></i>unblock</a
+                                    ><i class="bx bx-block me-1"></i>block</a
                                   >
                             
                                   <%
@@ -390,7 +390,7 @@
                                     %>
                                     
                                     <a class="dropdown-item" href="/admin/unblock-user?id=<%= users[i]._id %>" > 
-                                      <i class="bx bxs-user-account me-1"></i>block</a
+                                      <i class="bx bxs-user-account me-1"></i>unblock</a
                                       >
 
                                  <%

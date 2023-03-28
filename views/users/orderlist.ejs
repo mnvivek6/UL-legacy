@@ -1,4 +1,8 @@
-<%- include('../layouts/header.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
     <!-- metas -->
     <meta charset="utf-8">
     <meta name="author" content="Chitrakoot Web" />
@@ -21,10 +25,10 @@
 
     <!-- theme core css -->
     <link href="user/css/styles.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js"
-        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
+</head>
+
+<body>
 
     <!-- PAGE LOADING
     ================================================== -->
@@ -38,6 +42,7 @@
         ================================================== -->
         <header class="fixed header-light-nav">
 
+            
 
             <div class="navbar-default">
 
@@ -427,7 +432,8 @@
         <!-- PAGE TITLE
         ================================================== -->
        
-        <!-- ACCOUNT WISHLIST
+        
+        <!-- ACCOUNT ORDERS
         ================================================== -->
         <section class="md">
             <div class="container">
@@ -442,10 +448,10 @@
 
                                 <div class="text-center">
                                     <div class="pb-3">
-                                        <!-- <img class="img-fluid rounded-circle img-thumbnail" src="user/img/avatar/t-3.jpg" alt="..."> -->
+                                        <img class="img-fluid rounded-circle img-thumbnail" src="user/img/avatar/t-3.jpg" alt="...">
                                     </div>
-                                    <h6 class="mb-0 display-28"><%=userData.name%></h6>
-                                    <small></small>
+                                    <h6 class="mb-0 display-28">Peter Parker</h6>
+                                    <small>Joined February 06, 2017</small>
                                     <div class="reward-points">
                                         <i class="ti-star text-primary pe-1"></i> Points: 7386
                                     </div>
@@ -453,10 +459,10 @@
                             </div>
 
                             <div class="list-group">
-                                <a class="list-group-items" href="account-orders.html"><i class="ti-bag pe-2"></i>Orders<span class="badge badge-pill">6</span></a>
-                                <a class="list-group-items active" href="/profile"><i class="ti-user pe-2"></i>Profile</a>
-                                <a class="list-group-items" href="/address"><i class="ti-location-pin pe-2"></i>Addresses</a>
-                                <a class="list-group-items" href="/whishlist"><i class="ti-heart pe-2"></i>Wishlist<span class="badge badge-pill">3</span></a>
+                                <a class="list-group-items active" href="account-orders.html"><i class="ti-bag pe-2"></i>Orders<span class="badge badge-pill">6</span></a>
+                                <a class="list-group-items" href="account-profile.html"><i class="ti-user pe-2"></i>Profile</a>
+                                <a class="list-group-items" href="account-address.html"><i class="ti-location-pin pe-2"></i>Addresses</a>
+                                <a class="list-group-items" href="account-wishlist.html"><i class="ti-heart pe-2"></i>Wishlist<span class="badge badge-pill">3</span></a>
                                 <a class="list-group-items" href="account-tickets.html"><i class="ti-tag pe-2"></i>My Tickets<span class="badge badge-pill">4</span></a>
                             </div>
 
@@ -471,45 +477,61 @@
                         <div class="common-block">
 
                             <div class="inner-title">
-                                <h4 class="mb-0">My Wishlist</h4>
+                                <h4 class="mb-0">My Orders</h4>
                             </div>
-
-                            <% if(userData.whishlist.length == 0) {%>
-                                <h3>Ooops there's nothing in your wishlist</h3>
-                              <%}else{ %>
-
-                            <div class="table-responsive">
-                                <table class="table v-align-middle">
-                                    <thead>
-                                        <tr>
-                                            <th>Delete</th>
-                                            <th>Image</th>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Stock Status</th>
-                                            <th>Add To Cart</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% userData.whishlist.forEach((whishlist,index) => {%>
+                      
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Products</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%if(orderData.length == 0) {%>
+                                        <h3>no orders</h3>
+                                    <%}else{%>
+                                      <% for( let i = 0; i < orderData.length; i++ ) { %> 
+                                        
+                                    <tr>
+                                        <th>
+                                            #<%= orderData[i]._id.toString().substring(0,6)%>
+                                        </th>
+                                        <td>
+                                            <% orderData[i].items.forEach((element,index) => { %>
+                                            <p><%= element.productId.productname %>,</p>
+                                            <% } )%>
+                                          </td>
+                                          <td>
+                                            <p><%=orderData[i].address.fullName %><br><%=orderData[i].address.mobileNumber %><br><%=orderData[i].address.pincode %><br>
+                                              <%=orderData[i].address.houseAddress %><br><%=orderData[i].address.streetAddress %><%=orderData[i].address.landMark%>,<%=orderData[i].address.cityName %>,<%=orderData[i].address.state %>
+                                          </p>
+                                          </td>
+                                          <td>
+                                           <p><%= orderData[i].totalAmount %></p>
+                                          </td>
+                                          <td><p><%= orderData[i].orderStatus%></p></td>
+                                          <td class="quantity-col">
+                                            <div class="">
+                                              <a href="/cancelorder?id=<%=orderData[i]._id%> " class="btn_3">   <button type="button" class="btn btn-dark">Order Cancel</button></a>
                                             
-                                       
-                                        <tr>
-                                            <td><a onclick="deletewishlist('<%=whishlist.product._id%>')"><i class="fas fa-trash"></i></a></td>
-                                            <td>
-                                                <a href="#"><img src="/img/<%=whishlist.product.image[0] %>" alt="..."  /></a>
-                                            </td>
-                                            <td><a href="#"><%= whishlist.product.productname %></a></td>
-                                            <td class="product-price"><%= whishlist.product.price%></td>
-                                            <td class="product-quantity">In Stock</td>
-                                            <td><a href="#" class="butn-style2 small">Add To Cart</a></td>
-                                        </tr>
-                                    <%})%>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <% } %>
-                            <!-- <a class="butn-style2 mt-3" href="#"><span>Clear Wishlist</span></a> -->
+                                            
+                                            </div><!-- End .cart-product-quantity -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                  
+            <% } 
+        }%>
+                            </table>
+                        </div>
+                        <a class="butn-style2 mt-3" href="#"><span>Show All Orders</span></a>
                         </div>
 
                     </div>
@@ -648,55 +670,12 @@
             </div>
 
         </footer>
-
-        <script>
-            function deletewishlist(proid) {
-        
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You wan't to delete!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'yes, delete!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "/deletewhishlist",
-                    data: {
-                        productId: proid
-                    },
-                    method: 'post',
-                    success: (response) => {
-                        console.log("waoring")
-        
-                        $('#table-responsive').load('/whishlist #table-responsive')
-                        console.log(response);
-                        Swal.fire({
-                            title: 'deleted!',
-                            text: 'Your deleted',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer:1000
-                        })
-                        
-        
-                    }
-        
-                })
-            }
-        })
-        }
-        
-        </script>
-        
         
     </div>
     
     <!-- BUY TEMPLATE
     ================================================== -->
-    
+
     
     <!-- SCROLL TO TOP
     ================================================== -->
@@ -720,4 +699,7 @@
     <script src="user/js/main.js"></script>
 	
 	<!-- all js include end -->
-    <%- include('../layouts/footer.ejs') %>
+
+</body>
+
+</html>

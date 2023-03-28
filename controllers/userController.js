@@ -178,7 +178,11 @@ const verifylogin = async (req, res) => {
                             }else if (userData.is_admin==1) {
                                 res.render('userlogin',{message:'Admins Cannot access user side'})
                             
-                            } else {
+                            }else if(userData.block==1){
+                                res.render('userlogin',{message:'Oops sorry unfortunately we just blocked you please chech your mail'})
+                            }
+                            
+                            else {
                                 req.session.user_id = userData._id
                                 console.log(req.session.user_id);
 
@@ -676,7 +680,7 @@ const addAddressCheckout = async(req, res)=>{
                 mobileNumber:req.body.number,
                 pincode:req.body.zip,
                 houseAddress:req.body.houseAddress,
-                streetAdress:req.body.streetAdress,
+               
                 landMark:req.body.landmark,
                 cityName:req.body.city,
                 state:req.body.state
@@ -739,11 +743,12 @@ const placeorder = async( req , res)=>{
             userId:userId,
             address:{
 
-                fullname:userAddress.fullname,
+                fullName:userAddress.fullname,
                 mobileNumber:userAddress.mobileNumber,
                 pincode:userAddress.pincode,
                 houseAddress:userAddress.houseAddress,
-                landMark:userAddress.landMark,
+                streetAddress:userAddress.streetAddress,
+                landMark:userAddress.landmark,
                 cityName:userAddress.cityName,
                 state:userAddress.state
             
@@ -765,6 +770,7 @@ const placeorder = async( req , res)=>{
 
     } catch (error) {
         console.log(error.message);
+        console.log('error found at place order');
     }
 }
 
@@ -774,24 +780,55 @@ const ordersuccess = async (req , res)=>{
         const userId = req.session.user_id
 
         const userData = await User.findOne({_id:userId})
-        const orderData= await Order.findOne({userId:userId}).populate({path:'items',populate:{path:'productId',model:'product'}}).sort({createdAt:-1}).limit(1)
+        const orderData= await Order.findOne({userId:userId}).populate({path:'items',populate:{path:'productId',model:'Product'}}).sort({createdAt:-1}).limit(1)
         res.render('orderconfirmation',{orderData})
         
     } catch (error) {
         console.log(error.message);
     }
 }
+const orderlist = async(req, res)=>{
 
-const shipping = async (req, res)=>{
+    try {
+        
+        const userId= req.session.user_id
+
+        const orderData = await Order.find({userId:userId}).populate({path:'items',populate:{path:'productId',model:'Product'}})
+
+        res.render('orderlist',{orderData})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const OrderCancel = async( req, res)=>{
+
+    try {
+        
+        const orderId = req.query.id
+          console.log(orderId);
+        const order= await Order.findById(orderId)
+        console.log(order);
+        order.orderStatus='cancelled'
+        order.save()
+        res.redirect('/orderlist')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const pagenation = async( req, res)=>{
 
     try {
 
-        res.render('payment')
+        res.render('pagenation')
         
     } catch (error) {
         console.log(error.message);
     }
 }
+
+
 
 // exporting usercontroller module   
 module.exports = {
@@ -821,9 +858,12 @@ module.exports = {
     editandupdateaddress,
     DeleteAddress ,
     loadCheckout,
-    shipping,
     addAddressCheckout ,
     placeorder,
-    ordersuccess
+    ordersuccess,
+    orderlist,
+    OrderCancel,
+    pagenation
+
     
 }

@@ -1,4 +1,8 @@
-<%- include('../layouts/header.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
     <!-- metas -->
     <meta charset="utf-8">
     <meta name="author" content="Chitrakoot Web" />
@@ -21,10 +25,10 @@
 
     <!-- theme core css -->
     <link href="user/css/styles.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.js"
-        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
+</head>
+
+<body>
 
     <!-- PAGE LOADING
     ================================================== -->
@@ -38,6 +42,7 @@
         ================================================== -->
         <header class="fixed header-light-nav">
 
+           
 
             <div class="navbar-default">
 
@@ -80,14 +85,8 @@
                                     <!-- menu area -->
                                     <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
 
-                                        <li><a href="#">Home</a>
-                                            <ul>
-                                                <li><a href="home-shop-1.html">Home 01</a></li>
-                                                <li><a href="home-shop-2.html">Home 02</a></li>
-                                                <li><a href="home-shop-3.html">Home 03</a></li>
-                                                <li><a href="home-shop-4.html">Home 04</a></li>
-                                                <li><a href="admin/index.html" target="_blank">Admin Dashboard</a></li>
-                                            </ul>
+                                        <li><a href="/">Home</a>
+                                            
                                         </li>
                                         <li><a href="#">Pages</a>
                                             <ul>
@@ -113,7 +112,7 @@
                                                 <li><a href="account-profile.html">Profile Page</a></li>
                                                 <li><a href="account-address.html">Contact / Shipping Address</a></li>
                                                 <li><a href="account-tickets.html">My Tickets</a></li>
-                                                <li><a href="account-single-ticket.html">Single Ticket</a></li>
+                                                <!-- <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
                                             </ul>
                                         </li>
                                         <li><a href="#">Mega Menu</a>
@@ -427,93 +426,140 @@
         <!-- PAGE TITLE
         ================================================== -->
        
-        <!-- ACCOUNT WISHLIST
+        <!-- PAGINATION
         ================================================== -->
         <section class="md">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row">
 
-                    <!-- left panel -->
-                    <div class="col-lg-4 col-sm-9 mb-2-3 mb-lg-0">
+                    <div class="col-lg-9 mx-auto">
 
-                        <div class="account-pannel">
-
-                            <div class="p-4">
-
-                                <div class="text-center">
-                                    <div class="pb-3">
-                                        <!-- <img class="img-fluid rounded-circle img-thumbnail" src="user/img/avatar/t-3.jpg" alt="..."> -->
-                                    </div>
-                                    <h6 class="mb-0 display-28"><%=userData.name%></h6>
-                                    <small></small>
-                                    <div class="reward-points">
-                                        <i class="ti-star text-primary pe-1"></i> Points: 7386
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group">
-                                <a class="list-group-items" href="account-orders.html"><i class="ti-bag pe-2"></i>Orders<span class="badge badge-pill">6</span></a>
-                                <a class="list-group-items active" href="/profile"><i class="ti-user pe-2"></i>Profile</a>
-                                <a class="list-group-items" href="/address"><i class="ti-location-pin pe-2"></i>Addresses</a>
-                                <a class="list-group-items" href="/whishlist"><i class="ti-heart pe-2"></i>Wishlist<span class="badge badge-pill">3</span></a>
-                                <a class="list-group-items" href="account-tickets.html"><i class="ti-tag pe-2"></i>My Tickets<span class="badge badge-pill">4</span></a>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- end left panel -->
-
-                    <!-- right panel -->
-                    <div class="col-lg-8">
-
-                        <div class="common-block">
+                        <div class="mb-6 mb-lg-7 position-relative elements-block">
 
                             <div class="inner-title">
-                                <h4 class="mb-0">My Wishlist</h4>
+                                <h4 class="mb-0">Style 1</h4>
+                            </div>
+                            
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                            
+                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section">Copy</a></div>
+                            <div class="source-element"><a class="source-modal" href="#copy-code">Source</a></div>
+
+                            <div id="copy-code" class="mfp-hide white-popup-block popup-copy">
+                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section">copy</a></div>
+                                <pre id="section"><code class="language-html">
+&lt;nav aria-label="Page navigation example"&gt;
+    &lt;ul class="pagination"&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;Previous&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;Next&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                    </code></pre>
                             </div>
 
-                            <% if(userData.whishlist.length == 0) {%>
-                                <h3>Ooops there's nothing in your wishlist</h3>
-                              <%}else{ %>
+                        </div>
 
-                            <div class="table-responsive">
-                                <table class="table v-align-middle">
-                                    <thead>
-                                        <tr>
-                                            <th>Delete</th>
-                                            <th>Image</th>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Stock Status</th>
-                                            <th>Add To Cart</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% userData.whishlist.forEach((whishlist,index) => {%>
-                                            
-                                       
-                                        <tr>
-                                            <td><a onclick="deletewishlist('<%=whishlist.product._id%>')"><i class="fas fa-trash"></i></a></td>
-                                            <td>
-                                                <a href="#"><img src="/img/<%=whishlist.product.image[0] %>" alt="..."  /></a>
-                                            </td>
-                                            <td><a href="#"><%= whishlist.product.productname %></a></td>
-                                            <td class="product-price"><%= whishlist.product.price%></td>
-                                            <td class="product-quantity">In Stock</td>
-                                            <td><a href="#" class="butn-style2 small">Add To Cart</a></td>
-                                        </tr>
-                                    <%})%>
-                                    </tbody>
-                                </table>
+                        <div class="mb-6 mb-lg-7 position-relative elements-block">
+
+                            <div class="inner-title">
+                                <h4 class="mb-0">Style 2</h4>
                             </div>
-                            <% } %>
-                            <!-- <a class="butn-style2 mt-3" href="#"><span>Clear Wishlist</span></a> -->
+                           
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                  </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section1">Copy</a></div>
+                            <div class="source-element"><a class="source-modal" href="#copy-code1">Source</a></div>
+
+                            <div id="copy-code1" class="mfp-hide white-popup-block popup-copy">
+                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section1">copy</a></div>
+                                <pre id="section1"><code class="language-html">
+&lt;nav aria-label="Page navigation example"&gt;
+    &lt;ul class="pagination"&gt;
+        &lt;li class="page-item"&gt;
+            &lt;a class="page-link" href="#" aria-label="Previous"&gt;
+                                    &lt;span aria-hidden="true"&gt;&amp;laquo;&lt;/span&gt;
+                                  &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="page-item"&gt;
+            &lt;a class="page-link" href="#" aria-label="Next"&gt;
+                                    &lt;span aria-hidden="true"&gt;&amp;raquo;&lt;/span&gt;
+                                  &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                    </code></pre>
+                            </div>
+
+                        </div>
+
+                        <div class="position-relative elements-block">
+
+                            <div class="inner-title">
+                                <h4 class="mb-0">Style 3</h4>
+                            </div>
+                                                       
+                            <div class="pagination text-small text-uppercase text-extra-dark-gray">
+                                <ul>
+                                    <li><a href="#"><i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i> Prev</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">Next <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section3">Copy</a></div>
+                            <div class="source-element"><a class="source-modal" href="#copy-code3">Source</a></div>
+
+                            <div id="copy-code3" class="mfp-hide white-popup-block popup-copy">
+                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section3">copy</a></div>
+                                <pre id="section3"><code class="language-html">
+&lt;div class="pagination text-small text-uppercase text-extra-dark-gray"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;&lt;i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"&gt;&lt;/i&gt; Prev&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="active"&gt;&lt;a href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Next &lt;i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+                    </code></pre>
+                            </div>
+
                         </div>
 
                     </div>
-                    <!-- end right panel -->
+
                 </div>
             </div>
         </section>
@@ -648,55 +694,8 @@
             </div>
 
         </footer>
-
-        <script>
-            function deletewishlist(proid) {
-        
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You wan't to delete!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'yes, delete!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "/deletewhishlist",
-                    data: {
-                        productId: proid
-                    },
-                    method: 'post',
-                    success: (response) => {
-                        console.log("waoring")
-        
-                        $('#table-responsive').load('/whishlist #table-responsive')
-                        console.log(response);
-                        Swal.fire({
-                            title: 'deleted!',
-                            text: 'Your deleted',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer:1000
-                        })
-                        
-        
-                    }
-        
-                })
-            }
-        })
-        }
-        
-        </script>
-        
         
     </div>
-    
-    <!-- BUY TEMPLATE
-    ================================================== -->
-    
     
     <!-- SCROLL TO TOP
     ================================================== -->
@@ -720,4 +719,7 @@
     <script src="user/js/main.js"></script>
 	
 	<!-- all js include end -->
-    <%- include('../layouts/footer.ejs') %>
+
+</body>
+
+</html>

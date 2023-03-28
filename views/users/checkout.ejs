@@ -47,63 +47,7 @@
         ================================================== -->
         <header class="fixed header-light-nav">
 
-            <div id="top-bar">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-3 col-md-6">
-                            <div class="top-bar-info">
-                                <ul class="ps-0">
-                                    <li><a href="tel:01234567890"><i class="ti-mobile"></i><span class="d-none d-md-inline-block ps-2">(+123) 456 7890</span></a></li>
-                                    <li><a href="mailto:addyour@emailhere"><i class="ti-email"></i><span class="d-none d-md-inline-block ps-2">addyour@emailhere</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-9 col-md-6">
-                            <ul class="top-nav ps-0">
-                                <li class="nav-item dropdown">
-                                    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><i class="far fa-user"></i></a>
-                                    <ul class="dropdown-menu p-4">
-                                        <li class="mb-2">
-                                            <div class="media align-items-center">
-                                                <img class="w-40px rounded-circle me-3" src="user/img/avatar/01.png" alt="...">
-                                                <div class="media-body">Nancy Miller</div>
-                                            </div>
-
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown-item">My Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown-item">Order List</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown-item">Log Out</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li>
-                                    <select>
-                                        <option>English</option>
-                                        <option>Deutsch</option>
-                                        <option>Italiano</option>
-                                    </select>
-                                </li>
-                                <li>
-                                    <select>
-                                        <option>$ USD</option>
-                                        <option>€ EUR</option>
-                                        <option>£ UKP</option>
-                                        <option>¥ JPY</option>
-                                    </select>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+         
 
             <div class="navbar-default">
 
@@ -135,7 +79,7 @@
 
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- logo -->
-                                        <a href="index.html" class="navbar-brand logodefault"><img id="logo" src="user/img/logos/logo.png" alt="logo"></a>
+                           
                                         <!-- end logo -->
                                     </div>
 
@@ -492,20 +436,7 @@
 
         <!-- PAGE TITLE
         ================================================== -->
-        <section class="page-title-section bg-img cover-background" data-background="user/img/bg/page-title.jpg">
-            <div class="container">
-
-                <div class="title-info">
-                    <h1>Shop Checkout</h1></div>
-                <div class="breadcrumbs-info">
-                    <ul class="ps-0">
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="#">Shop Checkout</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
+        
         
         <!-- CHECKOUT
         ================================================== -->
@@ -518,7 +449,7 @@
                     <div class="col-12">
                         <div class="process-steps mb-1-9 mb-lg-6">
                             <a class="step active" href="shop-checkout-address.html"><i class="ti-direction-alt"></i><h4 class="step-title">1. Address</h4></a>
-                            <a class="step" href="shop-checkout-payment.html"><i class="ti-wallet"></i><h4 class="step-title">2. Payment</h4></a>
+                            <!-- <a class="step" href="shop-checkout-payment.html"><i class="ti-wallet"></i><h4 class="step-title">2. Payment</h4></a> -->
                             <a class="step" href="shop-checkout-review.html"><i class="ti-check-box"></i><h4 class="step-title">3. Review</h4></a>
                         </div>
                     </div>
@@ -545,7 +476,7 @@
                                                         <span>
                                                           <%= value.fullname%><br>
                                                             <%= value.mobileNumber %> <br>
-                                                              <%= value.houseAddress %>,<%= value.streetAddress %> ,<%= value.landMark %> <br>
+                                                              <%= value.houseAddress %>, ,<%= value.landMark %> <br>
                                                               <%= value.cityName %>,<%= value.state %> <br>
                                                               <%= value.pincode %>
                                                         </span>
@@ -809,7 +740,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 mb-3 mb-md-0">
                             <div class="text-center text-md-start">
-                                <p class="mb-0">&copy; <span class="current-year"></span> Smartshop is Powered by <a href="https://www.chitrakootweb.com/" target="_blank" class="text-dark">Chitrakoot Web</a></p>
+                                <p class="mb-0">&copy; <span class="current-year"></span> Smartshop is Powered by <a href="https://www.chitrakootweb.com/" target="_blank" class="text-dark"></a></p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -830,7 +761,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Add Address</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -870,7 +801,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-dark" >Add Address</button>
+                        <button type="submit" class="btn btn-dark" >Save Address</button>
                       </div>
                     
                   </form>

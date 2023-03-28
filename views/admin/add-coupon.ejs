@@ -308,19 +308,18 @@
   
   <div class="content-wrapper">
     <!-- Content -->
-
+  
     <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
-     
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Coupon /</span> Coupon List</h4>
+  
       <%if(typeof message !=='undefined'){%>
-
-        <p style="color: red;"><%=message%></p>
+      <p style="color: red;"><%=message%></p>
       <%}%>
       <!-- Basic Bootstrap Table -->
       <div class="card">
-        <h5 class="card-header">Table Basic</h5>
+        <h5 class="card-header"></h5>
         <div class="table-responsive text-nowrap">
-          <table class="table">
+          <table class="table table-striped">
             <thead>
               <tr>
                 <th>Coupon Code</th>
@@ -334,13 +333,10 @@
               </tr>
             </thead>
             <% if (couponsData.length >0) { %>
-                         
+            <tbody>
               <% for( let i = 0; i < couponsData.length; i++ ) { %>
-                <% console.log(couponsData[i].minRedeemAmount) %>
-                <% console.log(couponsData[i].expiryDate ) %>
-              
-              
-            <tbody class="table-border-bottom-0">
+              <% console.log(couponsData[i].minRedeemAmount) %>
+              <% console.log(couponsData[i].expiryDate ) %>
               <tr>
                 <td>
                   <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong><%=couponsData[i].couponCode %> </strong>
@@ -348,8 +344,9 @@
                 <td><%=couponsData[i].couponAmount %>(<%=couponsData[i].couponAmountType %>)</td>
                 <td><span class="badge bg-label-warning me-1"><%=couponsData[i].minCartAmount %></span></td>
                 <td><%= couponsData[i].minRedeemAmount %> </td>
-                <td><%=couponsData[i].startDate %> </td>
-                <td><%=couponsData[i].expiryDate%> </td>
+                
+                <td><%=couponsData[i].startDate.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'})  %> </td>
+                <td><%=couponsData[i].expiryDate.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'}) %> </td>
                 <td><%=couponsData[i].limit %></td>
                 <td>
                   <div class="dropdown">
@@ -357,29 +354,31 @@
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="javascript:void(0);"
-                        ><i class="bx bx-edit-alt me-2"></i> Edit</a
-                      >
-                      <a class="dropdown-item" href="javascript:void(0);"
-                        ><i class="bx bx-trash me-2"></i> Delete</a
-                      >
+                      <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
+                      <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
                     </div>
                   </div>
                 </td>
               </tr>
+              <% } %>
             </tbody>
+            <% }else{ %>
+            <tbody>
+              <tr>
+                <td colspan="8" class="text-center">
+                  <p style="color: red;">No coupon exist</p>
+                </td>
+              </tr>
+            </tbody>
+            <% } %>
           </table>
-          <% } %>
-        
-          <% }else{ %> 
         </div>
       </div>
-      <div >
-        <% } %>  
-      <button style="margin-top: 5px;"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Add Coupon
-      </button>
-    </div>
+  
+      <div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Coupon</button>
+      </div>
+   
   <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">

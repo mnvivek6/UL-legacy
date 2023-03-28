@@ -302,6 +302,12 @@
             </ul>
           </div>
         </nav>
+
+       
+
+
+
+
         
 <div class="content-wrapper">
   <!-- Content -->
@@ -312,7 +318,10 @@
     <!-- Basic Layout & Basic with Icons -->
     <div class="row">
       <!-- Basic Layout -->
-     
+      <%if (typeof message!== 'undefined'){%>
+<p style="color: red;">please fill in the blank field</p>
+      <%}else{%>
+        <%}%>
       <div class="col-xxl">
         <div class="card mb-4">
           <div class="card-body">
@@ -381,7 +390,7 @@
                 <label class="col-sm-2 col-form-label" for="basic-default-message">image</label>
                 
                 <div class="col-sm-10">
-                  <input type="file" name="image" id="basic-default-phone" class="form-control phone-mask" multiple  />
+                  <input type="file" name="image" id="basic-default-phone" class="form-control phone-mask" multiple accept="image/jpeg,image/png,image/webpeg" />
                 </div>
               </div>
               <div class="row justify-content-end">
@@ -390,33 +399,12 @@
                 </div>
               </div>
             </form>
+           
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script>
-  function show(input) {
-    debugger;
-    var validExtensions = ['jpg', 'png', 'jpeg']; //array of valid extensions
-    var fileName = input.files[0].name;
-    var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if ($.inArray(fileNameExt, validExtensions) == -1) {
-      input.type = ''
-      input.type = 'file'
-      $('#user_img').attr('src', "");
-      alert("Only these file types are accepted : " + validExtensions.join(', '));
-    }
-    else {
-      if (input.files && input.files[0]) {
-        var filerdr = new FileReader();
-        filerdr.onload = function (e) {
-          $('#user_img').attr('src', e.target.result);
-        }
-        filerdr.readAsDataURL(input.files[0]);
-      }
-    }
-  }
-</script>
+ 
 
   <%- include('../layouts/adminfooter.ejs') %>

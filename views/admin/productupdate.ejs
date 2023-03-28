@@ -430,13 +430,18 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <input type="file">
-        <form action="/delete-img" method="post" >
+        
+        <form action="/admin/edit-image/<%=product._id%>" method="post" enctype="multipart/form-data">
           <div class="modal-body">
+            <div>
+              <label for="">Image</label>
+              <input type="file" multiple name="image">
+              </div>
             <% product.image.forEach((x)=>{ %>
               <div>
                 <img src="/img/<%=x %> " alt="" style="width: 80; height: 80;">
-                <button type="submit" class="btn btn-primary" >delete</button>
+                <a href="/admin/delete-product-image/<%= x %>/<%= product._id %> ">delete</a>
+               
               </div>
   
          <% }) %>

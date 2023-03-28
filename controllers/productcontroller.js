@@ -200,14 +200,17 @@ const ListCart = async (req, res) => {
 
     try {
         const userId = req.session.user_id
+        console.log(userId,'user id here ');
         const temp = mongoose.Types.ObjectId(req.session.user_id)
-        const usercart = await User.aggregate([{ $match: { _id: temp } }, { $unwind: '$cart' }, { $group: { _id: null, totalcart: { $sum: '$cart.productTotalPrice' } } }])
-
+        console.log(temp,'temp');
+        const usercart = await User.aggregate([{ $match: { _id: temp } }, { $unwind: '$cart' }, { $group: { _id: null, totalcart: { $sum: '$cart.productTotalprice' } } }])
+       console.log(usercart,'usercart');
         if (usercart.length > 0) {
 
             const cartTotal = usercart[0].totalcart
-
+             console.log('cartTotal=',cartTotal);
             const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })
+            console.log(cartTotalUpdate);
 
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
 
@@ -274,18 +277,16 @@ const cartquantityupdation = async (req, res) => {
           
         }
         console.log(sum+"hi");
-       
 
-      
-
-        const update = await User.findByIdAndUpdate({ _id: usertemp }, { $set: { cartTotalPrice: sum } })
+        const update = await User.findOneAndUpdate({ _id: usertemp }, {$set: { cartTotalPrice: sum }})
         
             .then(async (response) => {
                 res.json({ response: true, singleproductprice, sum })
                 console.log(sum);
                 console.log(singleproductprice);
-                console.log(cartTotalPrice);
             })
+       
+
             
     } catch (error) {
         console.log(error.message);

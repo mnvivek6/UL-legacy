@@ -25,7 +25,7 @@ user_route.use(bodyparser.urlencoded({ extended: true }))
 
 
 const userController = require("../controllers/userController")
-const productController = require('../controllers/product_controller')
+const productController = require('../controllers/productcontroller')
 
 user_route.get('/signup', auth.isLogout, userController.loadRegister)
 
@@ -62,9 +62,9 @@ user_route.get('/productdetail', auth.isLogin, userController.productdetail)
 
 // cart
 user_route.post('/add-to-cart', auth.isLogin, productController.AddtoCart)
-user_route.get('/listcart', productController.ListCart)
-user_route.post('/deletecartproduct', productController.deleteCartProduct)
-user_route.post('/changequantity', productController.cartquantityupdation)
+user_route.get('/listcart',auth.isLogin, productController.ListCart)
+user_route.post('/deletecartproduct',auth.isLogin, productController.deleteCartProduct)
+user_route.post('/changequantity',auth.isLogin, productController.cartquantityupdation)
 
 // profile 
 user_route.get('/userprofile', auth.isLogin, userController.userProfile)
@@ -78,14 +78,19 @@ user_route.get('/delete-address/:id/:addressIndex',auth.isLogin,userController.D
 // whishlist
 user_route.get('/whishlist', auth.isLogin, userController.loadwhishlist)
 user_route.post('/addtowhishlist', auth.isLogin, userController.AddTowishlist)
-user_route.get('/deletewhishlist', userController.deletewhishlist)
+user_route.get('/deletewhishlist',auth.isLogin, userController.deletewhishlist)
 
-// checkout
+// orders
 user_route.get('/checkout',auth.isLogin,userController.loadCheckout)
-user_route.get('/shipping',auth.isLogin,userController.shipping)
+// user_route.get('/shipping',auth.isLogin,userController.shipping)
 user_route.post('/add-checkout-address',auth.isLogin,userController.addAddressCheckout)
 user_route.post('/placeorder',auth.isLogin,userController.placeorder)
 user_route.get('/ordersuccess',auth.isLogin,userController.ordersuccess)
+user_route.get('/orderlist',auth.isLogin,userController.orderlist)
+user_route.get('/cancelorder',auth.isLogin,userController.OrderCancel)
+
+// pagenation
+user_route.get('/pagenation',userController.pagenation)
 
 
 
