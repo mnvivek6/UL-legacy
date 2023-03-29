@@ -14,6 +14,8 @@ const Order = require('../models/orderModel')
 const Address = require('../models/addressModel');
 const { response } = require('express');
 const { default: mongoose } = require('mongoose');
+const Coupon = require('../models/couponModel')
+
 
 require('dotenv').config()
 
@@ -175,13 +177,13 @@ const verifylogin = async (req, res) => {
 
                                 res.render('userlogin', { message: 'Please Verify Your Mail' })
 
-                            }else if (userData.is_admin==1) {
-                                res.render('userlogin',{message:'Admins Cannot access user side'})
-                            
-                            }else if(userData.block==1){
-                                res.render('userlogin',{message:'Oops sorry unfortunately we just blocked you please chech your mail'})
+                            } else if (userData.is_admin == 1) {
+                                res.render('userlogin', { message: 'Admins Cannot access user side' })
+
+                            } else if (userData.block == 1) {
+                                res.render('userlogin', { message: 'Oops sorry unfortunately we just blocked you please chech your mail' })
                             }
-                            
+
                             else {
                                 req.session.user_id = userData._id
                                 console.log(req.session.user_id);
@@ -553,26 +555,26 @@ const editandupdateaddress = async (req, res) => {
 
 }
 
-const DeleteAddress = async (req , res)=>{
+const DeleteAddress = async (req, res) => {
 
     try {
-        
+
         const adrSchemaId = req.params.id
         const adrsId = req.params.adrsId
         const addressId = mongoose.Types.ObjectId(adrSchemaId)
-        const addresses= mongoose.Types.ObjectId(adrsId)
+        const addresses = mongoose.Types.ObjectId(adrsId)
 
-        const addressData = await Address.findOne({addressId})
+        const addressData = await Address.findOne({ addressId })
 
-        const addressIndex = await addressData.userAddresses.findIndex(data=> data.id== addresses)
-        addressData.userAddresses.splice(addressIndex,1)
+        const addressIndex = await addressData.userAddresses.findIndex(data => data.id == addresses)
+        addressData.userAddresses.splice(addressIndex, 1)
 
         await addressData.save()
 
         res.redirect('/userprofile')
 
     } catch (error) {
-       console.log(error.message);       
+        console.log(error.message);
     }
 }
 
@@ -653,120 +655,120 @@ const deletewhishlist = async (req, res) => {
 }
 
 
-const loadCheckout = async( req, res)=>{
+const loadCheckout = async (req, res) => {
 
     try {
         const userId = req.session.user_id
-        const userData = await User.findOne({_id:userId}).populate('cart.productId').exec()
+        const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
         console.log(userData);
-        const address = await Address.findOne({userId:userId})
-       
-        res.render('checkout',{userData,address})
+        const address = await Address.findOne({ userId: userId })
+
+        res.render('checkout', { userData, address })
     } catch (error) {
         console.log(error.message);
     }
 }
-const addAddressCheckout = async(req, res)=>{
+const addAddressCheckout = async (req, res) => {
 
     try {
 
         if (req.session.user_id) {
 
-            const userId=req.session.user_id
+            const userId = req.session.user_id
 
             let AddressObj = {
 
-                fullname:req.body.fullname,
-                mobileNumber:req.body.number,
-                pincode:req.body.zip,
-                houseAddress:req.body.houseAddress,
-               
-                landMark:req.body.landmark,
-                cityName:req.body.city,
-                state:req.body.state
+                fullname: req.body.fullname,
+                mobileNumber: req.body.number,
+                pincode: req.body.zip,
+                houseAddress: req.body.houseAddress,
+
+                landMark: req.body.landmark,
+                cityName: req.body.city,
+                state: req.body.state
             }
 
-            const userAddress = await Address.findOne({userId:userId})
+            const userAddress = await Address.findOne({ userId: userId })
 
             if (userAddress) {
 
-                const userAdrs = await Address.findOne({userId:userId}).populate('userId').exec()
+                const userAdrs = await Address.findOne({ userId: userId }).populate('userId').exec()
                 userAdrs.userAddresses.push(AddressObj)
-            
-                await userAdrs .save().then((reps)=>{
+
+                await userAdrs.save().then((reps) => {
                     res.redirect('/checkout')
-                }).catch((err)=>{
+                }).catch((err) => {
                     console.log(err);
                 })
-                console.log(userAdrs+"save aayi");
-            }else{
-                let userAddressObj ={
+                console.log(userAdrs + "save aayi");
+            } else {
+                let userAddressObj = {
 
-                    userId:userId,
-                    userAddresses:[AddressObj]
+                    userId: userId,
+                    userAddresses: [AddressObj]
                 }
-                await Address.create(userAddressObj).then((res)=>{
+                await Address.create(userAddressObj).then((res) => {
                     res.redirect('/checkout')
                 })
             }
-            
+
         }
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const placeorder = async( req , res)=>{
+const placeorder = async (req, res) => {
 
     try {
         console.log('orderplacing first part ');
-           const index = req.body.address
-           console.log(index);
-           const userId = req.session.user_id
-           console.log(userId);
-           const address = await Address.findOne({userId:userId})
-           console.log(address);
-           const userAddress = address.userAddresses[index]
-           console.log(userAddress);
+        const index = req.body.address
+        console.log(index);
+        const userId = req.session.user_id
+        console.log(userId);
+        const address = await Address.findOne({ userId: userId })
+        console.log(address);
+        const userAddress = address.userAddresses[index]
+        console.log(userAddress);
 
-           const cartData = await User.findOne({_id:userId}).populate('cart.productId')
-           console.log(cartData);
+        const cartData = await User.findOne({ _id: userId }).populate('cart.productId')
+        console.log(cartData);
 
-           const total = cartData.cartTotalPrice
-           console.log(total);
-             
-           const payment = req.body.payment
-           console.log(payment);
-           let status = payment ===' COD'?'placed':'pending'
-           let orderObj = {
-            userId:userId,
-            address:{
+        const total = cartData.cartTotalPrice
+        console.log(total);
 
-                fullName:userAddress.fullname,
-                mobileNumber:userAddress.mobileNumber,
-                pincode:userAddress.pincode,
-                houseAddress:userAddress.houseAddress,
-                streetAddress:userAddress.streetAddress,
-                landMark:userAddress.landmark,
-                cityName:userAddress.cityName,
-                state:userAddress.state
-            
+        const payment = req.body.payment
+        console.log(payment);
+        let status = payment === ' COD' ? 'placed' : 'pending'
+        let orderObj = {
+            userId: userId,
+            address: {
+
+                fullName: userAddress.fullname,
+                mobileNumber: userAddress.mobileNumber,
+                pincode: userAddress.pincode,
+                houseAddress: userAddress.houseAddress,
+                streetAddress: userAddress.streetAddress,
+                landMark: userAddress.landmark,
+                cityName: userAddress.cityName,
+                state: userAddress.state
+
             },
-            paymentMethod:payment,
-            orderStatus:status,
-            items:cartData.cart,
-            totalAmount:total
-           }
-           console.log(orderObj);
-           await Order.create(orderObj)
-           .then(async(data)=>{
-            const orderId = data._id.toString()
-            if (payment == 'COD') {
-                await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
-                res.json({status:true})
-            }
-           })
+            paymentMethod: payment,
+            orderStatus: status,
+            items: cartData.cart,
+            totalAmount: total
+        }
+        console.log(orderObj);
+        await Order.create(orderObj)
+            .then(async (data) => {
+                const orderId = data._id.toString()
+                if (payment == 'COD') {
+                    await User.updateOne({ _id: userId }, { $set: { cart: [], cartTotalPrice: 0 } })
+                    res.json({ status: true })
+                }
+            })
 
     } catch (error) {
         console.log(error.message);
@@ -774,42 +776,42 @@ const placeorder = async( req , res)=>{
     }
 }
 
-const ordersuccess = async (req , res)=>{
+const ordersuccess = async (req, res) => {
     try {
 
         const userId = req.session.user_id
 
-        const userData = await User.findOne({_id:userId})
-        const orderData= await Order.findOne({userId:userId}).populate({path:'items',populate:{path:'productId',model:'Product'}}).sort({createdAt:-1}).limit(1)
-        res.render('orderconfirmation',{orderData})
-        
+        const userData = await User.findOne({ _id: userId })
+        const orderData = await Order.findOne({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } }).sort({ createdAt: -1 }).limit(1)
+        res.render('orderconfirmation', { orderData })
+
     } catch (error) {
         console.log(error.message);
     }
 }
-const orderlist = async(req, res)=>{
+const orderlist = async (req, res) => {
 
     try {
-        
-        const userId= req.session.user_id
 
-        const orderData = await Order.find({userId:userId}).populate({path:'items',populate:{path:'productId',model:'Product'}})
+        const userId = req.session.user_id
 
-        res.render('orderlist',{orderData})
+        const orderData = await Order.find({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } })
+
+        res.render('orderlist', { orderData })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const OrderCancel = async( req, res)=>{
+const OrderCancel = async (req, res) => {
 
     try {
-        
+
         const orderId = req.query.id
-          console.log(orderId);
-        const order= await Order.findById(orderId)
-        console.log(order);
-        order.orderStatus='cancelled'
+
+        const order = await Order.findById(orderId)
+
+        order.orderStatus = 'cancelled'
         order.save()
         res.redirect('/orderlist')
     } catch (error) {
@@ -817,16 +819,97 @@ const OrderCancel = async( req, res)=>{
     }
 }
 
-const pagenation = async( req, res)=>{
+const productlist = async (req, res) => {
+
+    try {
+        
+        const products= await Product.find()
+        res.render('productlist',{products})
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+// coupon apply 
+const couponApply = async(req, res)=>{
 
     try {
 
-        res.render('pagenation')
+        const user= await User.findOne({_id:req.session.user_id})
+
+        let cartTotal = user.cartTotalPrice
+
+        // inserting userid into coupon 
+        const exist = await Coupon.findOne({
+
+            couponCode:req.body.code,
+            used:{$in:[user._id]}
+        })
+        if (exist) {
+            
+            res.json({user:true})
+        }else{
+
+            const couponData = await Coupon.findOne({ couponCode: req.body.code})
+            if (couponData) {
+                if (couponData.expiryDate>= new Date()) {
+                    if (couponData.limit !==0) {
+                        if (couponData.minCartAmount<= cartTotal) {
+                            if (couponData.couponAmountType==="fixed") {
+                                let discountValue = couponData.couponAmount
+                                let value = Math.round(cartTotal- couponData.couponAmount)
+                                return res.json({
+                                    amountokey:true,
+                                    value,
+                                    discountValue,
+                                    code:req.body.code
+                                })
+                            }else if( couponData.couponAmountType ==="percentage"){
+
+                                const discountPercentage =
+                                (cartTotal* couponData.couponAmount)/100
+                                if (discountPercentage <= couponData.minRedeemAmount) {
+                                    let discountValue = discountPercentage
+                                    let value = Math.round(cartTotal - discountPercentage)
+                                    return res.json({
+                                        amountokey:true,
+                                        value,
+                                        discountValue,
+                                        code:req.body.code,
+                                    })
+                                }else{
+
+                                    let discountValue = couponData.minRedeemAmount
+                                    let value = Math.round(cartTotal- couponData.minRedeemAmount)
+                                    return res.json({
+                                        amountokey:true,
+                                        value,
+                                        discountValue,
+                                        code:req.body.code,
+                                    })
+                                }
+                            }
+                        }else{
+
+                            res.json({minimum:true})
+                        }
+                    }else{
+                        res.json({ limit:true})
+                    }
+                }else{
+                    res.json({datefailed:true})
+                }
+            }else{
+                res.json({invalid:true})
+            }
+        }
         
     } catch (error) {
         console.log(error.message);
     }
 }
+
 
 
 
@@ -856,14 +939,14 @@ module.exports = {
     deletewhishlist,
     editAddress,
     editandupdateaddress,
-    DeleteAddress ,
+    DeleteAddress,
     loadCheckout,
-    addAddressCheckout ,
+    addAddressCheckout,
     placeorder,
     ordersuccess,
     orderlist,
     OrderCancel,
-    pagenation
+    productlist,
+    couponApply
 
-    
 }

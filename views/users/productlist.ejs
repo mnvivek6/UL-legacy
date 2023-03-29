@@ -88,7 +88,7 @@
                                         <li><a href="/">Home</a>
                                             
                                         </li>
-                                        <li><a href="#">Pages</a>
+                                        <!-- <li><a href="#">Pages</a>
                                             <ul>
                                                 <li><a href="about-us.html">About Us</a></li>
                                                 <li><a href="contact-us.html">Contacts</a></li>
@@ -102,7 +102,7 @@
                                                 <li><a href="newsletter.html">Newsletter</a></li>
                                                 <li><a href="privacy-policy.html">Privacy Policy</a></li>
                                             </ul>
-                                        </li>
+                                        </li> -->
                                         <li><a href="#">Account</a>
                                             <ul>
                                                 <li><a href="login-register.html">Login / Register</a></li>
@@ -112,33 +112,13 @@
                                                 <li><a href="account-profile.html">Profile Page</a></li>
                                                 <li><a href="account-address.html">Contact / Shipping Address</a></li>
                                                 <li><a href="account-tickets.html">My Tickets</a></li>
-                                                <!-- <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
+                                            
                                             </ul>
                                         </li>
                                         <li><a href="#">Mega Menu</a>
                                             <ul class="row megamenu">
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 01</span>
-                                                    <ul>
-                                                        <li><a href="#">Internal SSD</a></li>
-                                                        <li><a href="#">Memory Cards</a></li>
-                                                        <li><a href="#">Home Theatres</a></li>
-                                                        <li><a href="#">Unique Routers</a></li>
-                                                        <li><a href="#">Security cameras</a></li>
-                                                        <li><a href="#">Effective Laptops</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 02</span>
-                                                    <ul>
-                                                        <li><a href="#">Winterwear</a></li>
-                                                        <li><a href="#">Sportswear</a></li>
-                                                        <li><a href="#">Innerwear</a></li>
-                                                        <li><a href="#">Ethnic Wear</a></li>
-                                                        <li><a href="#">Cotton Lounge Wear</a></li>
-                                                        <li><a href="#">Essential Swimwear</a></li>
-                                                    </ul>
-                                                </li>
+                                                
+                                               
                                                 <li class="col-lg-3 col-sm-12">
                                                     <span class="mb-lg-2 d-block py-2 py-lg-0 px-1-9 px-lg-0 text-uppercase sub-title">Categories 03</span>
                                                     <ul>
@@ -437,7 +417,30 @@
                         <div class="mb-6 mb-lg-7 position-relative elements-block">
 
                             <div class="inner-title">
-                                <h4 class="mb-0">Style 1</h4>
+                                <h4 class="mb-0">Wear what you want</h4>
+                            </div>
+                            <div class="row justify-content-center">
+                                <%if (products==null) {%>
+                                    <h6>Oops there is no products</h6>
+                               <% }else{%>
+                                <% products.forEach((value,index)=>{%>
+                                <div class="col-sm-6 col-lg-3 mb-4">
+                                    <div class="product-grid-four">
+                                        <div class="product-img">
+                                            <a href="/productdetail?id=<%= value._id %>"><img src="/img/<%=value.image[0] %>" alt="..."></a>
+                                            <span class="product-label bg-primary">new</span>
+                                            <div class="action-butn">
+                                                <a onclick="addToCart('<%=value._id%>')"><i class="ti-shopping-cart"></i></a>
+                                                <a href="/productdetail"><i class="ti-eye"></i></a>
+                                                <a onclick="addtowhishlist('<%=value._id%>')"><i class="ti-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <h3 class="h6"><a href="/user/productdetail?id=<%= value._id %>"><%= value.productname %></a></h3>
+                                        <span class="font-weight-600 display-29 text-muted"><%= value.price%></span>
+                                    </div>
+                                </div>
+                                <%})
+                                }%>
                             </div>
                             
                             <nav aria-label="Page navigation example">
@@ -450,114 +453,10 @@
                                 </ul>
                             </nav>
                             
-                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section">Copy</a></div>
-                            <div class="source-element"><a class="source-modal" href="#copy-code">Source</a></div>
-
-                            <div id="copy-code" class="mfp-hide white-popup-block popup-copy">
-                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section">copy</a></div>
-                                <pre id="section"><code class="language-html">
-&lt;nav aria-label="Page navigation example"&gt;
-    &lt;ul class="pagination"&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;Previous&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;Next&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/nav&gt;
-                    </code></pre>
-                            </div>
+                          
+                          
 
                         </div>
-
-                        <div class="mb-6 mb-lg-7 position-relative elements-block">
-
-                            <div class="inner-title">
-                                <h4 class="mb-0">Style 2</h4>
-                            </div>
-                           
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                  </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                  </a>
-                                    </li>
-                                </ul>
-                            </nav>
-
-                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section1">Copy</a></div>
-                            <div class="source-element"><a class="source-modal" href="#copy-code1">Source</a></div>
-
-                            <div id="copy-code1" class="mfp-hide white-popup-block popup-copy">
-                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section1">copy</a></div>
-                                <pre id="section1"><code class="language-html">
-&lt;nav aria-label="Page navigation example"&gt;
-    &lt;ul class="pagination"&gt;
-        &lt;li class="page-item"&gt;
-            &lt;a class="page-link" href="#" aria-label="Previous"&gt;
-                                    &lt;span aria-hidden="true"&gt;&amp;laquo;&lt;/span&gt;
-                                  &lt;/a&gt;
-        &lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;&lt;a class="page-link" href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="page-item"&gt;
-            &lt;a class="page-link" href="#" aria-label="Next"&gt;
-                                    &lt;span aria-hidden="true"&gt;&amp;raquo;&lt;/span&gt;
-                                  &lt;/a&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/nav&gt;
-                    </code></pre>
-                            </div>
-
-                        </div>
-
-                        <div class="position-relative elements-block">
-
-                            <div class="inner-title">
-                                <h4 class="mb-0">Style 3</h4>
-                            </div>
-                                                       
-                            <div class="pagination text-small text-uppercase text-extra-dark-gray">
-                                <ul>
-                                    <li><a href="#"><i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i> Prev</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">Next <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
-                                </ul>
-                            </div>
-
-                            <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section3">Copy</a></div>
-                            <div class="source-element"><a class="source-modal" href="#copy-code3">Source</a></div>
-
-                            <div id="copy-code3" class="mfp-hide white-popup-block popup-copy">
-                                <div class="copy-element"><a class="copy-clipboard" data-clipboard-target="#section3">copy</a></div>
-                                <pre id="section3"><code class="language-html">
-&lt;div class="pagination text-small text-uppercase text-extra-dark-gray"&gt;
-    &lt;ul&gt;
-        &lt;li&gt;&lt;a href="#"&gt;&lt;i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"&gt;&lt;/i&gt; Prev&lt;/a&gt;&lt;/li&gt;
-        &lt;li class="active"&gt;&lt;a href="#"&gt;1&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="#"&gt;2&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="#"&gt;3&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a href="#"&gt;Next &lt;i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-                    </code></pre>
-                            </div>
-
-                        </div>
-
                     </div>
 
                 </div>

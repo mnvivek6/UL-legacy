@@ -132,7 +132,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/admin/loadcoupon" class="menu-link" >
+                  <a href="/admin/home" class="menu-link" >
                     <div data-i18n="Basic">Add Coupon</div>
                   </a>
                 </li>
@@ -302,167 +302,131 @@
             </ul>
           </div>
         </nav>
-        
-<div class="content-wrapper">
-  <!-- Content -->
-  
-  <div class="content-wrapper">
-    <!-- Content -->
-  
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Coupon /</span> Coupon List</h4>
-  
-      <%if(typeof message !=='undefined'){%>
-      <p style="color: red;"><%=message%></p>
-      <%}%>
-      <!-- Basic Bootstrap Table -->
-      <div class="card">
-        <h5 class="card-header"></h5>
-        <div class="table-responsive text-nowrap">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Coupon Code</th>
-                <th>Amount</th>
-                <th>Min.Cart Amount</th>
-                <th>Min.Radeem Amount</th>
-                <th>Start Date</th>
-                <th>Expiry Date</th>
-                <th>Usage Limit</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <% if (couponsData.length >0) { %>
-            <tbody>
-              <% for( let i = 0; i < couponsData.length; i++ ) { %>
-              <% console.log(couponsData[i].minRedeemAmount) %>
-              <% console.log(couponsData[i].expiryDate ) %>
-              <tr>
-                <td>
-                  <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong><%=couponsData[i].couponCode %> </strong>
-                </td>
-                <td><%=couponsData[i].couponAmount %>(<%=couponsData[i].couponAmountType %>)</td>
-                <td><span class="badge bg-label-warning me-1"><%=couponsData[i].minCartAmount %></span></td>
-                <td><%= couponsData[i].minRedeemAmount %> </td>
+        <div class="content-wrapper">
+            <!-- Content -->
+            
+            <div class="content-wrapper">
+              <!-- Content -->
+            
+              <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Banner /</span>Bnner List</h4>
+            
                 
-                <td><%=couponsData[i].startDate.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'})  %> </td>
-                <td><%=couponsData[i].expiryDate.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'}) %> </td>
-                <td><%=couponsData[i].limit %></td>
-                <td>
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="/admin/editcoupon/<%=couponsData[i]._id %>"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                      <a class="dropdown-item" href="/admin/deletecoupon/<%=couponsData[i]._id%>"><i class="bx bx-trash me-2"></i> Delete</a>
+               
+                <!-- Basic Bootstrap Table -->
+                <div class="card">
+                  <h5 class="card-header"></h5>
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Image</th>
+                          <th>Description</th>
+                          <th>Type</th>
+                          <th>Status</th>
+                          
+                        </tr>
+                      </thead>
                       
+                      <tbody>
+                        <% if(banner.length > 0){ %>
+                        
+                          <% banner.forEach((value,index) => { %>
+                          
+                         
+                        <tr>
+                          <td>
+                            <img src="/admin/banner-img/<%= value.bannerImage %>" alt="" style="width: 200; height: 80;"> 
+                          </td>
+                          <td><%= value.discription %></td>
+                          <td><%=value.type %></td>
+                          
+                          <% if (value.block == false) { %>
+                            <td style="color: rgb(2, 160, 2);">Enabled</td>
+                        <% } else { %>
+                            <td style="color: rgb(253, 33, 33);">Disabled</td>
+                        <% } %>
+
+                         
+                          <td> </td>
+                          <td></td>
+                          <td>
+                            <div class="dropdown">
+                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href=""><i class="bx bx-edit-alt me-2"></i> Edit</a>
+                                <a class="dropdown-item" href="/admin/deletebanner/<%=value._id%>"><i class="bx bx-trash me-2"></i> Disable</a>
+                                <a class="dropdown-item" href="/admin/enablebanner/<%=value._id%>">Enable</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      
+                        <% })
+                      }else{ %> 
+                     
+                    <tr>
+                        <td colspan="5"> Banner is empty </td>
+                      </tr>
+
+                      <% } %>
+                    
+                      </tbody>
+                     
+                      <!-- <tbody>
+                        <tr>
+                          <td colspan="8" class="text-center">
+                            <p style="color: red;">No coupon exist</p>
+                          </td>
+                        </tr>
+                      </tbody> -->
+                    
+                    </table>
+                  </div>
+                </div>
+            
+                <div>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"> Add Banner</button>
+                </div>
+
+
+                <!-- modal body -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a beautiful banner</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/admin/inserbanner" method="post" enctype="multipart/form-data">
+                        
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1 text-dark">Type </label>
+                                                <input type="text" class="form-control border px-2"
+                                                    id="exampleFormControlInput1" placeholder="" name="type" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1 text-dark">Description</label>
+                                                <input type="text" class="form-control border px-2"
+                                                    id="exampleFormControlInput1" placeholder="" name="description" required>
+                          </div>
+                         
+                          <div class="mb-3">
+                            <label for="exampleFormControlFile1">Example file input</label><br>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="bannerimage"  required>
+                          </div>
+                       
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                      </div>
+                    </form>
                     </div>
                   </div>
-                </td>
-              </tr>
-              <% } %>
-            </tbody>
-            <% }else{ %>
-            <tbody>
-              <tr>
-                <td colspan="8" class="text-center">
-                  <p style="color: red;">No coupon exist</p>
-                </td>
-              </tr>
-            </tbody>
-            <% } %>
-          </table>
-        </div>
-      </div>
-  
-      <div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Coupon</button>
-      </div>
-   
-  <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form  action="/admin/addcoupon" method="post" >
-            
-                <div class="form-group">
-                  <label for="">Coupon code</label>
-                  <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="coupon code" name="coupon_code" required>
-                </div>
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="fixed" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Fixed
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="percentage" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Percentage
-                    </label>
                 </div>
 
-                <div class="form-group">
-                    <label for="">Amount</label>
-                    <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="coupon amount" name="couponamount" required>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="">Min.Cart amount</label>
-                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.cart amount" name="cartamount" required>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="">Min.Radeem amount</label>
-                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.radeem amount" name="radeemamount" required>
-                        </div>
-                    </div>
-                </div>
-                
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Start date</label>
-                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="start date" name="startdate" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Expiry date</label>
-                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="expiry date" name="expirydate" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="">Usage limit</label>
-                    <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="limit" name="usagelimit" required>
-                </div>
-
-
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-                </div>
-              </form>
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-  <%- include('../layouts/adminfooter.ejs') %>
+        <%- include('../layouts/adminfooter.ejs') %>

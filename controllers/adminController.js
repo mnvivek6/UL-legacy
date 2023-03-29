@@ -10,6 +10,7 @@ const Coupon = require('../models/couponModel')
 const fs = require('fs');
 const path = require('path');
 const Category = require('../models/category');
+const Banner = require('../models/bannerModel')
 
 
 
@@ -320,7 +321,119 @@ const categoryimgdelete = async (req, res)=>{
     console.log(error.message);
    }
 }
+const editcoupon = async(req, res)=>{
 
+    try {
+        const couponId= req.params.id
+        console.log(couponId);
+        const couponData= await Coupon.findOne({_id:couponId})
+        console.log(couponData);
+        res.render('edit-coupon',{couponData})
+        
+    } catch (error) {
+     console.log(error.message);   
+    }
+}
+
+const couponUpdate = async(req, res)=>{
+    try {
+
+        const couponId = req.params.id
+        console.log(couponId+'it works');
+        const update = await Coupon.updateOne({_id:couponId},{$set:{
+
+            couponCode:req.body.couponcode,
+            
+            couponAmountType:req.body.fixedandpercentage,
+            couponAmount:req.body.couponamount,
+            minCartAmount:req.body.cartamount,
+            minRedeemAmount:req.body.radeemamount,
+            startDate:req.body.startdate,
+            expiryDate:req.body.expirydate,
+            limit:req.body.usagelimit,
+            
+        }})
+        
+        console.log(update);
+        res.redirect('/admin/loadcoupon')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deletecoupon= async(req, res)=>{
+
+    try {
+
+        const couponId= req.params.id
+
+        const disabel= await Coupon.updateOne({_id:couponId},{$set:{disable:true}})
+        res.redirect("/admin/loadcoupon")
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const loadbanner= async(req, res)=>{
+
+    try {
+        const banner = await Banner.find()
+        res.render('add-banner',{banner})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const insertBanner = async(req, res)=>{
+
+    try {
+
+        const filename = req.file.filename
+
+        const bannerData = new Banner({
+           
+            type:req.body.type,
+            discription:req.body.description,
+            bannerImage:filename,
+        })
+        console.log(bannerData);
+        const result = await bannerData.save()
+
+        if (result) {
+            res.redirect('/admin/loadbanner')
+        }else{
+            console.log('not inserted');
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+        console.log('got from insert BAnner');
+    }
+}
+const deletebanner= async(req, res)=>{
+
+    try {
+
+        const bannerId= req.params.id
+        await Banner.updateOne({_id:bannerId},{$set:{block:true}})
+        res.redirect('/admin/loadbanner')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const enblebanner = async(req, res)=>{
+     
+    try {
+
+        const bannerId= req.params.id
+        await Banner.updateOne({_id:bannerId},{$set:{block:false}})
+        res.redirect('/admin/loadbanner')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     loadlogin,
@@ -338,5 +451,12 @@ module.exports = {
     deleteImage,
     updateImage,
     categoryimgdelete,
+    editcoupon,
+    couponUpdate,
+    deletecoupon,
+    loadbanner,
+    insertBanner,
+    deletebanner,
+    enblebanner
     
 }

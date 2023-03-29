@@ -90,7 +90,10 @@ user_route.get('/orderlist',auth.isLogin,userController.orderlist)
 user_route.get('/cancelorder',auth.isLogin,userController.OrderCancel)
 
 // pagenation
-user_route.get('/pagenation',userController.pagenation)
+user_route.get('/pagenation',userController.productlist)
+
+// coupon
+user_route.post('/couponapply',auth.isLogin,userController.couponApply)
 
 
 

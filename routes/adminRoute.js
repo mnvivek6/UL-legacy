@@ -46,6 +46,18 @@ const catestorage = multer.diskStorage({
 
 const cateupload = multer({ storage: catestorage })
 
+const bannerStorage =multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,path.join(__dirname,"../public/admin/banner-img"))
+    },
+    filename:function(req,file,cb){
+        const name = Date.now()+"-"+file.originalname
+        cb(null,name)
+    }
+})
+
+const bannerMult = multer({storage:bannerStorage})
+
 
 // authentications and log , logout
 admin_route.get('/', adminController.loadlogin)
@@ -89,7 +101,15 @@ admin_route.get('/delete-category', category_Controller.deletecategory)
 //coupon 
 admin_route.get('/loadcoupon',adminController.loadCoupon)
 admin_route.post('/addcoupon',adminController.addCoupon)
+admin_route.get("/editcoupon/:id",adminController.editcoupon)
+admin_route.post('/updatecoupon/:id',adminController.couponUpdate)
+admin_route.get('/deletecoupon/:id',adminController.deletecoupon)
 
+// banner
+admin_route.get("/loadbanner",adminController.loadbanner)
+admin_route.post('/inserbanner',bannerMult.single('bannerimage'),adminController.insertBanner)
+admin_route.get('/deletebanner/:id',adminController.deletebanner)
+admin_route.get('/enablebanner/:id',adminController.enblebanner)
 
 // admin_route.get('/')
 admin_route.get('*', function (request, response) {
