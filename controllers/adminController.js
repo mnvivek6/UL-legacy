@@ -213,7 +213,7 @@ const loadCoupon = async(req , res)=>{
 
 
     try {
-       const couponsData =await Coupon.find({disable:false})
+       const couponsData =await Coupon.find({disable:true})
         res.render('add-coupon',{couponsData})
         
     } catch (error) {
@@ -343,7 +343,6 @@ const couponUpdate = async(req, res)=>{
         const update = await Coupon.updateOne({_id:couponId},{$set:{
 
             couponCode:req.body.couponcode,
-            
             couponAmountType:req.body.fixedandpercentage,
             couponAmount:req.body.couponamount,
             minCartAmount:req.body.cartamount,
@@ -367,9 +366,20 @@ const deletecoupon= async(req, res)=>{
 
         const couponId= req.params.id
 
-        const disabel= await Coupon.updateOne({_id:couponId},{$set:{disable:true}})
+        const disabel= await Coupon.updateOne({_id:couponId},{$set:{disable:false}})
         res.redirect("/admin/loadcoupon")
         
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const enablecoupon = async( req, res)=>{
+
+    try {
+
+        const couponId = req.params.id
+        const enable = await Coupon.updateOne({_id:couponId},{$set:{disable:true}})
+        res.redirect("/admin/loadcoupon")
     } catch (error) {
         console.log(error.message);
     }
@@ -426,7 +436,7 @@ const deletebanner= async(req, res)=>{
 const enblebanner = async(req, res)=>{
      
     try {
-
+console.log('hi');
         const bannerId= req.params.id
         await Banner.updateOne({_id:bannerId},{$set:{block:false}})
         res.redirect('/admin/loadbanner')
@@ -457,6 +467,7 @@ module.exports = {
     loadbanner,
     insertBanner,
     deletebanner,
-    enblebanner
+    enblebanner,
+    enablecoupon
     
 }

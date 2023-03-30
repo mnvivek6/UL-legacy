@@ -104,6 +104,7 @@ admin_route.post('/addcoupon',adminController.addCoupon)
 admin_route.get("/editcoupon/:id",adminController.editcoupon)
 admin_route.post('/updatecoupon/:id',adminController.couponUpdate)
 admin_route.get('/deletecoupon/:id',adminController.deletecoupon)
+admin_route.get('/enablecoupon/:id',adminController.enablecoupon)
 
 // banner
 admin_route.get("/loadbanner",adminController.loadbanner)

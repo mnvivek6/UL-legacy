@@ -15,6 +15,8 @@ const Address = require('../models/addressModel');
 const { response } = require('express');
 const { default: mongoose } = require('mongoose');
 const Coupon = require('../models/couponModel')
+const Razorpay= require('razorpay')
+const crypto = require('crypto')
 
 
 require('dotenv').config()
@@ -722,15 +724,20 @@ const addAddressCheckout = async (req, res) => {
 const placeorder = async (req, res) => {
 
     try {
-        console.log('orderplacing first part ');
+       
         const index = req.body.address
-        console.log(index);
+       
         const userId = req.session.user_id
-        console.log(userId);
+        
+        const discount = req.body.couponDiscount
+        const totel = req.body.total1
+        const coupon = req.body.couponC
+
+        const coupopnUpdate= await Coupon.updateOne({couponCode:coupon},{$push:{user:userId}})
         const address = await Address.findOne({ userId: userId })
-        console.log(address);
+        
         const userAddress = address.userAddresses[index]
-        console.log(userAddress);
+       
 
         const cartData = await User.findOne({ _id: userId }).populate('cart.productId')
         console.log(cartData);
@@ -758,7 +765,8 @@ const placeorder = async (req, res) => {
             paymentMethod: payment,
             orderStatus: status,
             items: cartData.cart,
-            totalAmount: total
+            totalAmount: total,
+            discount:discount
         }
         console.log(orderObj);
         await Order.create(orderObj)
@@ -767,8 +775,23 @@ const placeorder = async (req, res) => {
                 if (payment == 'COD') {
                     await User.updateOne({ _id: userId }, { $set: { cart: [], cartTotalPrice: 0 } })
                     res.json({ status: true })
+                }else{
+                    var instance = new Razorpay({
+                        key_id: process.env.KEY_ID,
+                        key_secret: process.env.KEY_SECRET,
+                    })
+                    let amount  = total
+                    instance.orders.create({
+                        amount:amount*100,
+                        currency:"INR",
+                        receipt:orderId,
+                    },(err,order) => {
+                        console.log(order,"log from placeorder ");
+                        res.json({status:false,order})
+                    })
                 }
             })
+           
 
     } catch (error) {
         console.log(error.message);
@@ -835,23 +858,30 @@ const productlist = async (req, res) => {
 const couponApply = async(req, res)=>{
 
     try {
+       
 
         const user= await User.findOne({_id:req.session.user_id})
+        console.log(user);
 
         let cartTotal = user.cartTotalPrice
+        console.log("here is the  Carttotal=="+cartTotal);
 
         // inserting userid into coupon 
+      
         const exist = await Coupon.findOne({
 
             couponCode:req.body.code,
             used:{$in:[user._id]}
         })
+        
+        console.log(exist);
         if (exist) {
             
             res.json({user:true})
         }else{
-
+      console.log(req.body.couponcode);
             const couponData = await Coupon.findOne({ couponCode: req.body.code})
+            console.log(couponData+"coupondata in else casae");
             if (couponData) {
                 if (couponData.expiryDate>= new Date()) {
                     if (couponData.limit !==0) {
@@ -868,10 +898,12 @@ const couponApply = async(req, res)=>{
                             }else if( couponData.couponAmountType ==="percentage"){
 
                                 const discountPercentage =
+                                
                                 (cartTotal* couponData.couponAmount)/100
                                 if (discountPercentage <= couponData.minRedeemAmount) {
                                     let discountValue = discountPercentage
                                     let value = Math.round(cartTotal - discountPercentage)
+                                    console.log(discountPercentage);
                                     return res.json({
                                         amountokey:true,
                                         value,
@@ -906,6 +938,40 @@ const couponApply = async(req, res)=>{
         }
         
     } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const verifyPayment = async(req,res)=>{
+    try{
+        console.log("inside verifypayment ");
+        console.log(req.body);
+        const userId = req.session.user_id
+            const details = req.body
+            console.log(details.payment); 
+            let hmac = crypto.createHmac('sha256', process.env.KEY_SECRET);
+            hmac.update(details.payment.razorpay_order_id + '|' + details.payment.razorpay_payment_id);
+            hmac = hmac.digest('hex')
+    
+            const orderId = details.order.receipt
+            console.log(orderId);
+            if (hmac == details.payment.razorpay_signature) {
+    
+                console.log('order Successfull')
+                await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
+                await Order.findByIdAndUpdate(orderId, { $set: { orderStatus: 'placed' } }).then((data) => {
+                    res.json({ status: true, data })
+                }).catch((err) => {
+                    console.log(err);
+                    res.data({ status: false, err })
+                })
+    
+            } else {
+                res.json({ status: false })
+                console.log('payment failed');
+            }
+
+    }catch(error){
         console.log(error.message);
     }
 }
@@ -947,6 +1013,7 @@ module.exports = {
     orderlist,
     OrderCancel,
     productlist,
-    couponApply
+    couponApply,
+    verifyPayment
 
 }

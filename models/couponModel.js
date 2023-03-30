@@ -40,7 +40,7 @@ const couponSchema = new mongoose.Schema({
     },
     disable:{
         type:Boolean,
-        default:false
+        default:true
     }
 },{timestamps:true})
 

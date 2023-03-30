@@ -15,11 +15,15 @@ const orderSchema = mongoose.Schema({
         landMark:{type:String},
         cityName:{type:String,required:true},
         state:{type:String}
+    },date:{
+        type:Date,
+        default:new Date()
     },
     paymentMethod:{type:String},
     orderStatus:{type:String},
     items:{type:Array},
-    totalAmount:{type:Number}
+    totalAmount:{type:Number},
+    discount:{type:Number}
 },{timestamps:true})
 
 module.exports = mongoose.model('order',orderSchema)

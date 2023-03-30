@@ -487,61 +487,7 @@
 
         <!-- PAGE TITLE
         ================================================== -->
-        <!-- <section class="page-title-section bg-img cover-background" data-background="user/img/bg/page-title.jpg">
-            <div class="container">
-
-                <div class="title-info">
-                    <h1>Success!</h1></div>
-                <div class="breadcrumbs-info">
-                    <ul class="ps-0">
-                        <li><a href="home-shop-1.html">Home</a></li>
-                        <li><a href="#">Success!</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </section> -->
-        
-        <!-- CHECKOUT COMPLETE
-        ================================================== -->
-        <!-- <section class="md">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-
-                        <div class="common-block text-center">
-
-                            <div class="inner-title">
-                                <h3 class="mb-0">Thank you for your order!</h3>
-                            </div>
-
-                            <p class="lead mb-4">
-                                Thank you for your payment. An automated payment receipt will be sent to your registered email.
-                            </p>
-
-                            <a href="order-tracking.html" class="butn-style2 wide m-1">Track your order</a>
-                            <a href="home-shop-1.html" class="butn-style2 wide m-1">Back to home</a>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="page-title-section bg-img cover-background" data-background="user/img/bg/page-title.jpg">
-            <div class="container">
-
-                <div class="title-info">
-                    <h1>Success!</h1></div>
-                <div class="breadcrumbs-info">
-                    <ul class="ps-0">
-                        <li><a href="/home">Home</a></li>
-                        <li><a href="#">Success!</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </section> -->
+     
         
         <!-- CHECKOUT COMPLETE
         ================================================== -->
@@ -572,7 +518,7 @@
         </section>
         <section class="confirmation_part padding_top">
             <div class="container">
-              <div class="row">
+              <div class="row  justify-content-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="card bg-light">
                       <div class="card-body">
@@ -584,11 +530,14 @@
                           </li>
                           <li class="d-flex justify-content-between align-items-center">
                             <p class="mb-0 text-muted">Date</p>
-                            <span class="font-weight-bold"><%= orderData.createdAt %></span>
+                            <span class="font-weight-bold"><%= orderData.createdAt.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'})  %></span>
                           </li>
                           <li class="d-flex justify-content-between align-items-center">
                             <p class="mb-0 text-muted">Total</p>
                             <span class="font-weight-bold text-success">₹<%= orderData.totalAmount %></span>
+                          </li>
+                          <li class="d-flex justify-content-between align-items-center">
+
                           </li>
                           <li class="d-flex justify-content-between align-items-center">
                             <p class="mb-0 text-muted">Payment Method</p>
@@ -599,7 +548,7 @@
                     </div>
                   </div>
                   
-                  <div class="col-lg-6 col-xl-4">
+                  <div class="col-lg-6 col-xl-8">
                     <div class="single_confirmation_details bg-light p-3">
                       <% console.log(orderData.address)%>
                       <h4 >Shipping Address</h4>
@@ -631,7 +580,7 @@
                     </div>
                   </div>
                   
-                  <div class="row">
+                  <div class="row  justify-content-center">
                     <div class="col-lg-12">
                       <div class="order_details_iner">
                         <h3 class="text-center text-primary mb-4">Order Details</h3>
@@ -646,9 +595,9 @@
                           <tbody>
                             <% orderData.items.forEach((value) => { %>
                               <tr>
-                                <td colspan="2"><span><%= value.productId.name %></span></td>
+                                <td colspan="2"><span><%= value.productId.productname %></span></td>
                                 <td><%= value.qty %></td>
-                                <td><span>₹<%= value.productTotalPrice %></span></td>
+                                <td><span>₹<%= value.productTotalprice %></span></td>
                               </tr>
                             <% }) %>
                             <tr>
@@ -656,14 +605,14 @@
                               <td><span>₹<%= orderData.totalAmount %></span></td>
                             </tr>
                             <tr>
-                              <td colspan="3" class="text-right">Shipping</td>
-                              <td><span>flat rate: $00.00</span></td>
+                              <td colspan="3" class="text-right">Discount</td>
+                              <td><span> <%= orderData.discount %></span></td>
                             </tr>
                           </tbody>
                           <tfoot>
                             <tr>
                               <th scope="col" colspan="3" class="text-right">Total</th>
-                              <th scope="col"><span>₹<%= orderData.totalAmount %></span></th>
+                              <th scope="col"><span>₹ <%=orderData.totalAmount - orderData.discount %></span></th>
                             </tr>
                             <tr>
                               <td colspan="4" class="text-center">

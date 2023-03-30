@@ -95,6 +95,8 @@ user_route.get('/pagenation',userController.productlist)
 // coupon
 user_route.post('/couponapply',auth.isLogin,userController.couponApply)
 
+user_route.post('/verifypayment',auth.isLogin,userController.verifyPayment)
+
 
 
 // user_route.get('/verification',userController.verificationload)
