@@ -199,10 +199,9 @@ const AddtoCart = async (req, res) => {
 const ListCart = async (req, res) => {
 
     try {
+    
         const userId = req.session.user_id
-        console.log(userId,'user id here ');
         const temp = mongoose.Types.ObjectId(req.session.user_id)
-        console.log(temp,'temp');
         const usercart = await User.aggregate([{ $match: { _id: temp } }, { $unwind: '$cart' }, { $group: { _id: null, totalcart: { $sum: '$cart.productTotalprice' } } }])
        console.log(usercart,'usercart');
         if (usercart.length > 0) {
@@ -213,7 +212,7 @@ const ListCart = async (req, res) => {
             console.log(cartTotalUpdate);
 
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
-
+console.log(userData,"load cart userDAta");
             res.render('cartitemslisting', { userData })
         } else {
             const userData = await User.findOne({ userId })
@@ -295,6 +294,7 @@ const cartquantityupdation = async (req, res) => {
 
 
 
+
 module.exports = {
     list_product,
     add_product,
@@ -302,7 +302,6 @@ module.exports = {
     deleteproduct,
     productupdate,
     editproduct,
-    // deleteImage,
     AddtoCart,
     ListCart,
     deleteCartProduct,

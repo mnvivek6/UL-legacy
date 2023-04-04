@@ -494,41 +494,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <%if(orderData.length == 0) {%>
+                                    <% if (orderData.length == 0) { %>
                                         <h3>no orders</h3>
-                                    <%}else{%>
-                                      <% for( let i = 0; i < orderData.length; i++ ) { %> 
-                                        
-                                    <tr>
-                                        <th>
-                                            #<%= orderData[i]._id.toString().substring(0,6)%>
-                                        </th>
-                                        <td>
-                                            <% orderData[i].items.forEach((element,index) => { %>
-                                            <p><%= element.productId.productname %>,</p>
-                                            <% } )%>
-                                          </td>
-                                          <td>
-                                            <p><%=orderData[i].address.fullName %><br><%=orderData[i].address.mobileNumber %><br><%=orderData[i].address.pincode %><br>
-                                              <%=orderData[i].address.houseAddress %><br><%=orderData[i].address.streetAddress %><%=orderData[i].address.landMark%>,<%=orderData[i].address.cityName %>,<%=orderData[i].address.state %>
-                                          </p>
-                                          </td>
-                                          <td>
-                                           <p><%= orderData[i].totalAmount %></p>
-                                          </td>
-                                          <td><p><%= orderData[i].orderStatus%></p></td>
-                                          <td class="quantity-col">
-                                            <div class="">
-                                              <a href="/cancelorder?id=<%=orderData[i]._id%> " class="btn_3">   <button type="button" class="btn btn-dark">Order Cancel</button></a>
-                                            
-                                            
-                                            </div><!-- End .cart-product-quantity -->
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                  
-            <% } 
-        }%>
+                                    <% } else { %>
+                                        <% for (let i = orderData.length - 1; i >= 0; i--) { %>
+                                            <tr>
+                                                <th>#<%= orderData[i]._id.toString().substring(0, 6) %></th>
+                                                <td>
+                                                    <% orderData[i].items.forEach((element, index) => { %>
+                                                        <p><%= element.productId.productname %>,</p>
+                                                    <% }) %>
+                                                </td>
+                                                <td>
+                                                    <p><%= orderData[i].address.fullName %><br><%= orderData[i].address.mobileNumber %><br><%= orderData[i].address.pincode %><br>
+                                                    <%= orderData[i].address.houseAddress %><br><%= orderData[i].address.streetAddress %><%= orderData[i].address.landMark %>,<%= orderData[i].address.cityName %>,<%= orderData[i].address.state %>
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p><%= orderData[i].totalAmount %></p>
+                                                </td>
+                                                <td>
+                                                    <p><%= orderData[i].orderStatus %></p>
+                                                </td>
+                                                <td class="quantity-col">
+                                                    <div class="">
+                                                        <a href="/cancelorder?id=<%= orderData[i]._id %> " class="btn_3">
+                                                            <button type="button" class="btn btn-dark">Order Cancel</button>
+                                                        </a>
+                                                    </div><!-- End .cart-product-quantity -->
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>
                             </table>
                         </div>
                         <a class="butn-style2 mt-3" href="#"><span>Show All Orders</span></a>

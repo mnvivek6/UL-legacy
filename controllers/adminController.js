@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const Category = require('../models/category');
 const Banner = require('../models/bannerModel')
+const Order = require('../models/orderModel')
 
 
 
@@ -64,14 +65,91 @@ const verifylogin = async (req, res) => {
 const loadDashboard = async (requset, res) => {
 
     try {
-        // const userData=  await  user.findById({_id:req.session.user_id})
-        res.render('home')
+       
 
-
+            const salesCount = await Order.find({}).count()
+            const users = await user.find({}).count()
+    
+            const online = await Order.find({paymentMehod:'online Payment'}).count()
+            const ord= await Order.find().populate({path:'items',populate:{path:'productId',model:'Product',populate:{path:'category'}}})
+            const categoryCount = {}
+            ord.forEach(order=>{
+    
+                order.items.forEach(product=>{
+                    const category= product.productId.category.categoryName
+                    if (category in categoryCount) {
+                        categoryCount[category]+=1
+    
+                    }else{
+                        categoryCount[category]=1
+                    }
+                })
+            })
+            const sortedCategoryCount = Object.entries(categoryCount).sort((a,b)=> b[1]-a[1])
+            const numbersOnly = sortedCategoryCount.map(innerArray => innerArray[1])
+            const categoryNames = sortedCategoryCount.map((categoryCount)=>{
+                return categoryCount[0]
+            })
+            const weeklyRevenueOf= await Order.aggregate([
+                {
+                    $match:{
+                        date:{
+                            $gte:new Date(new Date().setDate(new Date().getDate()-7))
+    
+                        },orderStatus:{
+                            $eq:'delivered'
+                        }
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        Revenue:{$sum:'$totalAmount'}
+                    }
+                }
+            ])
+            const weeklyRevenue = weeklyRevenueOf.map((item)=>{
+                return item.Revenue
+            })
+            const weeklySales = await Order.aggregate([
+                {
+                    $match:{
+                        orderStatus:{
+                            $eq:'delivered'
+                        }
+                    }
+                },
+                {
+                    $group:{
+                        _id:
+                        { $dateToString:{ format : "%d-%m-%Y", date: "$date"}},
+                        sales:{$sum:'$totalAmount'}
+                    }
+                },
+                {
+                    $sort:{_id:1}
+                },
+                {
+                    $limit:7
+                },
+            ])
+            res.render('admin/home',{
+                salesCount:salesCount,
+                userCount:users,
+                weeklyRevenue:weeklyRevenue,
+                upi:online,
+                cash:cod,
+                weeklySales:weeklySales,
+                Date:date,
+                Sales:Sales,
+                categoryNames:categoryNames,
+                categorySalesCount:numbersOnly
+            })
     } catch (error) {
         console.log(error.message);
     }
 }
+
 
 
 // logout
@@ -209,94 +287,94 @@ const sendunblockmail = async (name, email, user_id) => {
 
 }
 
-const loadCoupon = async(req , res)=>{
+const loadCoupon = async (req, res) => {
 
 
     try {
-       const couponsData =await Coupon.find({disable:true})
-        res.render('add-coupon',{couponsData})
-        
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-const addCoupon = async(req, res)=>{
-
-
-    try {
-        const couponData = {...req.body}
-      
-
-    const couponAdd = new Coupon({
-    
-        couponCode: couponData.coupon_code,
-        couponAmountType: couponData.fixedandpercentage,
-        couponAmount: couponData.couponamount,
-        minRedeemAmount: couponData.radeemamount,
-        minCartAmount: couponData.cartamount,
-        startDate:couponData.startdate,
-        expiryDate: couponData.expirydate,
-        limit: couponData.usagelimit,
-
-    })
-    console.log(couponAdd);
-    const inser = await couponAdd.save()
-    res.redirect('/admin/loadcoupon')
-  
+        const couponsData = await Coupon.find({ disable: true })
+        res.render('add-coupon', { couponsData })
 
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const deleteImage = async( req, res)=>{
+const addCoupon = async (req, res) => {
+
 
     try {
-        
+        const couponData = { ...req.body }
+
+
+        const couponAdd = new Coupon({
+
+            couponCode: couponData.coupon_code,
+            couponAmountType: couponData.fixedandpercentage,
+            couponAmount: couponData.couponamount,
+            minRedeemAmount: couponData.radeemamount,
+            minCartAmount: couponData.cartamount,
+            startDate: couponData.startdate,
+            expiryDate: couponData.expirydate,
+            limit: couponData.usagelimit,
+
+        })
+        console.log(couponAdd);
+        const inser = await couponAdd.save()
+        res.redirect('/admin/loadcoupon')
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deleteImage = async (req, res) => {
+
+    try {
+
         const imgId = req.params.imgid
         console.log(imgId);
         const prodid = req.params.prodid
-        fs.unlink(path.join(__dirname,'../public/img',imgId),()=>{})
-        const productImg = await Product.updateOne({_id:prodid},{$pull:{image:imgId}})
-     
+        fs.unlink(path.join(__dirname, '../public/img', imgId), () => { })
+        const productImg = await Product.updateOne({ _id: prodid }, { $pull: { image: imgId } })
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const updateImage = async( req, res)=>{
+const updateImage = async (req, res) => {
 
 
     try {
-        
-        const id= req.params.id
+
+        const id = req.params.id
         console.log(id);
-        const proData= await Product.findOne({_id:id})
+        const proData = await Product.findOne({ _id: id })
         console.log(proData);
         imagelength = proData.image.length
         console.log(imagelength);
-        if (imagelength<=4) {
-            let images =[]
-            for(file of req.files){
+        if (imagelength <= 4) {
+            let images = []
+            for (file of req.files) {
 
                 images.push(file.filename)
             }
-            if (imagelength+images.length<=4) {
+            if (imagelength + images.length <= 4) {
 
-                const updateData = await Product.updateOne({_id:id},{$addToSet:{image:{$each:images}}})
-                res.redirect('/admin/productupdate/'+id)     
-            }else{
+                const updateData = await Product.updateOne({ _id: id }, { $addToSet: { image: { $each: images } } })
+                res.redirect('/admin/productupdate')
+            } else {
 
-                const productData = await Product.findOne({_id:id})
+                const productData = await Product.findOne({ _id: id })
 
                 const categoryData = await Category.find()
 
-                res.render("productupdate",{productData,categoryData})
+                res.render("productupdate", { productData, categoryData })
             }
-        }else{
+        } else {
 
-            res.redirect('/admin/productupdate/')
+            res.redirect('/admin/productupdate', +_id)
         }
 
 
@@ -306,53 +384,55 @@ const updateImage = async( req, res)=>{
 }
 
 
-const categoryimgdelete = async (req, res)=>{
-
-   try {
-  console.log(' first part here categoryimgdelete');
-  const imgId = req.params.image
-  console.log(imgId);
-    const categoryId= req.params.id
-    console.log(categoryId);
-    fs.unlink(path.join(__dirname,'../public/img',imgId),()=>{})
-    const categoryimg = await Category.updateOne({_id:categoryId},{$unset:{image:imgId}})   
-    res.redirect('/admin/edit-category') 
-   } catch (error) {
-    console.log(error.message);
-   }
-}
-const editcoupon = async(req, res)=>{
+const categoryimgdelete = async (req, res) => {
 
     try {
-        const couponId= req.params.id
-        console.log(couponId);
-        const couponData= await Coupon.findOne({_id:couponId})
-        console.log(couponData);
-        res.render('edit-coupon',{couponData})
-        
+        console.log(' first part here categoryimgdelete');
+        const imgId = req.params.image
+        console.log(imgId);
+        const categoryId = req.params.id
+        console.log(categoryId);
+        fs.unlink(path.join(__dirname, '../public/img', imgId), () => { })
+        const categoryimg = await Category.updateOne({ _id: categoryId }, { $unset: { image: imgId } })
+        res.redirect('/admin/edit-category')
     } catch (error) {
-     console.log(error.message);   
+        console.log(error.message);
+    }
+}
+const editcoupon = async (req, res) => {
+
+    try {
+        const couponId = req.params.id
+        console.log(couponId);
+        const couponData = await Coupon.findOne({ _id: couponId })
+        console.log(couponData);
+        res.render('edit-coupon', { couponData })
+
+    } catch (error) {
+        console.log(error.message);
     }
 }
 
-const couponUpdate = async(req, res)=>{
+const couponUpdate = async (req, res) => {
     try {
 
         const couponId = req.params.id
-        console.log(couponId+'it works');
-        const update = await Coupon.updateOne({_id:couponId},{$set:{
+        console.log(couponId + 'it works');
+        const update = await Coupon.updateOne({ _id: couponId }, {
+            $set: {
 
-            couponCode:req.body.couponcode,
-            couponAmountType:req.body.fixedandpercentage,
-            couponAmount:req.body.couponamount,
-            minCartAmount:req.body.cartamount,
-            minRedeemAmount:req.body.radeemamount,
-            startDate:req.body.startdate,
-            expiryDate:req.body.expirydate,
-            limit:req.body.usagelimit,
-            
-        }})
-        
+                couponCode: req.body.couponcode,
+                couponAmountType: req.body.fixedandpercentage,
+                couponAmount: req.body.couponamount,
+                minCartAmount: req.body.cartamount,
+                minRedeemAmount: req.body.radeemamount,
+                startDate: req.body.startdate,
+                expiryDate: req.body.expirydate,
+                limit: req.body.usagelimit,
+
+            }
+        })
+
         console.log(update);
         res.redirect('/admin/loadcoupon')
     } catch (error) {
@@ -360,90 +440,218 @@ const couponUpdate = async(req, res)=>{
     }
 }
 
-const deletecoupon= async(req, res)=>{
-
-    try {
-
-        const couponId= req.params.id
-
-        const disabel= await Coupon.updateOne({_id:couponId},{$set:{disable:false}})
-        res.redirect("/admin/loadcoupon")
-        
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-const enablecoupon = async( req, res)=>{
+const deletecoupon = async (req, res) => {
 
     try {
 
         const couponId = req.params.id
-        const enable = await Coupon.updateOne({_id:couponId},{$set:{disable:true}})
+
+        const disabel = await Coupon.updateOne({ _id: couponId }, { $set: { disable: false } })
+        res.redirect("/admin/loadcoupon")
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const enablecoupon = async (req, res) => {
+
+    try {
+
+        const couponId = req.params.id
+        const enable = await Coupon.updateOne({ _id: couponId }, { $set: { disable: true } })
         res.redirect("/admin/loadcoupon")
     } catch (error) {
         console.log(error.message);
     }
 }
-const loadbanner= async(req, res)=>{
+const loadbanner = async (req, res) => {
 
     try {
         const banner = await Banner.find()
-        res.render('add-banner',{banner})
-        
+        res.render('add-banner', { banner })
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const insertBanner = async(req, res)=>{
+const insertBanner = async (req, res) => {
 
     try {
 
         const filename = req.file.filename
 
         const bannerData = new Banner({
-           
-            type:req.body.type,
-            discription:req.body.description,
-            bannerImage:filename,
+
+            type: req.body.type,
+            discription: req.body.description,
+            bannerImage: filename,
         })
         console.log(bannerData);
         const result = await bannerData.save()
 
         if (result) {
             res.redirect('/admin/loadbanner')
-        }else{
+        } else {
             console.log('not inserted');
         }
-        
+
     } catch (error) {
         console.log(error.message);
         console.log('got from insert BAnner');
     }
 }
-const deletebanner= async(req, res)=>{
+const deletebanner = async (req, res) => {
 
     try {
 
-        const bannerId= req.params.id
-        await Banner.updateOne({_id:bannerId},{$set:{block:true}})
+        const bannerId = req.params.id
+        await Banner.updateOne({ _id: bannerId }, { $set: { block: true } })
         res.redirect('/admin/loadbanner')
-        
+
     } catch (error) {
         console.log(error.message);
     }
 }
-const enblebanner = async(req, res)=>{
-     
+const enblebanner = async (req, res) => {
+
     try {
-console.log('hi');
-        const bannerId= req.params.id
-        await Banner.updateOne({_id:bannerId},{$set:{block:false}})
+        console.log('hi');
+        const bannerId = req.params.id
+        await Banner.updateOne({ _id: bannerId }, { $set: { block: false } })
         res.redirect('/admin/loadbanner')
     } catch (error) {
         console.log(error.message);
     }
 }
+
+
+const ordermanagement = async (req, res) => {
+
+    try {
+        const orderData = await Order.find()
+
+        res.render('ordermanagement', { orderData })
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const placeOrder = async (req, res) => {
+
+    try {
+        console.log('placeorderfirst part');
+        const orderid = req.params.id
+
+        if (orderid) {
+            const status = await Order.findByIdAndUpdate({ _id: orderid }, { $set: { orderStatus: 'placed' } })
+            if (status) {
+                res.redirect('/admin/ordermanagement')
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+        console.log('error from place order');
+    }
+}
+const shipedorder = async (req, res) => {
+
+    try {
+        const orderid = req.params.id
+        console.log(orderid);
+        if (orderid) {
+            const status = await Order.findByIdAndUpdate({ _id: orderid }, { $set: { orderStatus: 'shiped' } })
+            if (status) {
+                res.redirect('/admin/ordermanagement')
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const deliveredOrder = async (req, res) => {
+
+    try {
+        const orderid = req.params.id
+
+        if (orderid) {
+            const status = await Order.findByIdAndUpdate({ _id: orderid }, { $set: { orderStatus: 'delivered' } })
+            if (status) {
+                res.redirect('/admin/ordermanagement')
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const OrderReturnSuccess = async (req, res) => {
+
+    try {
+        const orderid = req.query.id
+
+        if (orderid) {
+            const status = await Order.findByIdAndUpdate({ _id: orderid }, { $set: { orderStatus: 'delivered' } })
+            if (status) {
+                res.redirect('/admin/ordermanagement')
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const OrderReturnCancelled = async (req, res) => {
+
+    try {
+        const orderid = req.query.id
+
+        if (orderid) {
+            const status = await Order.findByIdAndUpdate({ _id: orderid }, { $set: { orderStatus: 'Return Cancelled' } })
+            if (status) {
+                res.redirect('/admin/ordermanagement')
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const salesReport = async (req, res) => {
+
+    try {
+
+        res.render('Salesreport')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
+const showSalesReprot = async (req, res) => {
+    try {
+
+
+        const startDate = new Date(req.body.startDate)
+        const endDate = new Date(req.body.endDate)
+        console.log(endDate);        const saleData = await Order.find({
+            orderStatus: 'delivered',
+            date: { $gte: startDate, $lte: endDate }
+
+        })
+        if (saleData) {
+            res.render('salesreportTable', { saleData })
+        }
+
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+
+
 
 module.exports = {
     loadlogin,
@@ -468,6 +676,15 @@ module.exports = {
     insertBanner,
     deletebanner,
     enblebanner,
-    enablecoupon
+    enablecoupon,
+    ordermanagement,
+    placeOrder,
+    shipedorder,
+    deliveredOrder,
+    OrderReturnSuccess,
+    OrderReturnCancelled,
+    salesReport,
+    showSalesReprot,
     
+
 }

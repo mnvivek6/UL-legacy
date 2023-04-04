@@ -112,6 +112,18 @@ admin_route.post('/inserbanner',bannerMult.single('bannerimage'),adminController
 admin_route.get('/deletebanner/:id',adminController.deletebanner)
 admin_route.get('/enablebanner/:id',adminController.enblebanner)
 
+// ordermanagement
+admin_route.get('/ordermanagement',adminController.ordermanagement)
+admin_route.get('/placeOrder/:id',auth.islogin, adminController.placeOrder)
+admin_route.get('/shipedorder/:id',auth.islogin, adminController.shipedorder)
+admin_route.get('/deliveredOrder/:id',auth.islogin,adminController.deliveredOrder)
+
+// sales report
+admin_route.get('/salesreport',auth.islogin,adminController.salesReport)
+admin_route.post('/showsalesreport',auth.islogin,adminController.showSalesReprot)
+admin_route.get('/')
+
+
 // admin_route.get('/')
 admin_route.get('*', function (request, response) {
     response.redirect('/admin')

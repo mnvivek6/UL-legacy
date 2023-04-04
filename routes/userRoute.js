@@ -78,7 +78,7 @@ user_route.get('/delete-address/:id/:addressIndex',auth.isLogin,userController.D
 // whishlist
 user_route.get('/whishlist', auth.isLogin, userController.loadwhishlist)
 user_route.post('/addtowhishlist', auth.isLogin, userController.AddTowishlist)
-user_route.get('/deletewhishlist',auth.isLogin, userController.deletewhishlist)
+user_route.post('/deletewhishlist',auth.isLogin, userController.deletewhishlist)
 
 // orders
 user_route.get('/checkout',auth.isLogin,userController.loadCheckout)
@@ -90,12 +90,15 @@ user_route.get('/orderlist',auth.isLogin,userController.orderlist)
 user_route.get('/cancelorder',auth.isLogin,userController.OrderCancel)
 
 // pagenation
-user_route.get('/pagenation',userController.productlist)
+user_route.get('/shop',userController.productlist)
 
 // coupon
 user_route.post('/couponapply',auth.isLogin,userController.couponApply)
 
 user_route.post('/verifypayment',auth.isLogin,userController.verifyPayment)
+user_route.post('/whishlistTocart',auth.isLogin,userController.whishlistTocart)
+
+user_route.get('/viewProduct',auth.isLogin,userController.viewProduct)
 
 
 

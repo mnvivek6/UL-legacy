@@ -201,7 +201,7 @@ const verifylogin = async (req, res) => {
 
                     res.render('userlogin', { message: "Enter Valid Inputs" })
                 } else {
-                    res.render('userlogin', { message: 'Your Email or Password Is Not Valid' })
+                    res.render('userlogin', { message: 'Your Email and Password is incorrect' })
                 }
             })
 
@@ -219,6 +219,7 @@ const loadhome = async (req, res) => {
 
         const products = await Product.find()
         const user = true
+
         // console.log(products);
         console.log("load homepage");
         res.render('userhome', { products, category, user })
@@ -585,7 +586,7 @@ const AddTowishlist = async (req, res) => {
     try {
         console.log('hi');
         const productId = req.body.productId
-        // console.log(productId);
+        console.log(productId);
 
         let exist = await User.findOne({ id: req.session.user_id, 'whishlist.product': productId })
         console.log(exist);
@@ -628,12 +629,13 @@ const loadwhishlist = async (req, res) => {
     try {
         const Id = await req.session.user_id
         console.log(Id);
+        const user = true
         const userData = await User.findOne({ _id: Id }).populate('whishlist.product').exec()
 
         console.log(userData);
 
 
-        res.render('whishlist', { userData })
+        res.render('whishlist', { userData,user })
 
     } catch (error) {
         console.log(error.message);
@@ -642,9 +644,10 @@ const loadwhishlist = async (req, res) => {
 const deletewhishlist = async (req, res) => {
 
     try {
-
+        console.log('from deletewhishlist');
         const id = req.session.user_id
         const deleteProId = req.body.productId
+        console.log(deleteProId);
         const deleteWishlist = await User.findByIdAndUpdate({ _id: id }, { $pull: { whishlist: { product: deleteProId } } })
 
         if (deleteWishlist) {
@@ -818,7 +821,7 @@ const orderlist = async (req, res) => {
 
         const userId = req.session.user_id
 
-        const orderData = await Order.find({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } })
+        const orderData = await Order.find({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } }).sort({Date:-1})
 
         res.render('orderlist', { orderData })
     } catch (error) {
@@ -976,6 +979,138 @@ const verifyPayment = async(req,res)=>{
     }
 }
 
+const whishlistTocart = async (req, res) => {
+
+    try {
+        
+        const productId = req.body.productId
+        console.log(productId);
+        const _id =  req.session.user_id
+        console.log(_id);
+        let exist = await User.findOne({ id:_id, 'cart.productId': productId })
+
+        if (exist) {
+            console.log(exist);
+            const user = await User.findOne({ _id: req.session.user_id })
+            const index = await user.cart.findIndex(data => data.productId._id == req.body.productId)
+            user.cart[index].qty += 1
+            user.cart[index].productTotalprice = user.cart[index].qty * user.cart[index].Price
+            await user.save()
+            res.send(true)
+            console.log(user);
+        } else {
+            const product = await Product.findOne({ _id: req.body.productId })
+            console.log("knhdsdho" + product.price);
+
+            const userData = await User.findOne({ _id })
+
+            const result = await User.updateOne({ _id }, { $push: { cart: { productId: product._id, qty: 1, price: product.price, productTotalprice: product.price } } })
+           
+            if (result) {
+                console.log('hi');
+              await User.findByIdAndUpdate({ _id:_id}, { $pull: { whishlist: { product: product} } })
+                console.log('hi');
+
+                res.json({ status: true })
+              
+
+            } else {
+
+                console.log('adding to cart is failed it didnt updated');
+
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+        console.log('error from addto cart');
+    }
+
+}
+
+const viewProduct = async (req, res) => {
+    try {
+        const category = req.query.categoryId;
+        const search = req.query.search || "";
+        const sort = req.query.sort || "";
+        console.log(category + " - " + search + " - " + sort);
+        let isRender = false;
+
+        if (req.query.isRender) {
+            isRender = true;
+        }
+
+        const searchData = new String(search).trim();
+
+        const query = {
+            is_delete: false,
+        };
+
+        let sortQuery = { price: 1 };
+        if (sort == "high-to-low") {
+            sortQuery = { price: -1 };
+        }
+
+        if (search) {
+            query["$or"] = [
+                { productName: { $regex: ".*" + searchData + ".*", $options: "i" } },
+                { description: { $regex: searchData, $options: "i" } },
+            ];
+        }
+
+        if (category) {
+            query["$or"] = [{ mainCategory: category }];
+        }
+
+        const product = await Products.find(query).sort(sortQuery);
+
+        //console.log(product);
+
+        const productsPerPage = 5;
+        const page = req.query.page || 1;
+        const startIndex = (page - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const pageProducts = product.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(product.length / productsPerPage);
+        // console.log(
+        //   page +
+        //     " - " +
+        //     startIndex +
+        //     " - " +
+        //     endIndex +
+        //     " - " +
+        //     pageProducts +
+        //     " - " +
+        //     totalPages
+        // );
+        // -----------Category finding
+        const categoryData = await Category.find({});
+
+        // ----------------------
+
+        if (isRender == true) {
+            res.json({
+                pageProducts,
+                totalPages,
+                currentPage: parseInt(page, 10),
+                product,
+                // cartCount,
+                // wishListCount
+            });
+        } else {
+            res.render("products", {
+                pageProducts,
+                totalPages,
+                currentPage: parseInt(page, 10),
+                product,
+                categoryData,
+            });
+        }
+    } catch (error) {
+        console.log(error.message);
+        console.log("------------------Product Page Section-----------");
+    }
+}
+
 
 
 
@@ -1014,6 +1149,9 @@ module.exports = {
     OrderCancel,
     productlist,
     couponApply,
-    verifyPayment
+    verifyPayment,
+    whishlistTocart,
+    viewProduct
+   
 
 }
