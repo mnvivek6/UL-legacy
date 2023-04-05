@@ -518,9 +518,27 @@
                                                 </td>
                                                 <td class="quantity-col">
                                                     <div class="">
-                                                        <a href="/cancelorder?id=<%= orderData[i]._id %> " class="btn_3">
-                                                            <button type="button" class="btn btn-dark">Order Cancel</button>
+                                                        <% if (orderData[i].orderStatus=='delivered') {%>
+                                                        <a href="/returnOrder?id=<%= orderData[i]._id %> " class="btn_3">
+                                                            <button type="button" class="btn btn-dark">Return Order</button>
                                                         </a>
+                                                        <% }else if (orderData[i].orderStatus=='placed') {%>
+                                                            <a href="/cancelorder?id=<%= orderData[i]._id %> " class="btn_3">
+                                                                <button type="button" class="btn btn-dark">Cancel Order</button>
+                                                            </a>
+                                                       <% }else if (orderData[i].orderStatus=='shipped') {%>
+                                                         <a href="/cancelorder?id=<%= orderData[i]._id %> " class="btn_3">
+                                                                <button type="button" class="btn btn-dark">Cancel Order</button>
+                                                            </a>
+                                                    |<%  } else if (orderData[i].orderStatus=='return requested'){%>
+                                                        <a href="" class="btn_3">
+                                                            <button type="button" class="btn btn-dark">Please Wait</button>
+                                                        </a>
+                                                   <% }else if(orderData[i].orderStatus=='cancelled'){%>
+                                                    <a href="" class="btn_3">
+                                                        <button type="button" class="btn btn-dark">Order Cancelled</button>
+                                                    </a>
+                                                  <% }%>
                                                     </div><!-- End .cart-product-quantity -->
                                                 </td>
                                             </tr>

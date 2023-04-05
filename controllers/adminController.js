@@ -44,11 +44,13 @@ const verifylogin = async (req, res) => {
 
                 if (userData.is_admin === 0) {
 
-                    res.render('login', { message: 'not admin' })
+                    res.render('login', { message: 'Not Admin' })
                 } else {
                     req.session.admin_id = userData._id
-                    console.log(req.session.user_id);
-                    res.render('home')
+                    
+
+
+                    res.redirect('/admin/home')
 
                 }
             }
@@ -65,87 +67,121 @@ const verifylogin = async (req, res) => {
 const loadDashboard = async (requset, res) => {
 
     try {
-       
+        
+        const users = await user.find({}).count()
+        const online = await Order.find({ paymentMethod: 'Online Payment' }).count()
+        // console.log(online);
+        const ord = await Order.find().populate({ path: 'items', populate: { path: 'productId', model: 'Product', populate: { path: 'category' } } })
+        const categoryCount = {};
 
-            const salesCount = await Order.find({}).count()
-            const users = await user.find({}).count()
-    
-            const online = await Order.find({paymentMehod:'online Payment'}).count()
-            const ord= await Order.find().populate({path:'items',populate:{path:'productId',model:'Product',populate:{path:'category'}}})
-            const categoryCount = {}
-            ord.forEach(order=>{
-    
-                order.items.forEach(product=>{
-                    const category= product.productId.category.categoryName
-                    if (category in categoryCount) {
-                        categoryCount[category]+=1
-    
-                    }else{
-                        categoryCount[category]=1
-                    }
-                })
-            })
-            const sortedCategoryCount = Object.entries(categoryCount).sort((a,b)=> b[1]-a[1])
-            const numbersOnly = sortedCategoryCount.map(innerArray => innerArray[1])
-            const categoryNames = sortedCategoryCount.map((categoryCount)=>{
-                return categoryCount[0]
-            })
-            const weeklyRevenueOf= await Order.aggregate([
-                {
-                    $match:{
-                        date:{
-                            $gte:new Date(new Date().setDate(new Date().getDate()-7))
-    
-                        },orderStatus:{
-                            $eq:'delivered'
-                        }
-                    }
+        const totalales = await Order.find({ orderStatus: "delivered" })
+        let sum = 0
+        for (let i = 0; i < totalales.length; i++) {
+            sum = sum + totalales[i].totalAmount
+        }
+        const salescount = await Order.find({ orderStatus: "delivered", orderData:'delivered' }).count()
+
+        const cod = await Order.find({ paymentMethod: "COD", orderStatus:'delivered'  })
+    //    console.log(cod);
+        let cod_sum = 0
+        for (var i = 0; i < cod.length; i++) {
+            cod_sum = cod_sum + cod[i].totalAmount
+        }
+console.log(cod_sum);
+        const upi = await Order.find({ paymentMethod: 'Online Payment', orderStatus: "delivered" })
+        // console.log(upi,"upi value");
+
+        let upi_sum = 0
+        for (var i = 0; i < upi.length; i++) {
+            upi_sum = upi_sum + upi[i].totalAmount
+        }
+      console.log(upi_sum);
+        const wallet = await Order.find({ paymentMethod: "WALLET", orderStatus: "delivered" })
+
+        let wallet_sum = 0
+
+        for (var i = 0; i < wallet.length; i++) {
+            wallet_sum = wallet_sum + wallet[i].totalAmount
+        }
+   console.log(wallet_sum);
+        const methodtotal = cod_sum + upi_sum + wallet_sum
+        console.log(methodtotal);
+        const upi_percentage = upi_sum / methodtotal * 100
+        const wallet_percentage = wallet_sum / methodtotal * 100
+        const cod_percentage = cod_sum / methodtotal * 100
+
+
+        
+        const deliveryCount = await Order.find({ orderStatus: "delivered" }).count()
+        // console.log(deliveryCount);
+        const confirmedCount = await Order.find({ orderStatus: "placed" }).count()
+        // console.log(confirmedCount);
+        const cancelledCount = await Order.find({ orderStatus: "cancelled" }).count()
+        // console.log(cancelledCount);
+        const returnedCount = await Order.find({ orderStatus: "Return" }).count()
+        // console.log(returnedCount);
+
+
+        const salesChart = await Order.aggregate([
+
+            {
+                $match: { orderStatus: "delivered" } // Add $match stage to filter by status
+            },
+            {
+
+                $group: {
+                    _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+
+                    sales: { $sum: '$totalAmount' },
                 },
-                {
-                    $group:{
-                        _id:null,
-                        Revenue:{$sum:'$totalAmount'}
-                    }
-                }
-            ])
-            const weeklyRevenue = weeklyRevenueOf.map((item)=>{
-                return item.Revenue
-            })
-            const weeklySales = await Order.aggregate([
-                {
-                    $match:{
-                        orderStatus:{
-                            $eq:'delivered'
-                        }
-                    }
-                },
-                {
-                    $group:{
-                        _id:
-                        { $dateToString:{ format : "%d-%m-%Y", date: "$date"}},
-                        sales:{$sum:'$totalAmount'}
-                    }
-                },
-                {
-                    $sort:{_id:1}
-                },
-                {
-                    $limit:7
-                },
-            ])
-            res.render('admin/home',{
-                salesCount:salesCount,
-                userCount:users,
-                weeklyRevenue:weeklyRevenue,
-                upi:online,
-                cash:cod,
-                weeklySales:weeklySales,
-                Date:date,
-                Sales:Sales,
-                categoryNames:categoryNames,
-                categorySalesCount:numbersOnly
-            })
+            },
+            {
+                $sort: { _id: -1 },
+            },
+            {
+                $limit: 7,
+            },
+        ]);
+
+        // console.log('salesChart',salesChart);
+
+        const dates = salesChart.map((item) => {
+            return item._id;
+        })
+
+        const sale = salesChart.map((item) => {
+            return item.sales;
+        });
+
+
+        const salesr = sale.map((x) => {
+            return x
+        })
+
+        const date = dates.reverse()
+
+        const sales = salesr.reverse()
+
+
+        res.render('home', {
+            userCount: users,
+            deliveryCount,
+            cancelledCount,
+            returnedCount,
+            confirmedCount,
+            sum, cod_sum, upi_sum, wallet_sum,
+            salescount,
+            upi_percentage,
+            cod_percentage,
+            wallet_percentage,
+            sales,
+            date,
+            methodtotal
+
+           
+        })
     } catch (error) {
+
         console.log(error.message);
     }
 }
@@ -634,7 +670,7 @@ const showSalesReprot = async (req, res) => {
 
         const startDate = new Date(req.body.startDate)
         const endDate = new Date(req.body.endDate)
-        console.log(endDate);        const saleData = await Order.find({
+        console.log(endDate); const saleData = await Order.find({
             orderStatus: 'delivered',
             date: { $gte: startDate, $lte: endDate }
 
@@ -685,6 +721,6 @@ module.exports = {
     OrderReturnCancelled,
     salesReport,
     showSalesReprot,
-    
+
 
 }

@@ -1112,6 +1112,25 @@ const viewProduct = async (req, res) => {
 }
 
 
+const returnOrder = async(req, res)=>{
+
+    try {
+     const orderId = req.query.id
+     console.log(orderId);
+     const order = await Order.findById(orderId)
+
+     order.orderStatus = 'return requested'
+     order.save()
+
+     res.redirect('/orderlist')
+
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 
 
 // exporting usercontroller module   
@@ -1151,7 +1170,8 @@ module.exports = {
     couponApply,
     verifyPayment,
     whishlistTocart,
-    viewProduct
+    viewProduct,
+    returnOrder 
    
 
 }

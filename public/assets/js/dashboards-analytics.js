@@ -418,6 +418,21 @@
     profileReportChart.render();
   }
 
+  const upi = document.getElementById('upi').value
+  const cod = document.getElementById('cod').value
+  const wallet = document.getElementById('wallet').value
+
+  
+  
+ 
+
+  const upii = parseInt(upi)
+  const codd = parseInt(cod)
+  const wallett = parseInt(wallet)
+
+  console.log(upii);
+  console.log(codd);
+  console.log(wallett+"yjtfhyjhgf");
   // Order Statistics Chart
   // --------------------------------------------------------------------
   const chartOrderStatistics = document.querySelector('#orderStatisticsChart'),
@@ -427,9 +442,9 @@
         width: 130,
         type: 'donut'
       },
-      labels: ['Electronic', 'Sports', 'Decor', 'Fashion'],
-      series: [85, 15, 50, 50],
-      colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
+      labels: ['UPI', 'COD', 'WALLET'],
+      series: [upii, codd, wallett, ],
+      colors:  [config.colors.danger, config.colors.info, config.colors.primary, ],
       stroke: {
         width: 5,
         colors: cardColor
@@ -473,9 +488,9 @@
                 show: true,
                 fontSize: '0.8125rem',
                 color: axisColor,
-                label: 'Weekly',
+                label: 'UPI',
                 formatter: function (w) {
-                  return '38%';
+                  return upii+'%';
                 }
               }
             }
@@ -488,13 +503,35 @@
     statisticsChart.render();
   }
 
+  const dates = document.getElementById('date').value
+  const sales = document.getElementById('sales').value
+  
+  const sale = JSON.parse(sales);
+  const date = JSON.parse(dates);
+
+
+  // define an array of date strings
+let dateStrings = date;
+
+// define a function that converts a date string to a day of the week string
+function getDayOfWeek(dateStr) {
+ let dateObj = new Date(dateStr);
+ let dateString = dateObj.toDateString();
+ let dayOfWeek = dateString.slice(0, 3);
+ return dayOfWeek;
+}
+
+// use the map() method to apply the getDayOfWeek function to each element of the array
+let dayOfWeekStrings = dateStrings.map(getDayOfWeek);
+
+  
   // Income Chart - Area chart
   // --------------------------------------------------------------------
   const incomeChartEl = document.querySelector('#incomeChart'),
     incomeChartConfig = {
       series: [
         {
-          data: [24, 21, 30, 22, 42, 26, 35, 29]
+          data: sale
         }
       ],
       chart: {
@@ -558,7 +595,7 @@
         }
       },
       xaxis: {
-        categories: ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: dayOfWeekStrings,
         axisBorder: {
           show: false
         },
@@ -578,7 +615,7 @@
           show: false
         },
         min: 10,
-        max: 50,
+        max: 50000,
         tickAmount: 4
       }
     };
