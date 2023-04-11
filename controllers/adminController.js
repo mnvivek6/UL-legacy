@@ -286,6 +286,8 @@ const sendblockmail = async (name, email, user_id) => {
 
 }
 
+
+// blocking mail
 const sendunblockmail = async (name, email, user_id) => {
 
 
@@ -504,6 +506,7 @@ const loadbanner = async (req, res) => {
 
     try {
         const banner = await Banner.find()
+        
         res.render('add-banner', { banner })
 
     } catch (error) {
@@ -516,7 +519,7 @@ const insertBanner = async (req, res) => {
     try {
 
         const filename = req.file.filename
-
+console.log(filename);
         const bannerData = new Banner({
 
             type: req.body.type,
@@ -535,9 +538,10 @@ const insertBanner = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('got from insert BAnner');
+        
     }
 }
-const deletebanner = async (req, res) => {
+const disablebanner = async (req, res) => {
 
     try {
 
@@ -685,9 +689,55 @@ const showSalesReprot = async (req, res) => {
     }
 }
 
+const acceptReturn = async ( req, res)=>{
 
+    try {
+        id = req.query.id
+        const changeStatus = await Order.findByIdAndUpdate({_id:id},{$set:{orderStatus:"Return Accepted"}})
+        const orderData = await Order.findOne({_id:id})
+        if (orderData.paymentMethod == 'card') {
+            const refund = await user.updateOne({_id:orderData.userId},{$inc:{wallet:orderData.totalAmount}})
+        }
+       const quantity = orderData.items
 
+       for(let i = 0 ; i<quantity.length; i++){
 
+        const productstock = await Product.updateOne({_id:quantity[i].productId},{$inc:{qty:quantity[i].qty}})
+
+        res.redirect('/admin/ordermanagement')
+       }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const rejectReturn = async (req, res) => {
+    try {
+        console.log('reject return first part ');
+        id = req.params.id
+        console.log(id);
+        const changeStatus = await Order.findByIdAndUpdate({ _id: id }, { $set: { orderStatus: "Return rejected" } })
+        if (changeStatus) {
+            res.redirect('/admin/ordermanagement')
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const deleteBanner = async(req,res)=>{
+
+    try {
+        console.log('hi');
+        const bannerId = req.params.id
+        await Banner.findByIdAndDelete({ _id: bannerId })
+        res.redirect('/admin/loadbanner')
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     loadlogin,
@@ -710,7 +760,7 @@ module.exports = {
     deletecoupon,
     loadbanner,
     insertBanner,
-    deletebanner,
+    disablebanner,
     enblebanner,
     enablecoupon,
     ordermanagement,
@@ -721,6 +771,9 @@ module.exports = {
     OrderReturnCancelled,
     salesReport,
     showSalesReprot,
+    acceptReturn,
+    rejectReturn,
+    deleteBanner
 
 
 }

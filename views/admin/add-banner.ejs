@@ -366,7 +366,7 @@
                          
                         <tr>
                           <td>
-                            <img src="/admin/banner-img/<%= value.bannerImage %>" alt="" style="width: 200; height: 80;"> 
+                            <img src="/assets/banner/<%= value.bannerImage %>" alt="" style="width: 200; height: auto;"> 
                           </td>
                           <td><%= value.discription %></td>
                           <td><%=value.type %></td>
@@ -386,9 +386,10 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" href=""><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                                <a class="dropdown-item" href="/admin/deletebanner/<%=value._id%>"><i class="bx bx-trash me-2"></i> Disable</a>
+                                <!-- <a class="dropdown-item" href=""><i class="bx bx-edit-alt me-2"></i> Edit</a> -->
+                                <a class="dropdown-item" href="/admin/disablebanner/<%=value._id%>">Disable</a>
                                 <a class="dropdown-item" href="/admin/enablebanner/<%=value._id%>">Enable</a>
+                                <a class="dropdown-item" href="/admin/deletebanner/<%=value._id%>">Delete</a>
                               </div>
                             </div>
                           </td>
@@ -431,30 +432,72 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <form action="/admin/inserbanner" method="post" enctype="multipart/form-data">
-                        
-                          <div class="mb-3">
-                            <label for="exampleFormControlInput1 text-dark">Type </label>
-                                                <input type="text" class="form-control border px-2"
-                                                    id="exampleFormControlInput1" placeholder="" name="type" required>
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleFormControlInput1 text-dark">Description</label>
-                                                <input type="text" class="form-control border px-2"
-                                                    id="exampleFormControlInput1" placeholder="" name="description" required>
-                          </div>
-                         
-                          <div class="mb-3">
-                            <label for="exampleFormControlFile1">Example file input</label><br>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="bannerimage"  required>
-                          </div>
-                       
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                      </div>
-                    </form>
+                        <form action="/admin/inserbanner" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+  <div class="mb-3">
+    <label for="">Select Banner type</label>
+    <select class="form-select" id="banner-type" name="type">
+      <option value="first-carosal">First Carosal</option>
+      <option value="middle-offer">Middle Offer</option>
+      <option value="last-one">Last One</option>
+    </select>
+    <span id="banner-type-error" class="error-message" style="color: red;" ></span>
+  </div>
+  <div class="mb-3">
+    <label for="banner-description" class="form-label">Description</label>
+    <input type="text" class="form-control" id="banner-description" name="description">
+    <span id="banner-description-error" class="error-message" style="color: red;" ></span>
+  </div>
+  <div class="mb-3">
+    <label for="banner-image" class="form-label">Banner Image</label>
+    <input type="file" class="form-control-file" id="banner-image" name="bannerimage"><br>
+    <span id="banner-image-error" class="error-message" style="color: red;" ></span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+</form>
+
+<script>
+  function validateForm() {
+    let isValid = true;
+    const bannerType = document.getElementById("banner-type");
+    const bannerTypeErrorMessage = document.getElementById("banner-type-error");
+    const bannerDescription = document.getElementById("banner-description");
+    const bannerDescriptionErrorMessage = document.getElementById("banner-description-error");
+    const bannerImage = document.getElementById("banner-image");
+    const bannerImageErrorMessage = document.getElementById("banner-image-error");
+
+    // Reset error messages
+    bannerTypeErrorMessage.innerText = "";
+    bannerDescriptionErrorMessage.innerText = "";
+    bannerImageErrorMessage.innerText = "";
+
+    // Validate required fields
+    if (bannerType.value === "") {
+      bannerTypeErrorMessage.innerText = "Please select a banner type";
+      isValid = false;
+    }
+    if (bannerDescription.value === "") {
+      bannerDescriptionErrorMessage.innerText = "Please enter a description";
+      isValid = false;
+    }
+    if (bannerImage.value === "") {
+      bannerImageErrorMessage.innerText = "Please choose a banner image";
+      isValid = false;
+    }
+
+    // Validate image type
+    const allowedImageTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (bannerImage.files.length > 0 && !allowedImageTypes.includes(bannerImage.files[0].type)) {
+      bannerImageErrorMessage.innerText = "Only JPEG, PNG, and WebP image types are allowed";
+      isValid = false;
+    }
+
+    return isValid;
+  }
+</script>
+
                     </div>
                   </div>
                 </div>

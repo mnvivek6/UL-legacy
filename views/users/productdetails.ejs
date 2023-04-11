@@ -36,7 +36,7 @@
 
     <!-- PAGE LOADING
     ================================================== -->
-    <!-- <div id="preloader"></div> -->
+   
 
     <!-- MAIN WRAPPER
     ================================================== -->
@@ -52,13 +52,16 @@
                 <!-- top search -->
                 <div class="top-search bg-primary">
                     <div class="container-fluid">
-                        <form class="search-form" action="#" method="GET">
+                        <form class="search-form" action="/search" method="post">
                             <div class="input-group">
                                 <span class="input-group-addon cursor-pointer">
-                                    <button class="search-form_submit fas fa-search display-27 text-white" type="submit"></button>
+                                    <button class="search-form_submit fas fa-search display-27 text-white"
+                                        type="submit"></button>
                                 </span>
-                                <input type="text" class="search-form_input form-control" name="s" autocomplete="off" placeholder="Type & hit enter...">
-                                <span class="input-group-addon close-search"><i class="fas fa-times display-27 mt-2"></i></span>
+                                <input type="text" class="search-form_input form-control" name="s"
+                                    autocomplete="off" placeholder="Type & hit enter...">
+                                <span class="input-group-addon close-search"><i
+                                        class="fas fa-times display-27 mt-2"></i></span>
                             </div>
                         </form>
                     </div>
@@ -72,7 +75,6 @@
                                 <nav class="navbar navbar-expand-lg navbar-light p-0">
 
                                     <!-- category toggler -->
-                                    <a href="#" id="trigger" class="menu-trigger"><i class="ti-menu"></i></a>
                                     <!-- end category toggler -->
 
                                     <div class="navbar-header navbar-header-custom">
@@ -88,29 +90,42 @@
                                     <!-- menu area -->
                                     <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
 
-                                        <li><a href="/userhome">Home</a>
-                                            <ul>
-                                               
-                                            </ul>
+                                        <li><a href="/userhome" style="color: black;">Home</a>
+                                          
                                         </li>
-                                       
-                                        <li><a href="#">Account</a>
+                                      
+                                        </li>
+                                        <li><a href="#"style="color: black;" >Account</a>
                                             <ul>
-                                                <li><a href="/login">Login / Register</a></li>
-                                                <li><a href="adfs">Password Recovery</a></li>
+                                                <%if(user == false){%>
+                                          
+                                                    <li><a href="/logout">logout</a></li>
+                                            <%}else{%>
+                                                <li><a href="/login">login</a>
+                                                
+                                               
+                                            <%}%>
+                                                <!-- <li><a href="adfs">Password Recovery</a></li> -->
                                                 <li><a href="/orderlist">Orders List</a></li>
                                                 <li><a href="/whishlist">Wishlist</a></li>
                                                 <li><a href="/userprofile">Profile Page</a></li>
-                                                <li><a href="account-address.html">Contact / Shipping Address</a></li>
+                                                <!-- <li><a href="account-address.html">Contact / Shipping Address</a></li> -->
                                                 <!-- <li><a href="account-tickets.html">My Tickets</a></li>
                                                 <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
                                             </ul>
                                         </li>
                                         
-                                       
                                         
-                                    
+                                        <li><a href="#" style="color: black;">Shop</a>
+                                            <ul>
+                                                <li><a href="/shop">Shop Categories</a></li>
+                                            </ul>
+                                        </li>
+                                       
                                     </ul>
+
+
+
                                     <!-- end menu area -->
 
                                     <!-- attribute navigation -->
@@ -122,15 +137,11 @@
                                                     <span class="badge bg-primary">3</span>
                                                 </a>
                                                 <ul class="dropdown-menu cart-list">
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-01.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Men's Football Boots </a></h6>
-                                                        <p>2x - <span class="price">$30.00</span></p>
-                                                    </li>
+                                                    
                                                    
                                                    
                                                     <li class="total bg-primary">
-                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
+                                                        
                                                         <a href="/listcart" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
                                                     </li>
                                                 </ul>
@@ -155,114 +166,7 @@
         
         <!-- CATEGORY MP-MENU
         ================================================== -->
-        <div id="mp-menu" class="mp-menu">
-            <div class="mp-level">
-                <h2>All Categories</h2>
-                <ul>
-                    <li class="mp-has-sub">
-                        <a href="#">Devices</a>
-                        <div class="mp-level">
-                            <h2>Devices</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li class="mp-has-sub">
-                                    <a href="#">Mobiles Phones</a>
-                                    <div class="mp-level">
-                                        <h2>Mobile Phones</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Apple Mobile</a></li>
-                                            <li><a href="#">OnePlus Mobile</a></li>
-                                            <li><a href="#">Lenovo Mobile</a></li>
-                                            <li><a href="#">Micromax Mobile</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mp-has-sub">
-                                    <a href="#">Laptops</a>
-                                    <div class="mp-level">
-                                        <h2>Laptops</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Thin Laptops</a></li>
-                                            <li><a href="#">2-in-1 Laptops</a></li>
-                                            <li><a href="#">Gaming Laptops</a></li>
-                                            <li><a href="#">Budget Laptops</a></li>
-                                            <li><a href="#">Light Laptops</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mp-has-sub">
-                                    <a href="#">Televisions</a>
-                                    <div class="mp-level">
-                                        <h2>Televisions</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Smart TV</a></li>
-                                            <li><a href="#">Full HD TV</a></li>
-                                            <li><a href="#">Android TV</a></li>
-                                            <li><a href="#">4K TV</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Beauty &amp; Health</a>
-                        <div class="mp-level">
-                            <h2>Beauty &amp; Health</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li><a href="#">Grooming</a></li>
-                                <li><a href="#">Luxury Beauty</a></li>
-                                <li><a href="#">Make-up</a></li>
-                                <li><a href="#">Personal Care</a></li>
-                                <li><a href="#">Nutrition Care</a></li>
-                                <li><a href="#">Health Care</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Store</a>
-                        <div class="mp-level">
-                            <h2>Store</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li class="mp-has-sub">
-                                    <a class="icon icon-t-shirt" href="#">Clothes</a>
-                                    <div class="mp-level">
-                                        <h2 class="icon icon-t-shirt">Clothes</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li>
-                                                <a class="icon icon-female" href="#">Women's Clothing</a>
-                                            </li>
-                                            <li>
-                                                <a class="icon icon-male" href="#">Men's Clothing</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="icon icon-diamond" href="#">Watches</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-music" href="#">Shoes</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-food" href="#">Jewellery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#">Books &amp; Audible</a></li>
-                    <li><a href="#">Movies &amp; Games</a></li>
-                </ul>
-
-            </div>
-        </div>
-
+        
         <!-- PAGE TITLE
         ================================================== -->
       
@@ -316,7 +220,7 @@
 
                             </div>
                             <div class="mb-4">
-                                <span class="me-3 display-26 font-weight-600 offer-price">₹3333</span>
+                                <span class="me-3 display-26 font-weight-600 offer-price"></span>
                                 <span class="display-26 font-weight-700 text-primary">₹<%=product.price%></span>
                             </div>
 

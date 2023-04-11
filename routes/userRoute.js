@@ -98,8 +98,8 @@ user_route.post('/couponapply',auth.isLogin,userController.couponApply)
 
 user_route.post('/verifypayment',auth.isLogin,userController.verifyPayment)
 user_route.post('/whishlistTocart',auth.isLogin,userController.whishlistTocart)
+user_route.post('/search',userController.search_product)
 
-user_route.get('/viewProduct',auth.isLogin,userController.viewProduct)
 
 
 

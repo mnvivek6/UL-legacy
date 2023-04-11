@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,7 +117,11 @@
                                         
                                         <li><a href="#">Shop</a>
                                             <ul>
-                                                <li><a href="/shop">Shop Categories</a></li>
+                                                <li><a href="/shop">HOODIES</a></li>
+                                                <li><a href="/shop">NORMAL T-SHIRTS</a></li>
+                                                <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
+                                                <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
+                                                <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
                                             </ul>
                                         </li>
                                        
@@ -132,19 +137,14 @@
                                                     <span class="badge bg-primary">3</span>
                                                 </a>
                                                 <ul class="dropdown-menu cart-list">                                                   
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-03.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Heel Character Shoes</a></h6>
-                                                        <p>2x - <span class="price">$39.00</span></p>
-                                                    </li>
+                                                    
                                                     <li class="total bg-primary">
-                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
+                                                       
                                                         <a href="/listcart" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li class="search"><a href="#"><i class="ti-search"></i></a></li>
-                                            <li class="heart"> <a href="/whishlist"><i class="ti-heart"></i></a></li>
+                                            <li class="heart"> <a href="/whishlist"><i class="ti-heart"></i></a></li>                                          
                                         </ul>
                                     </div>
                                     <!-- end attribute navigation -->
@@ -161,45 +161,27 @@
 
         <!-- BANNER
         ================================================== -->
+       
+        
+    
         <section class="full-screen p-0 top-position">
             <div class="slider-fade2 owl-carousel owl-theme w-100">
-                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/legacyfirstpic.jpg">
+                <% BannerData.forEach((value,index)=>{%>
+                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="/assets/banner/<%=value.bannerImage %>">
                     <div class="container h-100 d-table">
                         <div class="row d-table-cell align-middle h-100">
                             <div class="col-lg-5">
-                                <h3 class="alt-font mb-2 h6 text-uppercase">New Arrivals</h3>
+                                <h3 class="alt-font mb-2 h6 text-uppercase"><%=value.discription  %></h3>
                                 <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9"style="color: aliceblue;">NEW ARRIVALS</h1>
                                 <a href="/shop" class="butn-style4">Shop Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/legacyfrontpic2.jpg">
-                    <div class="container h-100 d-table">
-                        <div class="row d-table-cell align-middle h-100">
-                            <div class="col-lg-5">
-                                <h3 class="alt-font mb-2 h6 text-uppercase">Offer</h3>
-                                <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9 " style="color: rgb(255, 0, 0);">OVERSIZED UP  to 50% OFF</h1>
-                                <a href="/shop" class="butn-style4">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item bg-img h-100 w-100 cover-background" data-overlay-dark="0" data-background="user/img/slider/legacyfrontpic3.jpg">
-                    <div class="container h-100 d-table">
-                        <div class="row d-table-cell align-middle h-100">
-                            <div class="col-lg-5">
-                                <h3 class="alt-font mb-2 h6 text-uppercase">Collection</h3>
-                                <h1 class="display-16 display-sm-8 display-md-5 display-lg-3 mb-1-6 mb-lg-2-9 "style="color: aliceblue;">Special Collection</h1>
-                                <a href="/shop" class="butn-style4">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <%})%>   
             </div>
         </section>
-
+       
         <!-- CATEGORY
         ================================================== -->
        
@@ -272,12 +254,17 @@
 
         <!-- OFFER BANNER
         ================================================== -->
+
         <section class="pt-0">
             <div class="container-fluid px-lg-1-9 px-xl-6 px-xxl-13">
                 <div class="row mt-n4">
+                    <% if (typeof Middlebanner!=='undifined') {%>
+                        
+                  
+                    <% Middlebanner.forEach((value,index)=>{%>
                     <div class="col-md-6 mt-4">
                         <div class="offer-style02">
-                            <img src="/img/skatebanner2.png" alt="...">
+                            <img src="/assets/banner/<%=value.bannerImage %>" alt="...">
                             <div class="text-center position-absolute top-10 start-0 end-0">
                                 <span class="text-uppercase font-weight-500 text-white letter-spacing-2 d-block mb-2 mb-sm-3">new arrivals</span>
                                 <h2 class="h1 mb-2 text-white">Featured Deals</h2>
@@ -286,17 +273,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-4">
-                        <div class="offer-style02">
-                            <img src="/img/onthedress1.jpeg" alt="...">
-                            <div class="text-center position-absolute top-10 start-0 end-0">
-                                <span class="text-uppercase font-weight-600 text-white letter-spacing-2 d-block mb-2 mb-sm-3">up to 50% off</span>
-                                <h2 class="h1 mb-2 text-white">Summer Sale</h2>
-                                <p class="text-white font-weight-600 display-29 d-none d-sm-block">Save on what's hot right now.</p>
-                                <a href="/shop" class="butn-style4 sm">Shop Now<span></span></a>
-                            </div>
-                        </div>
-                    </div>
+                    <%})%>  
+              <%  }else{%>
+
+                <h4>HEY GUYS NEW ARRIVALS AND OFFERS COMES SOON </h4>
+
+             <% } %>
                 </div>
             </div>
         </section>
@@ -310,25 +292,31 @@
         <section>
             <div class="container">
                 <div class="row align-items-center">
+                    <% if ( lastbanner!==null) {%>
+
+                    <% lastbanner.forEach((value,index)=>{%>
                     <div class="col-lg-7 mb-1-9 mb-lg-0">
                         <div class="pe-xl-1-9 position-relative">
-                            <img src="user/img/content/banner.webp" alt="...">
+                            <img src="/assets/banner/<%=value.bannerImage %>" alt="...">
                            
                         </div>
                     </div>
                     <div class="col-lg-5">
                         <div class="ps-xl-6">
-                            <h2 class="h1 w-xl-80 mb-1-6 mb-lg-1-9">BEST SUMMER COLLECTIONS ARE WAITING FOR YOU</h2>
+                            <h2 class="h1 w-xl-80 mb-1-6 mb-lg-1-9"><%=value.discription  %></h2>
                             <p class="mb-1-6 mb-lg-1-9">From curvaceous armchairs finished in sumptuous soft velvet, to statement art deco inspired console tables, bar trolleys and stylish side tables</p>
                             <a href="/shop" class="text-uppercase small border-bottom border-color-black text-dark">shop the look</a>
                         </div>
                     </div>
+                    <%})%>  
+                    <%  }else{%>
+                        <h4 style="color: green;">HEY GUYS NEW ARRIVALS AND OFFERS COMES SOON </h4>
+
+                        <% } %>
                 </div>
             </div>
         </section>
 
-        <!-- INSTAGRAM IMAGES
-        ================================================== -->
        
 
         <!-- FOOTER
@@ -457,12 +445,6 @@
 
     </div>
 
-    <!-- BUY TEMPLATE
-    ================================================== -->
-    <!-- <div class="buy-theme alt-font d-none d-lg-inline-block"><a href="https://wrapbootstrap.com/theme/smartshop-multipurpose-ecommerce-template-WB0N7CT4D" target="_blank"><i class="fas fa-cart-plus"></i><span>Buy Template</span></a></div>
-
-    <div class="all-demo alt-font d-none d-lg-inline-block"><a href="https://www.chitrakootweb.com/contact.html" target="_blank"><i class="far fa-envelope"></i><span>Quick Question?</span></a></div>
-     -->
     <!-- SCROLL TO TOP
     ================================================== -->
     <a href="#" class="scroll-to-top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>

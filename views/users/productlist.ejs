@@ -1,3 +1,5 @@
+<%- include('../layouts/header.ejs') %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,13 +58,16 @@
                 <!-- top search -->
                 <div class="top-search bg-primary">
                     <div class="container-fluid">
-                        <form class="search-form" action="#" method="GET">
+                        <form class="search-form" action="/search" method="post">
                             <div class="input-group">
                                 <span class="input-group-addon cursor-pointer">
-                                    <button class="search-form_submit fas fa-search display-27 text-white" type="submit"></button>
+                                    <button class="search-form_submit fas fa-search display-27 text-white"
+                                        type="submit"></button>
                                 </span>
-                                <input type="text" class="search-form_input form-control" name="s" autocomplete="off" placeholder="Type & hit enter...">
-                                <span class="input-group-addon close-search"><i class="fas fa-times display-27 mt-2"></i></span>
+                               <input type="text" class="search-form_input form-control" name="s" id="search-input" autocomplete="off" placeholder="Type & hit enter...">
+                                    
+                                <span class="input-group-addon close-search"><i
+                                        class="fas fa-times display-27 mt-2"></i></span>
                             </div>
                         </form>
                     </div>
@@ -88,12 +93,12 @@
                                     <!-- menu area -->
                                     <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
 
-                                        <li><a href="/userhome">Home</a>
+                                        <li><a href="/userhome" style="color: black;">Home</a>
                                           
                                         </li>
                                       
                                         </li>
-                                        <li><a href="#">Account</a>
+                                        <li><a href="#"style="color: black;" >Account</a>
                                             <ul>
                                                 <%if(user == false){%>
                                           
@@ -114,51 +119,16 @@
                                         </li>
                                         
                                         
-                                        <li><a href="#">Shop</a>
+                                        <li><a href="#" style="color: black;">Shop</a>
                                             <ul>
                                                 <li><a href="/shop">Shop Categories</a></li>
-                                                
-                                                    <ul>
-                                                        
-                                                        <li><a href="checkout-complete.html">Complete</a></li>
-                                                    </ul>
-                                                </li>
                                             </ul>
                                         </li>
-                                        <li><a href="#!">sdfsdf</a>
-                                            <ul class="row megamenu">
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30"></span>
-                                                    <ul>
-                                                        
-                                                        <li><a href="carousel-slider.html"><i class="far fa-images me-2"></i></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 02</span>
-                                                    <ul>
-                                                      
-                                                        <li><a href="font-icons.html"><i class="far fa-check-square me-2"></i></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 03</span>
-                                                    <ul>
-                                                        <li><a href="grid-system.html"><i class="fas fa-th me-2"></i></a></li>
-                                                        
-                                                        <li><a href="modal.html"><i class="fas fa-expand me-2"></i></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3 col-sm-12">
-                                                    <span class="mb-0 mb-lg-3 d-block py-2 p-lg-0 px-4 px-lg-0 text-uppercase sub-title font-weight-600 display-30">Elements 04</span>
-                                                    <ul>
-                                                        
-                                                        <li><a href="responsive-videos.html"><i class="fas fa-video me-2"></i>Videos</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                       
                                     </ul>
+
+
+
                                     <!-- end menu area -->
 
                                     <!-- attribute navigation -->
@@ -170,13 +140,9 @@
                                                     <span class="badge bg-primary">3</span>
                                                 </a>
                                                 <ul class="dropdown-menu cart-list">                                                   
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-03.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Heel Character Shoes</a></h6>
-                                                        <p>2x - <span class="price">$39.00</span></p>
-                                                    </li>
+                                                    
                                                     <li class="total bg-primary">
-                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
+                                                        
                                                         <a href="/listcart" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
                                                     </li>
                                                 </ul>
@@ -200,7 +166,7 @@
                                     <!-- end menu area -->
 
                                     <!-- attribute navigation -->
-                                    <div class="attr-nav">
+                                    <!-- <div class="attr-nav">
                                         <ul>
                                             <li class="dropdown me-3 me-lg-0">
                                                 <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -231,7 +197,7 @@
                                             </li>
                                             <li class="search"><a href="#"><i class="ti-search"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                     <!-- end attribute navigation -->
 
                                 </nav>
@@ -246,113 +212,7 @@
         
         <!-- CATEGORY MP-MENU
         ================================================== -->
-        <div id="mp-menu" class="mp-menu">
-            <div class="mp-level">
-                <h2>All Categories</h2>
-                <ul>
-                    <li class="mp-has-sub">
-                        <a href="#">Devices</a>
-                        <div class="mp-level">
-                            <h2>Devices</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li class="mp-has-sub">
-                                    <a href="#">Mobiles Phones</a>
-                                    <div class="mp-level">
-                                        <h2>Mobile Phones</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Apple Mobile</a></li>
-                                            <li><a href="#">OnePlus Mobile</a></li>
-                                            <li><a href="#">Lenovo Mobile</a></li>
-                                            <li><a href="#">Micromax Mobile</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mp-has-sub">
-                                    <a href="#">Laptops</a>
-                                    <div class="mp-level">
-                                        <h2>Laptops</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Thin Laptops</a></li>
-                                            <li><a href="#">2-in-1 Laptops</a></li>
-                                            <li><a href="#">Gaming Laptops</a></li>
-                                            <li><a href="#">Budget Laptops</a></li>
-                                            <li><a href="#">Light Laptops</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="mp-has-sub">
-                                    <a href="#">Televisions</a>
-                                    <div class="mp-level">
-                                        <h2>Televisions</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li><a href="#">Smart TV</a></li>
-                                            <li><a href="#">Full HD TV</a></li>
-                                            <li><a href="#">Android TV</a></li>
-                                            <li><a href="#">4K TV</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Beauty &amp; Health</a>
-                        <div class="mp-level">
-                            <h2>Beauty &amp; Health</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li><a href="#">Grooming</a></li>
-                                <li><a href="#">Luxury Beauty</a></li>
-                                <li><a href="#">Make-up</a></li>
-                                <li><a href="#">Personal Care</a></li>
-                                <li><a href="#">Nutrition Care</a></li>
-                                <li><a href="#">Health Care</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Store</a>
-                        <div class="mp-level">
-                            <h2>Store</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li class="mp-has-sub">
-                                    <a class="icon icon-t-shirt" href="#">Clothes</a>
-                                    <div class="mp-level">
-                                        <h2 class="icon icon-t-shirt">Clothes</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li>
-                                                <a class="icon icon-female" href="#">Women's Clothing</a>
-                                            </li>
-                                            <li>
-                                                <a class="icon icon-male" href="#">Men's Clothing</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="icon icon-diamond" href="#">Watches</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-music" href="#">Shoes</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-food" href="#">Jewellery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#">Books &amp; Audible</a></li>
-                    <li><a href="#">Movies &amp; Games</a></li>
-                </ul>
-
-            </div>
-        </div>
+       
 
         <!-- PAGE TITLE
         ================================================== -->
@@ -394,26 +254,11 @@
                                                     <option value="5">Price, high to low</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                    <!-- <div class="col-auto my-1 my-md-0">
-                                        <label class="m-0">Sort By:</label>
-                                        <select class="w-auto d-inline-block form-select">
-                                            <option value="#?sort=p.sort_order&amp;order=ASC">Default</option>
-                                            <option value="#?sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-                                            <option value="#?sort=pd.name&amp;order=DESC">Name (Z - A)</option>
-                                            <option value="#?sort=p.price&amp;order=ASC" selected="">Price (Low &gt; High)</option>
-                                            <option value="#?sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
-                                            <option value="#?sort=rating&amp;order=DESC">Rating (Highest)</option>
-                                            <option value="#?sort=rating&amp;order=ASC">Rating (Lowest)</option>
-                                            <option value="#?sort=p.model&amp;order=ASC">Model (A - Z)</option>
-                                            <option value="#?sort=p.model&amp;order=DESC">Model (Z - A)</option>
-                                        </select>
-                                    </div> -->
+                                        </div>      
 
+                          
+                                    </div>
                                 </div>
-
-                            </div>
-
                         </div>
 
                 <div class="row justify-content-center">
@@ -421,7 +266,7 @@
                     <div class="col-11 col-sm-6 col-lg-4 col-xl-3 mb-1-9">
                         <div class="product-grid">
                             <div class="product-img">
-                                <a href="/productdetail?id=<%= value._id%>"><div class="label-offer bg-red">Sale</div><img src="/img/<%= value.image[0] %>" alt="..."></a>
+                                <a href="/productdetail?id=<%= value._id%>"><div class="label-offer bg-red">Sale</div><img style="height: 250;" src="/img/<%= value.image[0] %>" alt="..."></a>
                             </div>
                             <div class="product-description">
                                 <h3><a href="/productdetail?id=<%= value._id%>"><%= value.productname%></a></h3>
@@ -600,7 +445,7 @@
     <script>
         function addToWishlist(prodId) {
             $.ajax({
-                url: '/add-to-wishlist',
+                url: '/addtowhishlist',
                 data: {
                     productId: prodId
                 },
@@ -656,7 +501,73 @@
             })
         }
     </script>
-
+    
+ <script>
+    let categoryId;
+    const searchInput = document.querySelector("#searchField");
+    searchInput.addEventListener("input", (event) => {
+      const search = event.target.value;
+      const searchValue = search;
+      toAjax();
+    });
+    // Filtering the products
+    // $("a.dropdown-item").click(function (e) {
+    //   e.preventDefault();
+    //   categoryId = $(this).data("category");
+    //   toAjax();
+    // });
+    $(document).ready(function () {
+      $("#button1").click(function () {
+        categoryId = $("#category :selected").text();
+        console.log(categoryId);
+        toAjax();
+      });
+    });
+    const sortSelect = document.getElementById("sort");
+    sortSelect.addEventListener("change", (event) => {
+      const selectedValue = event.target.value;
+      toAjax();
+    });
+    function toAjax(page) {
+      $.ajax({
+        url: "/viewProduct",
+        data: {
+          categoryId: categoryId,
+          sort: sortSelect.value,
+          page: page,
+          search: searchInput.value,
+          isRender: "true",
+        },
+        method: "get",
+        success: (response) => {
+          let html = "";
+          for (let i = 0; i < response.pageProducts.length; i++) {
+            html += `
+                    <div class="col-12 col-md-4 col-lg-3">
+                        <div class="box pt-3">
+                            <div class="card" style="width: 18rem;">
+                                <img height="250px" width="100%" src="/productImage/${response.pageProducts[i].image[0]}" alt="">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <span>
+                                            <h6 class="card-title">${response.pageProducts[i].productName}</h6>Rs.${response.pageProducts[i].price}
+                                        </span>
+                                        <p class="card-text">${response.pageProducts[i].description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+          }
+          document.getElementById("product").innerHTML = html;
+        },
+        fail: (error) => {
+          console.error(error);
+        },
+      });
+    }
+  </script>
 
 
 
@@ -682,3 +593,4 @@
 
 <!-- Mirrored from smartshop.websitelayout.net/shop-product-full-three-coulmn.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Jan 2023 16:00:39 GMT -->
 </html>
+<%- include('../layouts/footer.ejs') %>

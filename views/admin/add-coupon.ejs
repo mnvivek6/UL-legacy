@@ -419,74 +419,141 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form  action="/admin/addcoupon" method="post" >
-            
+          <form action="/admin/addcoupon" method="post">
+            <div class="form-group">
+              <label for="coupon_code">Coupon code</label>
+              <input type="text" class="form-control border pe-2 ps-2" id="coupon_code" placeholder="Coupon code" name="coupon_code">
+              <div class="invalid-feedback">Please enter a valid coupon code.</div>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fixedandpercentage" value="fixed" id="fixed_radio">
+              <label class="form-check-label" for="fixed_radio">Fixed</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fixedandpercentage" value="percentage" id="percentage_radio">
+              <label class="form-check-label" for="percentage_radio">Percentage</label>
+            </div>
+            <div class="form-group">
+              <label for="coupon_amount">Amount</label>
+              <input type="number" class="form-control border pe-2 ps-2" id="coupon_amount" placeholder="Coupon amount" name="couponamount">
+              <div class="invalid-feedback">Please enter a valid coupon amount.</div>
+            </div>        
+            <div class="row">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label for="">Coupon code</label>
-                  <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="coupon code" name="coupon_code" required>
+                  <label for="cart_amount">Min. cart amount</label>
+                  <input type="number" class="form-control border pe-2 ps-2" id="cart_amount" placeholder="Minimum cart amount" name="cartamount">
+                  <div class="invalid-feedback">Please enter a valid minimum cart amount.</div>
                 </div>
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="fixed" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Fixed
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="fixedandpercentage" value="percentage" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Percentage
-                    </label>
-                </div>
-
+              </div>
+              <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Amount</label>
-                    <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="coupon amount" name="couponamount" required>
+                  <label for="redeem_amount">Min. redeem amount</label>
+                  <input type="number" class="form-control border pe-2 ps-2" id="redeem_amount" placeholder="Minimum redeem amount" name="redeemamount">
+                  <div class="invalid-feedback">Please enter a valid minimum redeem amount.</div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="">Min.Cart amount</label>
-                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.cart amount" name="cartamount" required>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="">Min.Radeem amount</label>
-                            <input type="number" class="form-control border pe-2 ps-2" id="" placeholder="Min.radeem amount" name="radeemamount" required>
-                        </div>
-                    </div>
-                </div>
-                
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Start date</label>
-                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="start date" name="startdate" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Expiry date</label>
-                            <input type="date" class="form-control border pe-2 ps-2" id="" placeholder="expiry date" name="expirydate" required>
-                        </div>
-                    </div>
-                </div>
-
+              </div>
+            </div>          
+            <div class="row">
+              <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Usage limit</label>
-                    <input type="text" class="form-control border pe-2 ps-2" id="" placeholder="limit" name="usagelimit" required>
+                  <label for="start_date">Start date</label>
+                  <input type="date" class="form-control border pe-2 ps-2" id="start_date" name="startdate">
+                  <div class="invalid-feedback">Please enter a valid start date.</div>
                 </div>
-
-
-
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="expiry_date">Expiry date</label>
+                  <input type="date" class="form-control border pe-2 ps-2" id="expiry_date" name="expirydate">
+                  <div class="invalid-feedback">Please enter a valid expiry date.</div>
+                </div>
+              </div>
+            </div>          
+            <div class="form-group">
+              <label for="usage_limit">Usage limit</label>
+              <input type="text" class="form-control border pe-2 ps-2" id="usage_limit" placeholder="Usage limit" name="usagelimit">
+              <div class="invalid-feedback">Please enter a valid usage limit.</div>
+            </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                 </div>
               </form>
         </div>
+        <script>
+          function validateForm() {
+            // Get input fields
+            var couponCode = document.getElementById("coupon_code");
+            var couponAmount = document.getElementById("coupon_amount");
+            var cartAmount = document.getElementById("cart_amount");
+            var redeemAmount = document.getElementById("redeem_amount");
+            var startDate = document.getElementById("start_date");
+            var expiryDate = document.getElementById("expiry_date");
+            var usageLimit = document.getElementById("usage_limit");
+            
+            // Validate coupon code
+            if (couponCode.value.trim() == "") {
+              couponCode.classList.add("is-invalid");
+              return false;
+            }
+            
+            // Validate coupon type and amount
+            var couponType = document.querySelector('input[name="fixedandpercentage"]:checked');
+            if (!couponType) {
+              alert("Please select a coupon type.");
+              return false;
+            } else if (couponAmount.value.trim() == "" || isNaN(couponAmount.value)) {
+              couponAmount.classList.add("is-invalid");
+              return false;
+            }
+            
+            // Validate minimum cart amount
+            if (cartAmount.value.trim() == "" || isNaN(cartAmount.value)) {
+              cartAmount.classList.add("is-invalid");
+              return false;
+            }
+            
+            // Validate minimum redeem amount
+            if (redeemAmount.value.trim() == "" || isNaN(redeemAmount.value)) {
+              redeemAmount.classList.add("is-invalid");
+              return false;
+            }
+            
+            // Validate start date
+            if (startDate.value.trim() == "") {
+              startDate.classList.add("is-invalid");
+              return false;
+            }
+            
+            // Validate expiry date
+            if (expiryDate.value.trim() == "") {
+              expiryDate.classList.add("is-invalid");
+              return false;
+            } else if (expiryDate.value <= startDate.value) {
+              alert("Expiry date should be after start date.");
+              return false;
+            }
+            
+            // Validate usage limit
+            if (usageLimit.value.trim() == "" || isNaN(usageLimit.value)) {
+              usageLimit.classList.add("is-invalid");
+              return false;
+            }
+            
+            // If all fields are valid, submit form
+            return true;
+          }
+          
+          // Clear invalid class on input field when user starts typing
+          var inputs = document.querySelectorAll('input');
+          inputs.forEach(function(input) {
+            input.addEventListener('input', function() {
+              this.classList.remove('is-invalid');
+            });
+          });
+        </script>
+        
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Understood</button>

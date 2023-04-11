@@ -409,13 +409,13 @@
 
 
                              <% }else if (orderData[i].orderStatus == 'cancelled') {%>
-                                <a class="dropdown-item" href="/admin/<%=orderData[i]._id  %>"><i class="bx bx-trash me-1"></i>User Cancelled</a >
+                                <a class="dropdown-item" href=""><i class="bx bx-trash me-1"></i>User Cancelled</a >
 
                             <% }else if (orderData[i].orderStatus == 'return requested') {%>
-                                <a class="dropdown-item" href="/admin/<%=orderData[i]._id  %>"><i class="bx bx-trash me-1"></i>Return Accept</a >
-                                    <a class="dropdown-item" href="/admin/<%=orderData[i]._id  %>"><i class="bx bx-trash me-1"></i>Return Cancelled</a >
+                                <a class="dropdown-item" href="/admin/returnaccept/<%=orderData[i]._id  %>"><i class="bx bx-trash me-1"></i>Return Accept</a >
+                                    <a class="dropdown-item" href="/admin/rejectreturn/<%=orderData[i]._id  %>"><i class="bx bx-trash me-1"></i>Return Cancelled</a >
 
-                            <% }else if (orderData[i].orderStatus == 'Return Accept'||orderData[i].orderStatus == 'Return Cancelled' ) {%>
+                            <% }else if (orderData[i].orderStatus == 'delivered' ) {%>
                                 
                           <%  }%>
                                 <!-- <a href="/admin/productupdate">product update</a> -->

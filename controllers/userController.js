@@ -17,6 +17,7 @@ const { default: mongoose } = require('mongoose');
 const Coupon = require('../models/couponModel')
 const Razorpay= require('razorpay')
 const crypto = require('crypto')
+const Banner = require('../models/bannerModel')
 
 
 require('dotenv').config()
@@ -216,13 +217,16 @@ const loadhome = async (req, res) => {
 
     try {
         const category = await Category.find()
-
+        const BannerData = await Banner.find({type:'first carosal'})
+        const Middlebanner = await Banner.find({type:'middle offer'})
+        const lastbanner = await Banner.find({type:'Last One'})
+        console.log(BannerData);
         const products = await Product.find()
         const user = true
 
         // console.log(products);
-        console.log("load homepage");
-        res.render('userhome', { products, category, user })
+       
+        res.render('userhome', { products, category, user,BannerData,Middlebanner,lastbanner })
     } catch (error) {
         console.log(error.message);
     }
@@ -231,12 +235,14 @@ const homepage = async (req, res) => {
     try {
         if (req.session.user_id) {
             const category = await Category.find()
-
+            const BannerData = await Banner.find({type:'first carosal'})
+            const Middlebanner = await Banner.find({type:'middle offer'})
+            const lastbanner = await Banner.find({type:'Last One'})
             const products = await Product.find()
             const user = false
             // console.log(products);
             console.log("loading userhome");
-            res.render('userhome', { products, category, user })
+            res.render('userhome', { products, category, user ,BannerData,Middlebanner,lastbanner })
         }
 
     } catch (error) {
@@ -421,8 +427,10 @@ const productdetail = async (req, res) => {
 
         const proid = req.query.id
         const product = await Product.findOne({ _id: proid })
+        const products= await Product.findOne()
+        const user= true
         console.log(product);
-        res.render('productdetails', { product })
+        res.render('productdetails', { product,products,user })
     } catch (error) {
         console.log(error.message);
     }
@@ -434,8 +442,8 @@ const userProfile = async (req, res) => {
 
         const userId = await req.session.user_id
         const userData = await User.findOne({ _id: req.session.user_id })
-
-        res.render('userprofile', { userData })
+        const user= true
+        res.render('userprofile', { userData,user })
 
     } catch (error) {
         console.log(error.message);
@@ -503,9 +511,9 @@ const showaddress = async (req, res) => {
     try {
         // const userData = await User.findOne({_id:req.session.user_id})
         const address = await Address.findOne({ userId: req.session.user_id })
+        const user = true
 
-
-        res.render('address', { address })
+        res.render('address', { address,user })
     } catch (error) {
         console.log(error.message);
         console.log('error from showaddress');
@@ -584,19 +592,19 @@ const DeleteAddress = async (req, res) => {
 const AddTowishlist = async (req, res) => {
 
     try {
-        console.log('hi');
+      
         const productId = req.body.productId
-        console.log(productId);
+        
 
         let exist = await User.findOne({ id: req.session.user_id, 'whishlist.product': productId })
-        console.log(exist);
+      
 
         if (exist) {
             res.json({ status: false })
         } else {
-            console.log('else gotit');
+           
             const product = await Product.findOne({ _id: req.body.productId })
-            console.log("product");
+          
             console.log(product);
 
             const _id = req.session.user_id
@@ -666,9 +674,10 @@ const loadCheckout = async (req, res) => {
         const userId = req.session.user_id
         const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
         console.log(userData);
+        const user= true
         const address = await Address.findOne({ userId: userId })
 
-        res.render('checkout', { userData, address })
+        res.render('checkout', { userData, address,user })
     } catch (error) {
         console.log(error.message);
     }
@@ -776,8 +785,36 @@ const placeorder = async (req, res) => {
             .then(async (data) => {
                 const orderId = data._id.toString()
                 if (payment == 'COD') {
+                    const userData = await User.findOne({_id:userId})
+                    const cartData = userData.cart
+                    for( let i=0; i< cartData.length;i++){
+                        const productStock = await Product.findById(cartData[i].productId);
+                        productStock.quantity -= cartData[i].qty;
+                        await productStock.save();
+                    }
                     await User.updateOne({ _id: userId }, { $set: { cart: [], cartTotalPrice: 0 } })
                     res.json({ status: true })
+
+                }else if (payment == 'WALLET') {
+
+                    const userData = await User.findOne({_id:userId})
+                    if (userData.wallet >= total) {
+                        const cartData = userData.cart
+                        for(let i = 0; i<cartData.length; i++){
+                            const productStock = await Product.findById(cartData[i].productId)
+                            productStock.quantity -= cartData[i].qty
+                            await productStock.save()
+                        }
+                        const walletBalence = userData.wallet - userData.cartTotalPrice;
+                        await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
+                        await Order.updateOne({_id:orderId},{$set:{paymentMethod:'Wallet',orderStatus:'placed'}})
+                    
+                        const wallet = User.wallet;
+                        res.json({ status: true });
+                    } else {
+                      res.json({ walletBalance: true });
+                    }
+                    
                 }else{
                     var instance = new Razorpay({
                         key_id: process.env.KEY_ID,
@@ -809,7 +846,8 @@ const ordersuccess = async (req, res) => {
 
         const userData = await User.findOne({ _id: userId })
         const orderData = await Order.findOne({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } }).sort({ createdAt: -1 }).limit(1)
-        res.render('orderconfirmation', { orderData })
+        const user = true
+        res.render('orderconfirmation', { orderData,user })
 
     } catch (error) {
         console.log(error.message);
@@ -822,8 +860,8 @@ const orderlist = async (req, res) => {
         const userId = req.session.user_id
 
         const orderData = await Order.find({ userId: userId }).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } }).sort({Date:-1})
-
-        res.render('orderlist', { orderData })
+        const user= true
+        res.render('orderlist', { orderData,user })
     } catch (error) {
         console.log(error.message);
     }
@@ -850,7 +888,8 @@ const productlist = async (req, res) => {
     try {
         
         const products= await Product.find()
-        res.render('productlist',{products})
+        const user= true
+        res.render('productlist',{products,user})
 
     } catch (error) {
         console.log(error.message);
@@ -1027,90 +1066,6 @@ const whishlistTocart = async (req, res) => {
 
 }
 
-const viewProduct = async (req, res) => {
-    try {
-        const category = req.query.categoryId;
-        const search = req.query.search || "";
-        const sort = req.query.sort || "";
-        console.log(category + " - " + search + " - " + sort);
-        let isRender = false;
-
-        if (req.query.isRender) {
-            isRender = true;
-        }
-
-        const searchData = new String(search).trim();
-
-        const query = {
-            is_delete: false,
-        };
-
-        let sortQuery = { price: 1 };
-        if (sort == "high-to-low") {
-            sortQuery = { price: -1 };
-        }
-
-        if (search) {
-            query["$or"] = [
-                { productName: { $regex: ".*" + searchData + ".*", $options: "i" } },
-                { description: { $regex: searchData, $options: "i" } },
-            ];
-        }
-
-        if (category) {
-            query["$or"] = [{ mainCategory: category }];
-        }
-
-        const product = await Products.find(query).sort(sortQuery);
-
-        //console.log(product);
-
-        const productsPerPage = 5;
-        const page = req.query.page || 1;
-        const startIndex = (page - 1) * productsPerPage;
-        const endIndex = startIndex + productsPerPage;
-        const pageProducts = product.slice(startIndex, endIndex);
-        const totalPages = Math.ceil(product.length / productsPerPage);
-        // console.log(
-        //   page +
-        //     " - " +
-        //     startIndex +
-        //     " - " +
-        //     endIndex +
-        //     " - " +
-        //     pageProducts +
-        //     " - " +
-        //     totalPages
-        // );
-        // -----------Category finding
-        const categoryData = await Category.find({});
-
-        // ----------------------
-
-        if (isRender == true) {
-            res.json({
-                pageProducts,
-                totalPages,
-                currentPage: parseInt(page, 10),
-                product,
-                // cartCount,
-                // wishListCount
-            });
-        } else {
-            res.render("products", {
-                pageProducts,
-                totalPages,
-                currentPage: parseInt(page, 10),
-                product,
-                categoryData,
-            });
-        }
-    } catch (error) {
-        console.log(error.message);
-        console.log("------------------Product Page Section-----------");
-    }
-}
-
 
 const returnOrder = async(req, res)=>{
 
@@ -1130,7 +1085,24 @@ const returnOrder = async(req, res)=>{
     }
 }
 
-
+const search_product = async (req, res) => {
+    try {
+      console.log('log from searchproduct');
+      let user;
+      if (req.session.user) {
+        user = true;
+      } else {
+        user = true;
+      }
+      const input = req.body.s;
+      const products = await Product.find({ productname: { $regex: input, $options: 'i' } }).populate('category');
+      const coupon = await Coupon.find({ active: true });
+      const category = await Category.find();
+      res.render('productlist', { category, products, user, name: 'search', coupon });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
 
 // exporting usercontroller module   
@@ -1170,8 +1142,7 @@ module.exports = {
     couponApply,
     verifyPayment,
     whishlistTocart,
-    viewProduct,
-    returnOrder 
-   
+    returnOrder,
+    search_product  
 
 }

@@ -11,10 +11,10 @@
     <meta name="description" content="Smartshop - Multipurpose eCommerce Template + Admin" />
 
     <!-- title  -->
-    <title>Smartshop - Multipurpose eCommerce Template + Admin</title>
+    <title>UL</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="user/img/logos/favicon.png">
+    <link rel="shortcut icon" href="/user/img/logos/ULfavicon.jpg">
     <link rel="apple-touch-icon" href="user/img/logos/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="72x72" href="user/img/logos/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="user/img/logos/apple-touch-icon-114x114.png">
@@ -86,20 +86,26 @@
                                     <!-- menu area -->
                                     <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
 
-                                        <li><a href="/">Home</a>
-                                           
+                                        <li><a href="/userhome">Home</a>
+                                          
                                         </li>
-                                        <li><a href="#">Pages</a>
-                                           
+                                      
                                         </li>
                                         <li><a href="#">Account</a>
                                             <ul>
-                                                <li><a href="/login">Login / Register</a></li>
-                                                <li><a href="adfs">Password Recovery</a></li>
+                                                <%if(user == false){%>
+                                          
+                                                    <li><a href="/logout">logout</a></li>
+                                            <%}else{%>
+                                                <li><a href="/login">login</a>
+                                                
+                                               
+                                            <%}%>
+                                                <!-- <li><a href="adfs">Password Recovery</a></li> -->
                                                 <li><a href="/orderlist">Orders List</a></li>
                                                 <li><a href="/whishlist">Wishlist</a></li>
                                                 <li><a href="/userprofile">Profile Page</a></li>
-                                                <li><a href="">Contact / Shipping Address</a></li>
+                                                <!-- <li><a href="account-address.html">Contact / Shipping Address</a></li> -->
                                                 <!-- <li><a href="account-tickets.html">My Tickets</a></li>
                                                 <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
                                             </ul>
@@ -108,26 +114,16 @@
                                         
                                         <li><a href="#">Shop</a>
                                             <ul>
-                                                <li><a href="shop-categories.html">Shop Categories</a></li>
-                                                <li><a href="shop-product-grid.html">Product Grid</a></li>
-                                                <li><a href="shop-product-list.html">Product List</a></li>
-                                                <li><a href="shop-product-full-three-coulmn.html">Product Three Coulmns</a></li>
-                                                <li><a href="shop-product-full-four-coulmn.html">Product Four Coulmns</a></li>
-                                                <li><a href="shop-product-detail.html">Product Detail</a></li>
-                                                <li><a href="shop-cart.html">Shop Cart</a></li>
-                                                <li><a href="shop-checkout-address.html">Shop Checkout</a>
-                                                    <ul>
-                                                        <li><a href="shop-checkout-address.html">Address</a></li>
-                                                        <li><a href="shop-checkout-shipping.html">Shipping</a></li>
-                                                        <li><a href="shop-checkout-payment.html">Payment</a></li>
-                                                        <li><a href="shop-checkout-review.html">Review</a></li>
-                                                        <li><a href="checkout-complete.html">Complete</a></li>
-                                                    </ul>
-                                                </li>
+                                                <li><a href="/shop">Shop Categories</a></li>
                                             </ul>
                                         </li>
-                                        
+                                       
                                     </ul>
+
+
+
+
+
                                     <!-- end menu area -->
 
                                     <!-- attribute navigation -->
@@ -168,76 +164,6 @@
         
         <!-- CATEGORY MP-MENU
         ================================================== -->
-        <div id="mp-menu" class="mp-menu">
-            <div class="mp-level">
-                <h2>All Categories</h2>
-                <ul>
-                    <li class="mp-has-sub">
-                        <a href="#">Devices</a>
-                        <div class="mp-level">
-                            <h2>Devices</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                
-                                
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Beauty &amp; Health</a>
-                        <div class="mp-level">
-                            <h2>Beauty &amp; Health</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li><a href="#">Grooming</a></li>
-                                <li><a href="#">Luxury Beauty</a></li>
-                                <li><a href="#">Make-up</a></li>
-                                <li><a href="#">Personal Care</a></li>
-                                <li><a href="#">Nutrition Care</a></li>
-                                <li><a href="#">Health Care</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mp-has-sub">
-                        <a href="#">Store</a>
-                        <div class="mp-level">
-                            <h2>Store</h2>
-                            <a class="mp-back" href="#">back</a>
-                            <ul>
-                                <li class="mp-has-sub">
-                                    <a class="icon icon-t-shirt" href="#">Clothes</a>
-                                    <div class="mp-level">
-                                        <h2 class="icon icon-t-shirt">Clothes</h2>
-                                        <a class="mp-back" href="#">back</a>
-                                        <ul>
-                                            <li>
-                                                <a class="icon icon-female" href="#">Women's Clothing</a>
-                                            </li>
-                                            <li>
-                                                <a class="icon icon-male" href="#">Men's Clothing</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="icon icon-diamond" href="#">Watches</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-music" href="#">Shoes</a>
-                                </li>
-                                <li>
-                                    <a class="icon icon-food" href="#">Jewellery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a href="#">Books &amp; Audible</a></li>
-                    <li><a href="#">Movies &amp; Games</a></li>
-                </ul>
-
-            </div>
-        </div>
-
         <!-- PAGE TITLE
         ================================================== -->
        
@@ -286,7 +212,7 @@
                                     <td class="text-start">
                                         <a href="#"><%= cart.productId.productname %></a>
                                         <span class="text-uppercase d-block">SKU: 290397</span>
-                                        <a href="#" class="display-31"><i class="fas fa-edit"></i> Edit</a>
+                                        
                                     </td>
                                     <td class="text-start">
                                         <%= cart.productId.price %>

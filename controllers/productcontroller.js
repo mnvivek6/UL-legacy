@@ -205,18 +205,15 @@ const ListCart = async (req, res) => {
         const usercart = await User.aggregate([{ $match: { _id: temp } }, { $unwind: '$cart' }, { $group: { _id: null, totalcart: { $sum: '$cart.productTotalprice' } } }])
        console.log(usercart,'usercart');
         if (usercart.length > 0) {
-
-            const cartTotal = usercart[0].totalcart
-             console.log('cartTotal=',cartTotal);
-            const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })
-            console.log(cartTotalUpdate);
-
+            const cartTotal = usercart[0].totalcart            
+            const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })         
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
-console.log(userData,"load cart userDAta");
-            res.render('cartitemslisting', { userData })
+            const user = true
+            res.render('cartitemslisting', { userData,user })
         } else {
             const userData = await User.findOne({ userId })
-            res.render('cartitemslisting', { userData })
+            const user = true
+            res.render('cartitemslisting', { userData,user })
         }
     } catch (error) {
         console.log(error.message);
@@ -291,8 +288,6 @@ const cartquantityupdation = async (req, res) => {
         console.log(error.message);
     }
 }
-
-
 
 
 module.exports = {
