@@ -1023,13 +1023,13 @@ const whishlistTocart = async (req, res) => {
     try {
         
         const productId = req.body.productId
-        console.log(productId);
+       
         const _id =  req.session.user_id
-        console.log(_id);
+      
         let exist = await User.findOne({ id:_id, 'cart.productId': productId })
 
         if (exist) {
-            console.log(exist);
+            console.log(exist,"hi we got exist here");
             const user = await User.findOne({ _id: req.session.user_id })
             const index = await user.cart.findIndex(data => data.productId._id == req.body.productId)
             user.cart[index].qty += 1
@@ -1061,7 +1061,7 @@ const whishlistTocart = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
-        console.log('error from addto cart');
+        console.log('error from addto whislist');
     }
 
 }
@@ -1087,7 +1087,7 @@ const returnOrder = async(req, res)=>{
 
 const search_product = async (req, res) => {
     try {
-      console.log('log from searchproduct');
+     
       let user;
       if (req.session.user) {
         user = true;

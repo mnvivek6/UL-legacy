@@ -118,7 +118,7 @@ console.log(cod_sum);
         // console.log(confirmedCount);
         const cancelledCount = await Order.find({ orderStatus: "cancelled" }).count()
         // console.log(cancelledCount);
-        const returnedCount = await Order.find({ orderStatus: "Return" }).count()
+        const returnedCount = await Order.find({ orderStatus: "Return Accepted" }).count()
         // console.log(returnedCount);
 
 
@@ -658,8 +658,9 @@ const OrderReturnCancelled = async (req, res) => {
 const salesReport = async (req, res) => {
 
     try {
-
-        res.render('Salesreport')
+        const salesData = await Order.find({ orderStatus: 'delivered' }).sort({ orderDate: -1 }).limit(7);
+      
+    res.render('Salesreport',{salesData})
 
     } catch (error) {
         console.log(error.message);
@@ -671,13 +672,9 @@ const salesReport = async (req, res) => {
 const showSalesReprot = async (req, res) => {
     try {
 
-
         const startDate = new Date(req.body.startDate)
-        const endDate = new Date(req.body.endDate)
-        console.log(endDate); const saleData = await Order.find({
-            orderStatus: 'delivered',
-            date: { $gte: startDate, $lte: endDate }
-
+        const endDate = new Date(req.body.endDate)     
+         const saleData = await Order.find({ orderStatus: 'delivered', date: { $gte: startDate, $lte: endDate }
         })
         if (saleData) {
             res.render('salesreportTable', { saleData })
@@ -692,7 +689,7 @@ const showSalesReprot = async (req, res) => {
 const acceptReturn = async ( req, res)=>{
 
     try {
-        id = req.query.id
+        id = req.params.id
         const changeStatus = await Order.findByIdAndUpdate({_id:id},{$set:{orderStatus:"Return Accepted"}})
         const orderData = await Order.findOne({_id:id})
         if (orderData.paymentMethod == 'card') {

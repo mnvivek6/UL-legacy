@@ -387,16 +387,19 @@
 <body>
 	<h1>SALES REPORT</h1>
 	<form action="/admin/showsalesreport" method="POST">
+   
 		<label for="start_date">Start Date:</label>
 		<input type="date" id="startDate" name="startDate">
 
 		<label for="end_date">End Date:</label>
 		<input type="date" name="endDate" >
-
+   
 		<input type="submit" value="Generate Report">
+    
 	</form>
 
 	<table>
+    <h4>DAILY SALES</h4>
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -407,23 +410,29 @@
 			</tr>
 		</thead>
     
-      
-  
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2">Total:</td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tfoot>
+    <% salesData.sort((a, b) => b.date - a.date).forEach((value,index)=>{%>
+
+      <tbody>
+        <tr>
+          <td><%= value.date.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'})%></td>
+          <td>
+                    <p class="address" style="color: black;"> <b>
+                        <%=value.address.fullName %><br>
+                        <%= value.address.mobileNumber %><br>
+                        <%= value.address.houseAddress %>, <%= value.address.streetAddress %> <br>
+                        <%= value.address.landMark%> <br>
+                        <%= value.address.cityName %>, <%= value.address.state %> - <%= value.address.pincode %>
+                      </p>
+                    </b>
+                </td>
+          <td><%= value.paymentMethod %></td>
+                <td style="color: green;"><b><%= value.orderStatus%></b></td>
+                <td style="color: green;"><b>₹<%= value.totalAmount %></b></td>
+        </tr>
+      </tbody>
+    <%})%>
+    
+		
 	</table>
   
 </body>

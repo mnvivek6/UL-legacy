@@ -43,7 +43,7 @@ const addproduct = async (req, res) => {
        
         // console.log(productname);
         if (productname==''||quantity==''||price==''||description==''||category== ''||req.files=='') {
-            console.log("ii if");
+           console.log();
             const category = await Category.find({})
             res.render('add-product',{message:'please fill the field', category })
         }else{
@@ -151,36 +151,25 @@ const editproduct = async (req, res) => {
 const AddtoCart = async (req, res) => {
 
     try {
-        console.log('hi');
+       
         const productId = req.body.productId
-        console.log(productId);
+        
         const _id = await req.session.user_id
-        console.log(_id);
+       
         let exist = await User.findOne({ id: session.user_id, 'cart.productId': productId })
 
         if (exist) {
-            console.log(exist);
-            const user = await User.findOne({ _id: req.session.user_id })
-            const index = await user.cart.findIndex(data => data.productId._id == req.body.productId)
-            user.cart[index].qty += 1
-            user.cart[index].productTotalprice = user.cart[index].qty * user.cart[index].Price
-            await user.save()
-            res.send(true)
-            console.log(user);
+           
+            res.send(false)
+           
         } else {
             const product = await Product.findOne({ _id: req.body.productId })
-            console.log("knhdsdho" + product.price);
-
+           
             const userData = await User.findOne({ _id })
 
             const result = await User.updateOne({ _id }, { $push: { cart: { productId: product._id, qty: 1, price: product.price, productTotalprice: product.price } } })
-
-            console.log(result);
+         
             if (result) {
-                console.log('hi');
-
-                console.log('hi');
-
                 res.json({ status: true })
                 res.redirect('/userhome')
 

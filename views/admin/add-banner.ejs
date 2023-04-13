@@ -433,13 +433,13 @@
                       </div>
                       <div class="modal-body">
                         <form action="/admin/inserbanner" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-  <div class="mb-3">
-    <label for="">Select Banner type</label>
-    <select class="form-select" id="banner-type" name="type">
-      <option value="first-carosal">First Carosal</option>
-      <option value="middle-offer">Middle Offer</option>
-      <option value="last-one">Last One</option>
-    </select>
+               <div class="mb-3">
+                     <label for="">Select Banner type</label>
+                       <select class="form-select" id="banner-type" name="type">
+                           <option value="first-carosal">First Carosal</option>
+                           <option value="middle-offer">Middle Offer</option>
+                           <option value="last-one">Last One</option>
+                       </select>
     <span id="banner-type-error" class="error-message" style="color: red;" ></span>
   </div>
   <div class="mb-3">
@@ -502,4 +502,4 @@
                   </div>
                 </div>
 
-        <%- include('../layouts/adminfooter.ejs') %>
+        <%- include('../layouts/adminfooter.ejs') %> 

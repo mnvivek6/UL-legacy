@@ -333,12 +333,7 @@
           </nav>
 
 
-       
-
-
-
-
-        
+             
 <div class="content-wrapper">
   <!-- Content -->
   
@@ -348,93 +343,123 @@
     <!-- Basic Layout & Basic with Icons -->
     <div class="row">
       <!-- Basic Layout -->
-      <%if (typeof message!== 'undefined'){%>
-<p style="color: red;">please fill in the blank field</p>
-      <%}else{%>
-        <%}%>
+    
       <div class="col-xxl">
         <div class="card mb-4">
           <div class="card-body">
-            <form method="post" action="/admin/add-product" enctype="multipart/form-data">
+            <form method="post" action="/admin/add-product" enctype="multipart/form-data" onsubmit="validate(event)">
+
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
-                <p id="productname1"></p>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="basic-default-name" name="name" placeholder="" />
+                  <p class="error" id="productname-error"></p>
                 </div>
               </div>
-              <div class="row mb-2">
-                 <div class="mb-2">
-                <!-- <label for="defaultSelect" class="form-label">Category</label> -->
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label" for="basic-default-phone">Description</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="description" id="basic-default-phone" class="form-control phone-mask" aria-describedby="basic-default-phone" />
-                  </div>
-                </div>
-                  <!-- <select name="category" id="defaultSelect" class="form-select">
-                    <option>Default select</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select> -->
-                </div>
-              </div>
+            
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="basic-default-email">Quantity</label>
                 <div class="col-sm-10">
                   <div class="input-group input-group-merge">
-                    <input
-                      type="number"
-                      name="quantity"
-                      id="basic-default-email"
-                      class="form-control"
-                      placeholder="john.doe"
-                      aria-label="john.doe"
-                      aria-describedby="basic-default-email2"
-                    />
-                  </div>
+                    <input type="number" name="quantity" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2" />
+                   
+                  </div> <p class="error" id="quantity-error"></p>
                 </div>
               </div>
+            
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="basic-default-phone">Price</label>
                 <div class="col-sm-10">
                   <input type="number" name="price" id="basic-default-phone" class="form-control phone-mask" aria-describedby="basic-default-phone" />
+                  <p class="error" id="price-error"></p>
                 </div>
               </div>
-              
+            
               <div class="mb-3">
-                <label for="exampleFormControlSelect1" class="form-label">category</label>
+                <label for="exampleFormControlSelect1" class="form-label">Category</label>
                 <div class="col-sm-10">
                   <select id="Select Category" name="category" class="form-select">
-                    <%
-                   if(category.length > 0){
-
-                  for(let i=0; i<category.length; i++){
-                      %>
-                    <option  value <%= category[i]._id %> ><%= category[i].name %></option>
+                    <% if(category.length > 0){ for(let i=0; i<category.length; i++){ %>
+                    <option value="<%= category[i]._id %>"><%= category[i].name %></option>
                     <% }} %>
                   </select>
+                  <p class="error" id="category-error"></p>
                 </div>
+              </div>
+            
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-message">image</label>
-                
+                <label class="col-sm-2 col-form-label" for="basic-default-message">Image</label>
                 <div class="col-sm-10">
                   <input type="file" name="image" id="basic-default-phone" class="form-control phone-mask" multiple accept="image/jpeg,image/png,image/webpeg" />
+                  <p class="error" id="image-error"></p>
                 </div>
               </div>
+            
               <div class="row justify-content-end">
                 <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary" onsubmit="validate(event)">Send</button>
+                  <button type="submit" class="btn btn-primary">Send</button>
                 </div>
               </div>
+            
             </form>
-           
+            
           </div>
         </div>
       </div>
     </div>
   </div>
  
+<script>
+  function validate(event) {
+  event.preventDefault();
 
+  let productName = document.getElementById("basic-default-name").value.trim();
+  let quantity = document.getElementById("basic-default-email").value.trim();
+  let price = document.getElementById("basic-default-phone").value.trim();
+  let category = document.getElementById("Select Category").value.trim();
+  let image = document.getElementById("basic-default-phone").value.trim();
+  
+  let errors = [];
+
+  if (productName === "") {
+    errors.push("Please enter a product name.");
+    document.getElementById("productname-error").innerHTML = "Please enter a product name.";
+  } else {
+    document.getElementById("productname-error").innerHTML = "";
+  }
+
+  if (quantity === "") {
+    errors.push("Please enter a quantity.");
+    document.getElementById("quantity-error").innerHTML = "Please enter a quantity.";
+  } else {
+    document.getElementById("quantity-error").innerHTML = "";
+  }
+
+  if (price === "") {
+    errors.push("Please enter a price.");
+    document.getElementById("price-error").innerHTML = "Please enter a price.";
+  } else {
+    document.getElementById("price-error").innerHTML = "";
+  }
+
+  if (category === "") {
+    errors.push("Please select a category.");
+    document.getElementById("category-error").innerHTML = "Please select a category.";
+  } else {
+    document.getElementById("category-error").innerHTML = "";
+  }
+
+  if (image === "") {
+    errors.push("Please select an image.");
+    document.getElementById("image-error").innerHTML = "Please select an image.";
+  } else {
+    document.getElementById("image-error").innerHTML = "";
+  }
+  
+  if (errors.length === 0) {
+    event.target.submit();
+  }
+}
+
+</script>
   <%- include('../layouts/adminfooter.ejs') %>

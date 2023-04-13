@@ -362,7 +362,8 @@
                       <% if (typeof orderData!=='undifined') {%>
                         
                     
-                     <% for(let i = 0; i<= orderData.length-1;i++){ %>
+                        <% orderData.sort((a, b) => b.date - a.date); for(let i = 0; i<= orderData.length-1;i++){ %>
+
                       <tr>
                       
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%= i+1 %></strong></td>
