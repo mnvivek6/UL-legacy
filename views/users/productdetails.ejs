@@ -220,7 +220,11 @@
 
                             </div>
                             <div class="mb-4">
-                                <span class="me-3 display-26 font-weight-600 offer-price"></span>
+                                <% if (product.quantity>0) {%>
+                                    <% }else{%>
+                                        <span class="me-3 display-26 font-weight-600 " style="color: red;">OUT OF STOCK</span>
+                                <%} %>
+                               
                                 <span class="display-26 font-weight-700 text-primary">₹<%=product.price%></span>
                             </div>
 
@@ -513,100 +517,30 @@
                 </div>
 
                 <div class="product-grid-slide owl-carousel owl-theme">
-                    <div class="product-grid">
-                        <div class="product-img">
-                            <a href="shop-product-detail.html">
-                                <div class="label-offer bg-red">Sale</div><img src="user/img/products/product-grid/product-01.jpg" alt="..."></a>
-                        </div>
-                        <div class="product-description">
-                            <h3><a href="shop-product-detail.html">Smart Digital Watch</a></h3>
-                            <h4 class="price">
-                                                        <span class="regular-price line-through">$99.00</span>
-                                                        <span class="offer-price">$90.00</span>
-                                                    </h4>
-                        </div>
-                        <div class="product-buttons">
-                            <ul class="ps-0">
-                                <li><a href="#" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#" class="butn-style2" title="Add to Cart">Add to Cart</a></li>
-                                <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-grid">
-                        <div class="product-img">
-                            <a href="shop-product-detail.html"><img src="user/img/products/product-grid/product-02.jpg" alt="..."></a>
-                        </div>
-                        <div class="product-description">
-                            <h3><a href="shop-product-detail.html">Desktop Speakers</a></h3>
-                            <h4 class="price">
-                                                        <span class="offer-price">$29.00</span>
-                                                    </h4>
-                        </div>
-                        <div class="product-buttons">
-                            <ul class="ps-0">
-                                <li><a href="#" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#" class="butn-style2" title="Add to Cart">Add to Cart</a></li>
-                                <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-grid">
-                        <div class="product-img">
-                            <a href="shop-product-detail.html">
-                                <div class="label-offer left-align bg-primary">New</div><img src="user/img/products/product-grid/product-03.jpg" alt="..."></a>
-                        </div>
-                        <div class="product-description">
-                            <h3><a href="shop-product-detail.html">Wireless Controller</a></h3>
-                            <h4 class="price">
-                                                        <span class="regular-price line-through">$57.00</span>
-                                                        <span class="offer-price">$55.00</span>
-                                                    </h4>
-                        </div>
-                        <div class="product-buttons">
-                            <ul class="ps-0">
-                                <li><a href="#" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#" class="butn-style2" title="Add to Cart">Add to Cart</a></li>
-                                <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-grid">
-                        <div class="product-img">
-                            <a href="shop-product-detail.html"><img src="user/img/products/product-grid/product-04.jpg" alt="..."></a>
-                        </div>
-                        <div class="product-description">
-                            <h3><a href="shop-product-detail.html">Wireless Headset</a></h3>
-                            <h4 class="price">
-                                                        <span class="offer-price">$28.00</span>
-                                                    </h4>
-                        </div>
-                        <div class="product-buttons">
-                            <ul class="ps-0">
-                                <li><a href="#" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#" class="butn-style2" title="Add to Cart">Add to Cart</a></li>
-                                <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product-grid">
-                        <div class="product-img">
-                            <a href="shop-product-detail.html"><img src="user/img/products/product-grid/product-05.jpg" alt="..."></a>
-                        </div>
-                        <div class="product-description">
-                            <h3><a href="shop-product-detail.html">Hp Wireless Printer</a></h3>
-                            <h4 class="price">
-                                                    <span class="offer-price">$90.00</span>
-                                                </h4>
-                        </div>
-                        <div class="product-buttons">
-                            <ul class="ps-0">
-                                <li><a href="#" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#" class="butn-style2" title="Add to Cart">Add to Cart</a></li>
-                                <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <% products.forEach((value)=>{%>
+                 
+                 <div class="product-grid">
+                     <div class="product-img">
+                         <a href="/productDetails?id=<%= value._id %>">
+                             <div class="label-offer bg-red">Sale</div><img src="/img/<%=value.image[0] %>" alt="..."></a>
+                     </div>
+                     <div class="product-description">
+                         <h3><a href="/productDetails?id=<%= value._id %>"><%= value.productname%></a></h3>
+                         <h4 class="price">
+                                                   
+                                                     <span class="offer-price">$<%= value.price%></span>
+                                                 </h4>
+                     </div>
+                     <div class="product-buttons">
+                         <ul class="ps-0">
+                             <li><a onclick="addToWishlist('<%= value._id%>')" class="btn-link" title="Add To Wishlist"><i class="far fa-heart"></i></a></li>
+                             <li><a onclick="AddToCart('<%= value._id%>')"  class="butn-style2" title="Add to Cart">Add to Cart</a></li>
+                             <li><a href="#" class="btn-link" title="Add To Compare"><i class="fas fa-random"></i></a></li>
+                         </ul>
+                     </div>
+                 </div>
+                 <% })%>
+                       
                 </div>
                 <!-- end related product -->
 

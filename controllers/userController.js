@@ -427,9 +427,10 @@ const productdetail = async (req, res) => {
 
         const proid = req.query.id
         const product = await Product.findOne({ _id: proid })
-        const products= await Product.findOne()
+        const products= await Product.find()
+
         const user= true
-        console.log(product);
+        console.log(products,'here we got aall teh jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdfasdfsdfdsfdsf');
         res.render('productdetails', { product,products,user })
     } catch (error) {
         console.log(error.message);
@@ -759,7 +760,7 @@ const placeorder = async (req, res) => {
 
         const payment = req.body.payment
         console.log(payment);
-        let status = payment === ' COD' ? 'placed' : 'pending'
+        let status = payment === ' COD' ? 'placed':'pending';
         let orderObj = {
             userId: userId,
             address: {
@@ -806,7 +807,7 @@ const placeorder = async (req, res) => {
                             await productStock.save()
                         }
                         const walletBalence = userData.wallet - userData.cartTotalPrice;
-                        await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
+                        await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0, wallet:walletBalence}})
                         await Order.updateOne({_id:orderId},{$set:{paymentMethod:'Wallet',orderStatus:'placed'}})
                     
                         const wallet = User.wallet;
@@ -1102,9 +1103,38 @@ const search_product = async (req, res) => {
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }
 
 
+  const shopcategory = async(req, res)=>{
+
+    try {
+
+        const Id = req.query.id
+       const user= true
+        console.log(Id,"here i got");
+        res.render('shopfullsleeve',{user})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
+
+  const singelorderdowload = async ( req, res)=>{
+
+    try {
+
+        Id = req.query.id
+        console.log(Id);
+       const orderData = await Order.findById({_id:Id}).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } })
+       console.log(orderData);
+       const user= false
+        res.render('invoicepage',{orderData,user})
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+  }
 // exporting usercontroller module   
 module.exports = {
     loadRegister,
@@ -1143,6 +1173,7 @@ module.exports = {
     verifyPayment,
     whishlistTocart,
     returnOrder,
-    search_product  
-
+    search_product,
+    shopcategory,
+    singelorderdowload
 }

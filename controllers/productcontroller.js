@@ -198,11 +198,11 @@ const ListCart = async (req, res) => {
             const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })         
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
             const user = true
-            res.render('cartitemslisting', { userData,user })
+            res.render('cartitemslisting',{ userData,user })
         } else {
             const userData = await User.findOne({ userId })
             const user = true
-            res.render('cartitemslisting', { userData,user })
+            res.render('cartitemslisting',{ userData,user })
         }
     } catch (error) {
         console.log(error.message);

@@ -1,4 +1,6 @@
 <%- include('../layouts/adminheader.ejs') %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -347,7 +349,7 @@
       <div class="col-xxl">
         <div class="card mb-4">
           <div class="card-body">
-            <form method="post" action="/admin/add-product" enctype="multipart/form-data" onsubmit="validate(event)">
+            <form method="post" action="/admin/add-product" enctype="multipart/form-data" onsubmit="validate(event)" >
 
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
@@ -416,7 +418,11 @@
       </div>
     </div>
   </div>
+  
  
+  
+  
+  
 <script>
   function validate(event) {
   event.preventDefault();
@@ -476,4 +482,5 @@
 }
 
 </script>
+
   <%- include('../layouts/adminfooter.ejs') %>

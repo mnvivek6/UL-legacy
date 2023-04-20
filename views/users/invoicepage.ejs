@@ -1,4 +1,5 @@
 <%- include('../layouts/header.ejs') %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,28 +17,34 @@
     <title>UL</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="user/img/logos/favicon.png">
-    <link rel="apple-touch-icon" href="user/img/logos/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="user/img/logos/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="user/img/logos/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="/user/img/logos/ULfavicon.png">
+    <link rel="apple-touch-icon" href="/user/img/logos/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/user/img/logos/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/user/img/logos/apple-touch-icon-114x114.png">
 
     <!-- plugins -->
-    <link rel="stylesheet" href="user/css/plugins.css">
+    <link rel="stylesheet" href="/user/css/plugins.css">
 
     <!-- theme core css -->
-    <link href="user/css/styles.css" rel="stylesheet">
+    <link href="/user/css/styles.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-   
+    <!-- PAGE LOADING
+    ================================================== -->
+    <!-- <div id="preloader"></div> -->
 
     <!-- MAIN WRAPPER
     ================================================== -->
     <div class="main-wrapper mp-pusher" id="mp-pusher">
 
-    
+        <!-- HEADER
+        ================================================== -->
+        <header class="fixed header-light-nav">
+
+            
 
             <div class="navbar-default">
 
@@ -63,7 +70,9 @@
                             <div class="menu_area alt-font">
                                 <nav class="navbar navbar-expand-lg navbar-light p-0">
 
-                                  
+                                    <!-- category toggler -->
+                                    
+                                    <!-- end category toggler -->
 
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- logo -->
@@ -78,12 +87,12 @@
                                     <!-- menu area -->
                                     <ul class="navbar-nav mx-auto" id="nav" style="display: none;">
 
-                                        <li><a href="/userhome">Home</a>
+                                        <li><a href="/userhome" style="color: black;">Home</a>
                                           
                                         </li>
                                       
                                         </li>
-                                        <li><a href="#">Account</a>
+                                        <li><a href="#"style="color: black;" >Account</a>
                                             <ul>
                                                 <%if(user == false){%>
                                           
@@ -93,22 +102,25 @@
                                                 
                                                
                                             <%}%>
+                                                <!-- <li><a href="adfs">Password Recovery</a></li> -->
                                                 <li><a href="/orderlist">Orders List</a></li>
                                                 <li><a href="/whishlist">Wishlist</a></li>
                                                 <li><a href="/userprofile">Profile Page</a></li>
+                                                <!-- <li><a href="account-address.html">Contact / Shipping Address</a></li> -->
+                                                <!-- <li><a href="account-tickets.html">My Tickets</a></li>
+                                                <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
                                             </ul>
                                         </li>
                                         
                                         
-                                        <li><a href="#">Shop</a>
+                                        <li><a href="#" style="color: black;">Shop</a>
                                             <ul>
                                                 <li><a href="/shop">Shop Categories</a></li>
                                             </ul>
                                         </li>
                                        
                                     </ul>
-
-                    
+                                                  
                                     <!-- end menu area -->
 
                                     <!-- attribute navigation -->
@@ -120,10 +132,16 @@
                                                     <span class="badge bg-primary">3</span>
                                                 </a>
                                                 <ul class="dropdown-menu cart-list">
-                                                 
+                                                    
+                                                    
+                                                    <li>
+                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-03.jpg" class="cart-thumb" alt="..." /></a>
+                                                        <h6><a href="#">Heel Character Shoes</a></h6>
+                                                        <p>2x - <span class="price">$39.00</span></p>
+                                                    </li>
                                                     <li class="total bg-primary">
-                                                        
-                                                        <a href="" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
+                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
+                                                        <a href="shop-cart.html" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -139,162 +157,75 @@
                 </div>
 
             </div>
-
         </header>
-        
-        <!-- CATEGORY MP-MENU
-        ================================================== -->
-        
-
-        <!-- PAGE TITLE
-        ================================================== -->
-     
-        
-        <!-- CHECKOUT COMPLETE
-        ================================================== -->
-        <section class="md" >
-            <div class="container">
-                <div class="row justify-content-center">
+                    <!-- right panel -->
                     <div class="col-lg-8">
 
-                        <div class="common-block text-center">
+                        <div class="common-block">
 
                             <div class="inner-title">
-                                <h3 class="mb-0">Thank you for your order!</h3>
-                            </div>
-                            <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-                              <lord-icon
-                                 src="https://cdn.lordicon.com/xxdqfhbi.json"
-                                        trigger="hover"
-                                       style="width:100px;height:100px">
-                              </lord-icon>
-
-                            <p class="lead mb-4">
-                                Thank you for your payment. An automated payment receipt will be sent to your registered email.
-                            </p>
-
-                          
-                            <a href="/userhome" class="butn-style2 wide m-1">Back to home</a>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section class="confirmation_part mt" style="padding: 0px 0 120px 0px !important;">
-            <div class="container">
-              <div class="row ">
-                <div class="col-lg-12">
-                    <div class="card bg-light">
-                      <div class="card-body">
-                        <h4 class="card-title text-primary">Order Info</h4>
-                        <ul class="list-unstyled">
-                          <li class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 text-muted">Order Number</p>
-                            <span class="font-weight-bold"><%= orderData.orderNumber %></span>
-                          </li>
-                          <li class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 text-muted">Date</p>
-                            <span class="font-weight-bold"><%= orderData.createdAt.toLocaleString({day:'2-digit',month:'2-digit',year:'2-digit'})  %></span>
-                          </li>
-                          <li class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 text-muted">Total</p>
-                            <span class="font-weight-bold text-success">₹<%= orderData.totalAmount %></span>
-                          </li>
-                          <li class="d-flex justify-content-between align-items-center">
-
-                          </li>
-                          <li class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0 text-muted">Payment Method</p>
-                            <span class="font-weight-bold"><%= orderData.paymentMethod %></span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="col-lg-12 col-xl-12">
-                    <div class="single_confirmation_details bg-light p-3 card bg-light">
-                      <% console.log(orderData.address)%>
-                      <h4 >Shipping Address</h4>
-                      <ul class="list-unstyled">
-                        <li>
-                          <p>Name <br>
-                          <%= orderData.address.fullName %></p>
-                        </li>
-                        <li>
-                          <p>House
-                          <br><%= orderData.address.houseAddress%></p>
-                        </li>
-                        <li>
-                         
-                        </li>
-                        <li>
-                          <p>City
-                          <br><%= orderData.address.cityName %></p>
-                        </li>
-                        <li>
-                          <p>State
-                          <br><%= orderData.address.state%></p>
-                        </li>
-                        <li>
-                          <p>Postcode
-                          <br><%= orderData.address.pincode%></p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div class="row  justify-content-center">
-                    <div class="col-lg-12">
-                      <div class="order_details_iner mt-5">
-                        <h3 class="text-center text-primary mb-4">Order Details</h3>
-                        <table class="table table-bordered">
-                          <thead class="thead-dark">
-                            <tr>
-                              <th scope="col" colspan="2">Product</th>
-                              <th scope="col">Quantity</th>
-                              <th scope="col">Total</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <% orderData.items.forEach((value) => { %>
-                              <tr>
+                                <h4 class="mb-0">My Orders</h4>
+                            </div> 
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                       <th></th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th>Address</th>
+                                        <th>Status</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>    
+                                   <% orderData.items.forEach((value) => { %>
+                            
                                 <td colspan="2"><span><%= value.productId.productname %></span></td>
                                 <td><%= value.qty %></td>
                                 <td><span>₹<%= value.productTotalprice %></span></td>
-                              </tr>
-                            <% }) %>
-                            <tr>
-                              <td colspan="3" class="text-right">Subtotal</td>
-                              <td><span>₹<%= orderData.totalAmount %></span></td>
-                            </tr>
-                            <tr>
-                              <td colspan="3" class="text-right">Discount</td>
-                              <td><span> <%= orderData.discount %></span></td>
-                            </tr>
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                              <th scope="col" colspan="3" class="text-right">Total</th>
-                              <th scope="col"><span>₹ <%=orderData.totalAmount - orderData.discount %></span></th>
-                            </tr>
-                            <tr>
-                              <td colspan="4" class="text-center">
-                                <button type="button" class="btn btn-dark btn_3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Download invoice
-                                </button>
-                              </td>
-                            </tr>
-                          </tfoot>
-                        </table>
-                      </div>
+                              
+                            <% }) %>                                
+                                                                              
+                            
+                                    <td>
+                                     <p><%= orderData.address.fullName %><br><%= orderData.address.mobileNumber %><br><%= orderData.address.pincode %><br>
+                                       <%= orderData.address.houseAddress %><br><%= orderData.address.streetAddress %><%= orderData.address.landMark %>,<%= orderData.address.cityName %>,<%= orderData.address.state %>
+                                       </p>
+                                     </td>
+                                       
+                                      <td>
+                                      <p><%= orderData.orderStatus %></p>
+                                        </td>
+                                        <% if (orderData.orderStatus=='delivered') {%>
+                                          
+                                       
+                                         <td class="quantity-col">
+                                          <div class="">
+                                             <button type="button" class="btn btn-dark btn_3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Download invoice
+                                             </button>
+                                                                  
+                                       </div><!-- End .cart-product-quantity -->
+                                   </td>
+                                   <%}else{%>
+                                    <td><p>Not delivered</p> </td>
+                                  
+                                   <%} %>
+                                </tr>
+                            </table>
+                        </div>
+                        <a class="butn-style2 mt-3" href="#"><span>Show All Orders</span></a>
+                        </div>
+
                     </div>
-                  </div>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- end right panel -->
+                </div>
+            </div>
+        </section>
+       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -443,18 +374,21 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <%orderData.items.forEach((product,index) => { %>
-                                              <tr class="invoice-items">
-                                                <td><%= index+1 %></td>
-                                                <td ><%= product.productId.productname%></td>
-                                                <td>₹<%= product.price%></td>
-                                                <td><%= product.qty %> PC</td>
-                                                <td style="text-align: right;">₹<%= product.productTotalPrice%></td>
-                                              </tr>
+                                              <% orderData.items.forEach((value) => { %>
+                                                <tr>
+                                                  <td colspan="2"><span><%= value.productId.productname %></span></td>
+                                                  <td><%= value.qty %></td>
+                                                  <td><span>₹<%= value.productTotalprice %></span></td>
+                                                </tr>
                                               <% }) %>
-                                              
-                                           
-                                            </tbody>
+                                                <tr class="invoice-items">
+                                                  <td> </td>
+                                                  <td ><%= orderData.productname %></td>
+                                                  <td>₹<%= orderData.totalAmount%></td>
+                                                  <td><%= orderData.qty %> PC</td>
+                                                  <td style="text-align: right;">₹<%= orderData.productTotalPrice%></td>
+                                                </tr>
+                                              </tbody>
                                           </table>
                                           <table style="width: 100%;
                                           margin-top: 15px;
@@ -464,7 +398,7 @@
                                               <tr>
                                                 <th>Sub Total</th>
                                                
-                                                <th style="text-align: right;">₹ <%= orderData.totalAmount %></th>
+                                                <th style="text-align: right;">₹ </th>
                                                 
                                               </tr>
                                               <tr>
@@ -494,17 +428,14 @@
                                             <thead>
                                               <tr>
                                                 <th>Total</th>
-                                                <th style="text-align: center;">Item(<%= orderData.items.length %>)</th>
+                                                <th style="text-align: center;">Item</th>
                                                 <th>&nbsp;</th>
-                                                <th style="text-align: right;">₹ <%= orderData.totalAmount-orderData.discount %></th>
+                                                <th style="text-align: right;">₹<%= orderData.totalAmount-orderData.discount %></th>
                                                 
                                               </tr>
                                             </thead>
                                          
                                           </table>
-                            
-                                         
-                            
                                 </section>
                               </body>
                             </html>
@@ -516,23 +447,15 @@
                       </div>
                     </div>
                   </div>
-                  
-                    
-                  
                   <script>
                     function invoice(){
-                      var divToPrint = document.getElementById("invoice");
+                    var divToPrint = document.getElementById("invoice");  
                     var newWindow = window.open("", "Print Window");
                     newWindow.document.write(divToPrint.outerHTML);
                     newWindow.print();
                     newWindow.close();
                     }
                   </script>
-
-
-            </div> 
-          </section>
-        
         
         <!-- FOOTER
         ================================================== -->
@@ -652,11 +575,11 @@
                         </div>
                         <div class="col-md-6">
                             <ul class="list-style-17 text-center text-md-end">
-                                <li><img src="user/img/content/payment-options/visa.png" alt="..."></li>
-                                <li><img src="user/img/content/payment-options/mastercard.png" alt="..."></li>
-                                <li><img src="user/img/content/payment-options/paypal.png" alt="..."></li>
-                                <li><img src="user/img/content/payment-options/amex.png" alt="..."></li>
-                                <li><img src="user/img/content/payment-options/discover.png" alt="..."></li>
+                                <li><img src="/user/img/content/payment-options/visa.png" alt="..."></li>
+                                <li><img src="/user/img/content/payment-options/mastercard.png" alt="..."></li>
+                                <li><img src="/user/img/content/payment-options/paypal.png" alt="..."></li>
+                                <li><img src="/user/img/content/payment-options/amex.png" alt="..."></li>
+                                <li><img src="/user/img/content/payment-options/discover.png" alt="..."></li>
                             </ul>
                         </div>
                     </div>
@@ -678,19 +601,19 @@
     <!-- all js include start -->
 
     <!-- jQuery -->
-    <script src="user/js/jquery.min.js"></script>
+    <script src="/user/js/jquery.min.js"></script>
 
     <!-- popper js -->
-    <script src="user/js/popper.min.js"></script>
+    <script src="/user/js/popper.min.js"></script>
 
     <!-- bootstrap -->
-    <script src="user/js/bootstrap.min.js"></script>
+    <script src="/user/js/bootstrap.min.js"></script>
 
     <!-- core.min.js -->
-    <script src="user/js/core.min.js"></script>
+    <script src="/user/js/core.min.js"></script>
 
     <!-- custom scripts -->
-    <script src="user/js/main.js"></script>
+    <script src="/user/js/main.js"></script>
 	
 	<!-- all js include end -->
 

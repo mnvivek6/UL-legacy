@@ -201,42 +201,50 @@
                                 </tr>
                             </thead>
                             <tbody>
-                             <% userData.cart.forEach((cart,index)=> { %>
-                                
-                           
-                               
-                                <tr>
-                                    <td class="product-thumbnail text-start">
+                                <% userData.cart.forEach((cart, index) => {
+                                    const productId = cart.productId;
+                                  
+                                    if (productId && productId.productname) {
+                                  %>
+                                    <tr>
+                                      <td class="product-thumbnail text-start">
                                         <a href="#"><img src="/img/<%=cart.productId.image[0]%>" alt="..." ></a>
-                                    </td>
-                                    <td class="text-start">
-                                        <a href="#"><%= cart.productId.productname %></a>
+                                      </td>
+                                      <td class="text-start">
+                                        <a href="#"><%= productId.productname %></a>
                                         <span class="text-uppercase d-block">SKU: 290397</span>
+                                      </td>
+                                      <td class="text-start">
+                                        <%= productId.price %>
+                                      </td>
+                                    
                                         
-                                    </td>
-                                    <td class="text-start">
-                                        <%= cart.productId.price %>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <button
-                                        style="border: none;border-radius:3px; padding:0 16px 0 16px"
-                                        onclick="cartquantityupdation('<%= userData._id %>','<%= cart.productId._id %>',-1,'<%= cart.productId.price %>')">
-                                        -
-                                    </button> <span
-                                        id="<%= cart.productId._id %>">
-                                        <%= cart.qty %>
-                                    </span> <button
-                                        style="border: none;border-radius:3px; padding:0 16px 0 16px"
-                                        onclick="cartquantityupdation('<%= userData._id %>','<%= cart.productId._id %>',1,'<%= cart.productId.price %>')">+</button>
-                                      
-                                    </td>
-                                    <td class="product-subtotal text-start" ><h5 class="<%= cart.productId._id%>"><%=cart.productTotalprice%></h5></td>
-                                    <td class="product-remove text-center">
-                                        <!-- <a href="/deletecartproduct"><i class="fas fa-times"></i></a> -->
-                                        <td><button class="butn-style2 small bg-color mb-2 mb-md-0" onclick="deleteCartProduct('<%= userData._id %>','<%= cart.productId._id%>')">Remove cart</button></td>
-                                    </td>
-                                </tr>
-                            <%})%>
+                                   
+                                      <td class="product-quantity">
+                                        <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
+                                          onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',-1,'<%= productId.price %>')"> -</button>
+                                        <span id="<%= productId._id %>">
+                                          <%= cart.qty %>
+                                        </span>  
+                                                               
+                                        <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
+                                          onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',1,'<%= productId.price %>')"> + </button>
+                                      </td>
+                                       
+                                      <td class="product-subtotal text-start">
+                                        <h5 class="<%= productId._id %>"><%= cart.productTotalprice %></h5>
+                                      </td>
+                                      <td class="product-remove text-center">
+                                        <button class="butn-style2 small bg-color mb-2 mb-md-0"
+                                          onclick="deleteCartProduct('<%= userData._id %>','<%= productId._id %>')">
+                                          Remove cart
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  <% 
+                                    }
+                                  }) %>
+                                  
                             
                                 
                             </tbody>
@@ -425,11 +433,11 @@
         <!-- quantity updation  -->
         
     </div>
-    <script>
+         <script>
          function cartquantityupdation(userId, productId, count, proPrice) {  
-        let quantity = parseInt(document.getElementById(productId).innerHTML)
-        let procount = parseInt(count)
-        if(quantity <= 1 && procount === -1 ){
+         let quantity = parseInt(document.getElementById(productId).innerHTML)
+         let procount = parseInt(count)
+         if(quantity <= 1 && procount === -1 ){
             console.log('hi');
         }else{
           $.ajax({
