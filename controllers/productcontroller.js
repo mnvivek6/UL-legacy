@@ -182,6 +182,7 @@ const AddtoCart = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from addto cart');
+        res.render('500')
     }
 
 }
@@ -198,15 +199,16 @@ const ListCart = async (req, res) => {
             const cartTotalUpdate = await User.updateOne({ _id: userId }, { $set: { cartTotalPrice: cartTotal } })         
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec()
             const user = true
-            res.render('cartitemslisting', { userData,user })
+            res.render('cartitemslisting',{ userData,user })
         } else {
             const userData = await User.findOne({ userId })
             const user = true
-            res.render('cartitemslisting', { userData,user })
+            res.render('cartitemslisting',{ userData,user })
         }
     } catch (error) {
         console.log(error.message);
         console.log('error from list cart');
+        res.render('500')
     }
 }
 
@@ -233,50 +235,54 @@ const deleteCartProduct = async (req, res) => {
 }
 
 const cartquantityupdation = async (req, res) => {
-
     try {
-
-        const { user, product, count, Quantity, proPrice } = req.body
-
-        const producttemp = mongoose.Types.ObjectId(product)
-    
-        const usertemp = mongoose.Types.ObjectId(user)
-        console.log(usertemp,"this is user temp");
-
-        const updateQTY = await User.findOneAndUpdate({ _id: usertemp, 'cart.productId': producttemp }, { $inc: { 'cart.$.qty': count } })
-
-        const currentqty = await User.findOne({ _id: usertemp, 'cart.productId': producttemp }, { _id: 0, 'cart.qty.$': 1 })
-
-        const qty = currentqty.cart[0].qty
-
-        const singleproductprice = proPrice * qty
-        console.log("hai");
-        console.log(singleproductprice);
-
-        await User.updateOne({ _id: usertemp, 'cart.productId': producttemp }, { $set: { 'cart.$.productTotalprice':singleproductprice } })
-        const cart = await User.findOne({ _id: usertemp })
-        
-        let sum = 0
-        for (let i = 0; i < cart.cart.length; i++) {
-            sum = sum + cart.cart[i].productTotalprice
-          
-        }
-        console.log(sum+"hi");
-
-        const update = await User.findOneAndUpdate({ _id: usertemp }, {$set: { cartTotalPrice: sum }})
-        
-            .then(async (response) => {
-                res.json({ response: true, singleproductprice, sum })
-                console.log(sum);
-                console.log(singleproductprice);
-            })
-       
-
-            
+      const { user, product, count, Quantity, proPrice } = req.body;
+  
+      const producttemp = mongoose.Types.ObjectId(product);
+      const productqty = await Product.findOne({ _id: producttemp }, { quantity: 1 });
+      const requestedQty = count + Quantity;
+  
+      const usertemp = mongoose.Types.ObjectId(user);
+  
+      const updateQTY = await User.findOneAndUpdate(
+        { _id: usertemp, 'cart.productId': producttemp },
+        { $inc: { 'cart.$.qty': count } }
+      );
+  
+      const currentqty = await User.findOne(
+        { _id: usertemp, 'cart.productId': producttemp },
+        { _id: 0, 'cart.qty.$': 1 }
+      );
+      const qty = currentqty.cart[0].qty;
+  
+      const singleproductprice = proPrice * qty;
+  
+      await User.updateOne(
+        { _id: usertemp, 'cart.productId': producttemp },
+        { $set: { 'cart.$.productTotalprice': singleproductprice } }
+      );
+      const cart = await User.findOne({ _id: usertemp });
+  
+      let sum = 0;
+      for (let i = 0; i < cart.cart.length; i++) {
+        sum = sum + cart.cart[i].productTotalprice;
+      }
+  
+      const update = await User.findOneAndUpdate(
+        { _id: usertemp },
+        { $set: { cartTotalPrice: sum } }
+      );
+  
+      if (requestedQty > productqty.quantity) {
+        res.json({ response: false, message: 'Product out of stock.' });
+      } else {
+        res.json({ response: true, singleproductprice, sum });
+      }
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
+      res.render('500');
     }
-}
+  };
 
 
 module.exports = {

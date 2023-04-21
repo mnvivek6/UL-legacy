@@ -449,7 +449,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="redeem_amount">Min. redeem amount</label>
-                  <input type="number" class="form-control border pe-2 ps-2" id="redeem_amount" placeholder="Minimum redeem amount" name="redeemamount">
+                  <input type="number" class="form-control border pe-2 ps-2" id="redeem_amount" placeholder="Minimum redeem amount" name="radeemamount">
                   <div class="invalid-feedback">Please enter a valid minimum redeem amount.</div>
                 </div>
               </div>
@@ -477,89 +477,37 @@
             </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                  <button type="button" class="btn btn-primary" >Save changes</button>
                 </div>
               </form>
         </div>
-        <script>
-          function validateForm() {
-            // Get input fields
-            var couponCode = document.getElementById("coupon_code");
-            var couponAmount = document.getElementById("coupon_amount");
-            var cartAmount = document.getElementById("cart_amount");
-            var redeemAmount = document.getElementById("redeem_amount");
-            var startDate = document.getElementById("start_date");
-            var expiryDate = document.getElementById("expiry_date");
-            var usageLimit = document.getElementById("usage_limit");
-            
-            // Validate coupon code
-            if (couponCode.value.trim() == "") {
-              couponCode.classList.add("is-invalid");
-              return false;
-            }
-            
-            // Validate coupon type and amount
-            var couponType = document.querySelector('input[name="fixedandpercentage"]:checked');
-            if (!couponType) {
-              alert("Please select a coupon type.");
-              return false;
-            } else if (couponAmount.value.trim() == "" || isNaN(couponAmount.value)) {
-              couponAmount.classList.add("is-invalid");
-              return false;
-            }
-            
-            // Validate minimum cart amount
-            if (cartAmount.value.trim() == "" || isNaN(cartAmount.value)) {
-              cartAmount.classList.add("is-invalid");
-              return false;
-            }
-            
-            // Validate minimum redeem amount
-            if (redeemAmount.value.trim() == "" || isNaN(redeemAmount.value)) {
-              redeemAmount.classList.add("is-invalid");
-              return false;
-            }
-            
-            // Validate start date
-            if (startDate.value.trim() == "") {
-              startDate.classList.add("is-invalid");
-              return false;
-            }
-            
-            // Validate expiry date
-            if (expiryDate.value.trim() == "") {
-              expiryDate.classList.add("is-invalid");
-              return false;
-            } else if (expiryDate.value <= startDate.value) {
-              alert("Expiry date should be after start date.");
-              return false;
-            }
-            
-            // Validate usage limit
-            if (usageLimit.value.trim() == "" || isNaN(usageLimit.value)) {
-              usageLimit.classList.add("is-invalid");
-              return false;
-            }
-            
-            // If all fields are valid, submit form
-            return true;
-          }
-          
-          // Clear invalid class on input field when user starts typing
-          var inputs = document.querySelectorAll('input');
-          inputs.forEach(function(input) {
-            input.addEventListener('input', function() {
-              this.classList.remove('is-invalid');
-            });
-          });
-        </script>
-        
+      </div>
+    </div>
+  </div>
+       
+
+  <script>
+    const fixedRadio = document.getElementById('fixed_radio');
+    const percentageRadio = document.getElementById('percentage_radio');
+    const couponAmountInput = document.getElementById('coupon_amount');
+    
+    fixedRadio.addEventListener('click', () => {
+      couponAmountInput.setAttribute('max', '');
+      couponAmountInput.removeAttribute('step');
+      couponAmountInput.setCustomValidity('');
+    });
+    
+    percentageRadio.addEventListener('click', () => {
+      couponAmountInput.setAttribute('max', '99');
+      couponAmountInput.setAttribute('step', '0.01');
+      couponAmountInput.setCustomValidity('Please enter a valid percentage (below 100%).');
+    });
+  </script>
+
         <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Understood</button>
         </div> -->
-      </div>
-    </div>
-  </div>
+      
 
   <%- include('../layouts/adminfooter.ejs') %>

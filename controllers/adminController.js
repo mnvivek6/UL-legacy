@@ -341,11 +341,12 @@ const addCoupon = async (req, res) => {
 
 
     try {
+
+
+
+
         const couponData = { ...req.body }
-
-
         const couponAdd = new Coupon({
-
             couponCode: couponData.coupon_code,
             couponAmountType: couponData.fixedandpercentage,
             couponAmount: couponData.couponamount,
@@ -401,7 +402,7 @@ const updateImage = async (req, res) => {
             if (imagelength + images.length <= 4) {
 
                 const updateData = await Product.updateOne({ _id: id }, { $addToSet: { image: { $each: images } } })
-                res.redirect('/admin/productupdate')
+                res.redirect('/admin/list-product')
             } else {
 
                 const productData = await Product.findOne({ _id: id })
@@ -692,8 +693,9 @@ const acceptReturn = async ( req, res)=>{
         id = req.params.id
         const changeStatus = await Order.findByIdAndUpdate({_id:id},{$set:{orderStatus:"Return Accepted"}})
         const orderData = await Order.findOne({_id:id})
-        if (orderData.paymentMethod == 'card') {
+        if (orderData.paymentMethod == 'Online Payment') {
             const refund = await user.updateOne({_id:orderData.userId},{$inc:{wallet:orderData.totalAmount}})
+            console.log(refund);
         }
        const quantity = orderData.items
 

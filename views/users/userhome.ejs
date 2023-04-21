@@ -119,8 +119,8 @@
                                             <ul>
                                                 <li><a href="/shop">HOODIES</a></li>
                                                 <li><a href="/shop">NORMAL T-SHIRTS</a></li>
-                                                <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
-                                                <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
+                                                <li><a href="/fullsleeve">FULL SLEEVE</a></li>
+                                                <li><a href="/shop">OVERSIZED T-SHIRTS</a></li>
                                                 <li><a href="/shop">OVERSIZED FULLSLEEVE</a></li>
                                             </ul>
                                         </li>
@@ -204,7 +204,7 @@
                                 <h6 style="color: red;">Oops category is empty</h6>
                            <% }else{ %>
                             <% category.forEach((value,index)=>{%>
-                                <a href="">
+                                <a href="/shopfullsleeve/?id=<%=value._id%>">
                                 <img src="/category-img/<%=value.image %>" alt="...">
                                 <h3 class="h5 mb-0 mt-3"><%= value.name%></h3>
                             </a>
@@ -235,11 +235,17 @@
                             <div class="product-img">
                                 <a href="/productdetail?id=<%= value._id %>"><img style="width: 100%;" src="/img/<%=value.image[0] %>" alt="..."></a>
                                 <span class="product-label bg-primary">new</span>
+                                <% if (value.quantity>0) {%>
+                                    
+                              
                                 <div class="action-butn">
                                     <a onclick="addToCart('<%=value._id%>')"><i class="ti-shopping-cart"></i></a>
                                     
                                     <a onclick="addtowhishlist('<%=value._id%>')"><i class="ti-heart"></i></a>
                                 </div>
+                                <% }else{%>
+                                    <p>OUT OF STOCK</p>
+                                <%} %>
                             </div>
                             <h3 class="h6"><a href="/user/productdetail?id=<%= value._id %>"><%= value.productname %></a></h3>
                             <span class="font-weight-600 display-29 text-muted"><%= value.price%></span>

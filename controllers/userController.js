@@ -426,13 +426,16 @@ const productdetail = async (req, res) => {
     try {
 
         const proid = req.query.id
+        console.log(proid);
         const product = await Product.findOne({ _id: proid })
-        const products= await Product.findOne()
+        const products= await Product.find()
+
         const user= true
-        console.log(product);
+       
         res.render('productdetails', { product,products,user })
     } catch (error) {
         console.log(error.message);
+       res.render('500')
     }
 }
 
@@ -447,6 +450,7 @@ const userProfile = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -503,6 +507,7 @@ const addingAddress = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from adding address');
+        res.render('500')
     }
 }
 
@@ -517,6 +522,7 @@ const showaddress = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from showaddress');
+        res.render('500')
 
     }
 }
@@ -541,6 +547,7 @@ const editAddress = async (req, res) => {
         res.render('addressedit', { editAddress, addressIndex })
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -562,6 +569,7 @@ const editandupdateaddress = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from editand update address its not working');
+        res.render('500')
     }
 
 }
@@ -586,6 +594,7 @@ const DeleteAddress = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -630,6 +639,7 @@ const AddTowishlist = async (req, res) => {
         console.log(error.message);
 
         console.log('error from addtowishlist');
+        res.render('500')
     }
 }
 const loadwhishlist = async (req, res) => {
@@ -647,6 +657,7 @@ const loadwhishlist = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 const deletewhishlist = async (req, res) => {
@@ -664,6 +675,7 @@ const deletewhishlist = async (req, res) => {
         }
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -680,6 +692,7 @@ const loadCheckout = async (req, res) => {
         res.render('checkout', { userData, address,user })
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 const addAddressCheckout = async (req, res) => {
@@ -730,6 +743,7 @@ const addAddressCheckout = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -759,7 +773,7 @@ const placeorder = async (req, res) => {
 
         const payment = req.body.payment
         console.log(payment);
-        let status = payment === ' COD' ? 'placed' : 'pending'
+        let status = payment === ' COD' ? 'placed':'pending';
         let orderObj = {
             userId: userId,
             address: {
@@ -806,7 +820,7 @@ const placeorder = async (req, res) => {
                             await productStock.save()
                         }
                         const walletBalence = userData.wallet - userData.cartTotalPrice;
-                        await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0}})
+                        await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0, wallet:walletBalence}})
                         await Order.updateOne({_id:orderId},{$set:{paymentMethod:'Wallet',orderStatus:'placed'}})
                     
                         const wallet = User.wallet;
@@ -836,6 +850,7 @@ const placeorder = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error found at place order');
+        res.render('500')
     }
 }
 
@@ -851,6 +866,7 @@ const ordersuccess = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 const orderlist = async (req, res) => {
@@ -864,6 +880,7 @@ const orderlist = async (req, res) => {
         res.render('orderlist', { orderData,user })
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -880,6 +897,7 @@ const OrderCancel = async (req, res) => {
         res.redirect('/orderlist')
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -893,6 +911,7 @@ const productlist = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -981,6 +1000,7 @@ const couponApply = async(req, res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -1015,6 +1035,7 @@ const verifyPayment = async(req,res)=>{
 
     }catch(error){
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -1062,6 +1083,7 @@ const whishlistTocart = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from addto whislist');
+        res.render('500')
     }
 
 }
@@ -1082,6 +1104,7 @@ const returnOrder = async(req, res)=>{
         
     } catch (error) {
         console.log(error.message);
+        res.render('500')
     }
 }
 
@@ -1101,10 +1124,42 @@ const search_product = async (req, res) => {
       res.render('productlist', { category, products, user, name: 'search', coupon });
     } catch (error) {
       console.log(error.message);
+      res.render('500')
     }
-  };
+  }
 
 
+  const shopcategory = async(req, res)=>{
+
+    try {
+
+        const Id = req.query.id
+       const user= true
+        console.log(Id,"here i got");
+        res.render('shopfullsleeve',{user})
+        
+    } catch (error) {
+        console.log(error.message);
+        res.render('500')
+    }
+  }
+
+  const singelorderdowload = async ( req, res)=>{
+
+    try {
+
+        Id = req.query.id
+        console.log(Id);
+       const orderData = await Order.findById({_id:Id}).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } })
+       console.log(orderData);
+       const user= false
+        res.render('invoicepage',{orderData,user})
+        
+    } catch (error) {
+        console.log(error.message);
+        res.render('500')
+    }
+  }
 // exporting usercontroller module   
 module.exports = {
     loadRegister,
@@ -1143,6 +1198,7 @@ module.exports = {
     verifyPayment,
     whishlistTocart,
     returnOrder,
-    search_product  
-
+    search_product,
+    shopcategory,
+    singelorderdowload
 }

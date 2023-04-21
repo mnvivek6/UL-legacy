@@ -221,7 +221,8 @@
                                     <tr>
                                         <th>Order</th>
                                         <th>Products</th>
-                                        <th>Status</th>
+                                        
+                                       
                                         <th>Total</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -233,11 +234,14 @@
                                     <% } else { %>
                                         <% for (let i = orderData.length - 1; i >= 0; i--) { %>
                                             <tr>
-                                                <th>#<%= orderData[i]._id.toString().substring(0, 6) %></th>
+                                               
                                                 <td>
                                                     <% orderData[i].items.forEach((element, index) => { %>
-                                                        <p><%= element.productId.productname %>,</p>
+                                                        <% if (element.productId && element.productId.productname) { %>
+                                                            <p><%= element.productId.productname %>,</p>
+                                                        <% } %>
                                                     <% }) %>
+                                                    
                                                 </td>
                                                 <td>
                                                     <p><%= orderData[i].address.fullName %><br><%= orderData[i].address.mobileNumber %><br><%= orderData[i].address.pincode %><br>
@@ -275,6 +279,11 @@
                                                   <% }%>
                                                     </div><!-- End .cart-product-quantity -->
                                                 </td>
+                                               <td>
+                                                <a href="/downloadinvoice?id=<%=orderData[i]._id %>" class="btn_3">
+                                                    <button type="button" class="btn btn-dark">View Order</button>
+                                                </a>
+                                               </td>
                                             </tr>
                                         <% } %>
                                     <% } %>
@@ -288,6 +297,10 @@
                 </div>
             </div>
         </section>
+                
+
+
+                 
         
         <!-- FOOTER
         ================================================== -->

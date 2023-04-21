@@ -347,7 +347,8 @@
                 <div class="card mb-4">
                  <br>
                   <div class="card-body">
-                    <form method="post" action="/admin/productupdate?id=<%=product._id %>" >
+                    <form method="post" action="/admin/productupdate?id=<%=product._id%>">
+
                       <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
                         <div class="col-sm-10">
@@ -358,12 +359,19 @@
                         <label class="col-sm-2 col-form-label" for="basic-default-company">Category</label>
                         <div class="col-sm-10">
                           <select id="Select Category" name="category" class="form-select">
+
                             <%
                       if(category.length > 0){
   
                           for(let i=0; i<category.length; i++){
                               %>
+                              <%if(product.category==category[i]._id){%>
+                            <option selected value= <%= category[i]._id %> ><%= category[i].name %></option>
+
+                                <%}else{%>
                             <option  value= <%= category[i]._id %> ><%= category[i].name %></option>
+
+                                  <%}%>
                             <% }} %>
                           </select>
                         </div>
@@ -394,8 +402,9 @@
                       </div>
                       <div class="mb-3">
                         <label for="formFile" class="col-sm-2 col-form-label">Image </label>
-                        <img src="/img/<%= product.image %>" alt="">
-                        <input class="form-control" type="file" id="formFile" name="image" />
+                        <img src="/img/<%= product.image[1] %>" style="height: 80px;width: 80px; " alt="">
+                       
+                        
                       </div>
                       <br>
                       <div class="row justify-content-end">
@@ -462,7 +471,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Image</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         

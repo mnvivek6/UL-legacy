@@ -89,10 +89,11 @@ user_route.get('/ordersuccess',auth.isLogin,userController.ordersuccess)
 user_route.get('/orderlist',auth.isLogin,userController.orderlist)
 user_route.get('/cancelorder',auth.isLogin,userController.OrderCancel)
 user_route.get('/returnOrder',auth.isLogin,userController.returnOrder)
+user_route.get('/downloadinvoice',auth.isLogin,userController.singelorderdowload)
 
 // pagenation
 user_route.get('/shop',userController.productlist)
-
+user_route.get('/shopfullsleeve',userController.shopcategory)
 // coupon
 user_route.post('/couponapply',auth.isLogin,userController.couponApply)
 
