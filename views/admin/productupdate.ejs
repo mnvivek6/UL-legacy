@@ -359,12 +359,19 @@
                         <label class="col-sm-2 col-form-label" for="basic-default-company">Category</label>
                         <div class="col-sm-10">
                           <select id="Select Category" name="category" class="form-select">
+
                             <%
                       if(category.length > 0){
   
                           for(let i=0; i<category.length; i++){
                               %>
+                              <%if(product.category==category[i]._id){%>
+                            <option selected value= <%= category[i]._id %> ><%= category[i].name %></option>
+
+                                <%}else{%>
                             <option  value= <%= category[i]._id %> ><%= category[i].name %></option>
+
+                                  <%}%>
                             <% }} %>
                           </select>
                         </div>
