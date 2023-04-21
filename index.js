@@ -27,6 +27,11 @@ app.set('view engine', 'ejs')
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin', adminRoute)
 
+app.use((req, res)=>{
+res.render('404')
+})
+
+
 app.listen(3000, function () {
     console.log('server is run..');
 })
