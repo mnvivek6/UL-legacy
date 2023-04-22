@@ -821,7 +821,7 @@ const placeorder = async (req, res) => {
                         }
                         const walletBalence = userData.wallet - userData.cartTotalPrice;
                         await User.updateOne({_id:userId},{$set:{cart:[],cartTotalPrice:0, wallet:walletBalence}})
-                        await Order.updateOne({_id:orderId},{$set:{paymentMethod:'Wallet',orderStatus:'placed'}})
+                        await Order.updateOne({_id:orderId},{$set:{paymentMethod:'WALLET',orderStatus:'placed'}})
                     
                         const wallet = User.wallet;
                         res.json({ status: true });
