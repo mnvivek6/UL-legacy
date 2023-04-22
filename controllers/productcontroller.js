@@ -273,7 +273,7 @@ const cartquantityupdation = async (req, res) => {
         { $set: { cartTotalPrice: sum } }
       );
   
-      if (requestedQty > productqty.quantity) {
+      if ( qty >=productqty.quantity) {
         res.json({ response: false, message: 'Product out of stock.' });
       } else {
         res.json({ response: true, singleproductprice, sum });

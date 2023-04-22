@@ -226,11 +226,14 @@
                                         <span id="<%= productId._id %>">
                                           <%= cart.qty %>
                                         </span>  
-                                                               
+                                                 
                                         <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
                                           onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',1,'<%= productId.price %>')"> + </button>
                                       </td>
-                                       
+                                     
+                                     
+                                      
+                                    
                                       <td class="product-subtotal text-start">
                                         <h5 class="<%= productId._id %>"><%= cart.productTotalprice %></h5>
                                       </td>
@@ -452,8 +455,7 @@
 
             method: 'post',
             success: (response) => {
-                console.log(response.singleproductprice);
-                console.log(response.sum);
+    
               document.getElementById(productId).innerHTML = quantity+count
               document.getElementsByClassName(productId)[0].innerHTML = response.singleproductprice
               document.getElementById('total').innerHTML = response.sum
