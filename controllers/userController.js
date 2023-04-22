@@ -1148,10 +1148,12 @@ const search_product = async (req, res) => {
 
     try {
 
+       
+
         Id = req.query.id
         console.log(Id);
        const orderData = await Order.findById({_id:Id}).populate({ path: 'items', populate: { path: 'productId', model: 'Product' } })
-       console.log(orderData);
+       
        const user= false
         res.render('invoicepage',{orderData,user})
         
