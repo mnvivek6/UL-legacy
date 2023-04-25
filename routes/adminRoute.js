@@ -63,6 +63,7 @@ const bannerMult = multer({storage:bannerStorage})
 admin_route.get('/', adminController.loadlogin)
 admin_route.post('/', adminController.verifylogin)
 admin_route.get('/logout', auth.islogin, adminController.logout)
+admin_route.get('/adminprofile',auth.islogin,adminController.adminprofile)
 
 
 // admin home
@@ -70,56 +71,56 @@ admin_route.get('/home', auth.islogin, adminController.loadDashboard)
 
 
 // user information
-admin_route.get('/useredit', adminController.userTable);
-admin_route.get('/block-user', adminController.blockUser);
-admin_route.get('/unblock-user', adminController.unblockUser);
+admin_route.get('/useredit', auth.islogin, adminController.userTable);
+admin_route.get('/block-user',auth.islogin, adminController.blockUser);
+admin_route.get('/unblock-user', auth.islogin,adminController.unblockUser);
 admin_route.get('/list-user', auth.islogin, adminController.loaduser);
 
 
 // product management
-admin_route.get('/list-product', product_Controller.list_product);
-admin_route.get('/add-product', product_Controller.add_product);
-admin_route.post('/add-product', upload.array('image', 4), product_Controller.addproduct)
-admin_route.get('/delete-product-image/:imgid/:prodid',adminController.deleteImage)
+admin_route.get('/list-product',auth.islogin, product_Controller.list_product);
+admin_route.get('/add-product',auth.islogin, product_Controller.add_product);
+admin_route.post('/add-product',upload.array('image', 4), product_Controller.addproduct)
+admin_route.get('/delete-product-image/:imgid/:prodid',auth.islogin,adminController.deleteImage)
 admin_route.post("/edit-image/:id",upload.array('image'), adminController.updateImage)
-admin_route.get('/delete-product', product_Controller.deleteproduct)
-admin_route.get('/productupdate', product_Controller.productupdate)
+admin_route.delete('/delete-product',auth.islogin, product_Controller.deleteproduct)
+admin_route.get('/productupdate/:id',auth.islogin, product_Controller.productupdate)
 admin_route.post('/productupdate', product_Controller.editproduct)
 // admin_route.get('/delete-img',product_Controller.deleteImage)
 
 
 
 //category management
-admin_route.get('/add-category', category_Controller.formcategory)
+admin_route.get('/add-category',auth.islogin, category_Controller.formcategory)
 admin_route.post('/add-category', cateupload.single('image'), category_Controller.addcategory)
-admin_route.get('/delete-category-img/:image/:id',adminController.categoryimgdelete)
-admin_route.get('/category-list', category_Controller.showcategory)
-admin_route.get('/edit-category', category_Controller.updatecategory)
+admin_route.get('/delete-category-img/:image/:id',auth.islogin,adminController.categoryimgdelete)
+admin_route.get('/category-list', auth.islogin,category_Controller.showcategory)
+admin_route.get('/edit-category',auth.islogin, category_Controller.updatecategory)
 admin_route.post('/edit-category', category_Controller.editcategory)
-admin_route.get('/delete-category', category_Controller.deletecategory)
+admin_route.get('/delete-category',auth.islogin, category_Controller.deletecategory)
 
 //coupon 
-admin_route.get('/loadcoupon',adminController.loadCoupon)
+admin_route.get('/loadcoupon',auth.islogin,adminController.loadCoupon)
 admin_route.post('/addcoupon',adminController.addCoupon)
-admin_route.get("/editcoupon/:id",adminController.editcoupon)
+admin_route.get("/editcoupon/:id",auth.islogin,adminController.editcoupon)
 admin_route.post('/updatecoupon/:id',adminController.couponUpdate)
-admin_route.get('/deletecoupon/:id',adminController.deletecoupon)
-admin_route.get('/enablecoupon/:id',adminController.enablecoupon)
+admin_route.get('/deletecoupon/:id',auth.islogin,adminController.deletecoupon)
+admin_route.get('/enablecoupon/:id',auth.islogin,adminController.enablecoupon)
 
 // banner
-admin_route.get("/loadbanner",adminController.loadbanner)
+admin_route.get("/loadbanner",auth.islogin,adminController.loadbanner)
 admin_route.post('/inserbanner',bannerMult.single('bannerimage'),adminController.insertBanner)
-admin_route.get('/disablebanner/:id',adminController.disablebanner)
-admin_route.get('/enablebanner/:id',adminController.enblebanner)
-admin_route.get('/deletebanner/:id',adminController.deleteBanner)
+admin_route.get('/disablebanner/:id',auth.islogin,adminController.disablebanner)
+admin_route.get('/enablebanner/:id',auth.islogin,adminController.enblebanner)
+admin_route.get('/deletebanner/:id',auth.islogin,adminController.deleteBanner)
 
 // ordermanagement
-admin_route.get('/ordermanagement',adminController.ordermanagement)
+admin_route.get('/ordermanagement',auth.islogin,adminController.ordermanagement)
 admin_route.get('/placeOrder/:id',auth.islogin, adminController.placeOrder)
 admin_route.get('/shipedorder/:id',auth.islogin, adminController.shipedorder)
 admin_route.get('/deliveredOrder/:id',auth.islogin,adminController.deliveredOrder)
-admin_route.get('/returnaccept/:id',adminController.acceptReturn)
-admin_route.get('/rejectreturn/:id',adminController.rejectReturn)
+admin_route.get('/returnaccept/:id',auth.islogin,adminController.acceptReturn)
+admin_route.get('/rejectreturn/:id',auth.islogin,adminController.rejectReturn)
 
 // sales report
 admin_route.get('/salesreport',auth.islogin,adminController.salesReport)

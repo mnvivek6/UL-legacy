@@ -86,15 +86,17 @@ const deleteproduct = async (req, res) => {
 
     try {
 
-        const product = req.query.id
-        console.log(product);
+        const product = req.body.productId
+       console.log(product,'not getting the product');
         const deleted = await Product.deleteOne({ _id: product })
-        if (deleted) {
-            res.redirect('/admin/list-product')
-        }
-        else {
-            console.log('cant delete');
-        }
+       
+       .then(()=>{
+        res.json({success:true})
+       })
+       console.log(deleted);
+       
+           
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -106,8 +108,13 @@ const productupdate = async (req, res) => {
     try {
 
         const category = await Category.find()
-        const product = await Product.findOne({ _id: req.query.id })
-        res.render('productupdate', { product: product, category })
+        const product = await  Product.findOne({_id:req.params.id}).populate('category')
+        const productcategory = product.category
+        console.log(productcategory);
+        
+        
+     
+        res.render('productupdate', { product: product, category,productcategory })
     } catch (error) {
         console.log(error.message);
     }

@@ -737,6 +737,15 @@ const deleteBanner = async(req,res)=>{
         console.log(error.message);
     }
 }
+const adminprofile = async(req,res)=>{
+
+    try {
+        const admin= await user.find({is_admin:'1'})
+        res.render('adminprofile',{admin}) 
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 module.exports = {
     loadlogin,
@@ -772,7 +781,7 @@ module.exports = {
     showSalesReprot,
     acceptReturn,
     rejectReturn,
-    deleteBanner
-
+    deleteBanner,
+    adminprofile 
 
 }

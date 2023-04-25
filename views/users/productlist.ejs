@@ -163,39 +163,7 @@
 
                                     <!-- end menu area -->
 
-                                    <!-- attribute navigation -->
-                                    <!-- <div class="attr-nav">
-                                        <ul>
-                                            <li class="dropdown me-3 me-lg-0">
-                                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
-                                                    <i class="ti-bag"></i>
-                                                    <span class="badge bg-primary">3</span>
-                                                </a>
-                                                <ul class="dropdown-menu cart-list">
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-01.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Men's Football Boots </a></h6>
-                                                        <p>2x - <span class="price">$30.00</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-02.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Sun Protection Cap</a></h6>
-                                                        <p>1x - <span class="price">$10.20</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="photo"><img src="user/img/products/cart-thumbs/cart-thumb-03.jpg" class="cart-thumb" alt="..." /></a>
-                                                        <h6><a href="#">Heel Character Shoes</a></h6>
-                                                        <p>2x - <span class="price">$39.00</span></p>
-                                                    </li>
-                                                    <li class="total bg-primary">
-                                                        <span class="float-start"><strong>Total</strong>: $79.20</span>
-                                                        <a href="shop-cart.html" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="search"><a href="#"><i class="ti-search"></i></a></li>
-                                        </ul>
-                                    </div> -->
+                                    
                                     <!-- end attribute navigation -->
 
                                 </nav>
@@ -230,32 +198,21 @@
                                 <div class="row justify-content-center">
 
                                     <div class="col-auto my-1 my-md-0">
-                                        <label class="m-0">Show:</label>
-                                        <select class="w-auto d-inline-block form-select">
-                                            <option value="#?limit=24" selected="selected">24</option>
-                                            <option value="#?limit=25">25</option>
-                                            <option value="#?limit=50">50</option>
-                                            <option value="#?limit=75">75</option>
-                                            <option value="#?limit=100">100</option>
-                                        </select>
+                                        <label class="m-0">Categories</label>
+                                        <div>
+                                            <ul class="list-unstyled">
+                                                <% if(category.length>0){
+                                                    for(let i=0 ; i<category.length ; i++) {%>
+                                                        <li><a href="/productlist/<%= category[i]._id %>">
+                                                                <%= category[i].name %>
+                                                            </a></li>
+                                                        <% } } %>
+                                            </ul>
+    
+                              
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div class="col-md-6 ec-sort-select">
-                                            <span class="sort-by">Sort by</span>
-                                            <div class="ec-select-inner">
-                                                <select name="ec-select" id="ec-select">
-                                                    <option selected disabled>Position</option>
-                                                    <option value="1">Relevance</option>
-                                                    <option value="2">Name, A to Z</option>
-                                                    <option value="3">Name, Z to A</option>
-                                                    <option value="4">Price, low to high</option>
-                                                    <option value="5">Price, high to low</option>
-                                                </select>
-                                            </div>
-                                        </div>      
-
-                          
-                                    </div>
+                                    
                                 </div>
                         </div>
 

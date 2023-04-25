@@ -203,7 +203,7 @@
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="/admin/list-user" class="menu-link">
+                <a href="/admin/adminprofile" class="menu-link">
                   <div data-i18n="Error">admin profile</div>
                 </a>
               </li>
@@ -296,7 +296,7 @@
                     <div class="dropdown-divider"></div>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/admin/adminprofile">
                       <i class="bx bx-user me-2"></i>
                       <span class="align-middle">My Profile</span>
                     </a>
@@ -435,14 +435,38 @@
         <%})%>
 		<tfoot>
 			<tr>
-				<td colspan="2">Total:</td>
-				<td></td>
-				<td></td>
+				
+				
+        </td>
+				<td><a href="#" onclick="downloadSalesReport()"><button type="button" class="btn btn-dark">Download Sales Report</button></a>
+        
+        </td>
 			</tr>
 		</tfoot>
 	</table>
   
+  
 </body>
 </html>
+<script>
+  function downloadSalesReport() {
+  const rows = document.querySelectorAll("table tr");
+  const csvContent = "data:text/csv;charset=utf-8,"
+    + Array.from(rows)
+        .map(row => Array.from(row.cells)
+          .map(cell => cell.textContent.trim())
+          .join(",")
+        )
+        .join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "sales_report.csv");
+  document.body.appendChild(link);
+  link.click();
+}
+
+</script>
+
 
         <%- include('../layouts/adminfooter.ejs') %>

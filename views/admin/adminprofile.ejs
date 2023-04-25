@@ -9,13 +9,7 @@
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
-                <!-- <svg
-                  width="25"
-                  viewBox="0 0 25 42"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                > -->
+               
                   <defs>
                     <path
                       d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
@@ -208,21 +202,13 @@
                   </a>
                 </li>
               </ul>
-              <!-- <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/admin/list-user" class="menu-link">
-                    <div data-i18n="Error"></div>
-                  </a>
-                </li>
-              </ul> -->
+              
             </li>
           </ul>
         </aside>
         <!-- / Menu -->
 
         <!-- Layout container -->
-
-
 
 
 
@@ -286,7 +272,7 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
+                            <span class="fw-semibold d-block"></span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -331,115 +317,66 @@
               </ul>
             </div>
           </nav>
+          <div class="content-wrapper">
+            <!-- Content -->
 
-        
-<div class="content-wrapper">
-  <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span> Account</h4>
 
-  <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Category/</span> Add Category </h4>
+              <div class="row">
+                <div class="col-md-12">
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <!-- <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a> -->
+                    </li>
+                    
+                    <% if(admin.length > 0){%>
 
-    <!-- Basic Layout & Basic with Icons -->
-    <div class="row">
-      <!-- Basic Layout -->
-      <div class="col-xxl">
-        <div class="card mb-4">
-          <div class="card-body">
-            <form method="post" action="/admin/add-category" enctype="multipart/form-data" onsubmit="return validateForm()">
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-name">Category</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="basic-default-name" name="categoryname" placeholder="" />
-                  <div id="categoryname-error" class="text-danger"></div>
-                </div>
-              </div>
-              <div class="row mb-2">
-                <div class="mb-2">
-                  <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label" for="basic-default-phone">Description</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="description" id="basic-default-phone" class="form-control phone-mask" aria-describedby="basic-default-phone" />
-                      <div id="description-error" class="text-danger"></div>
+                       <% for(let i=0; i<admin.length; i++){  %>
+                          
+                  </ul>
+                  <div class="card mb-4">
+                    <h5 class="card-header">Profile Details</h5>
+                    <!-- Account -->
+                    <div class="card-body">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                       
+                        
+                      </div>
                     </div>
-                  </div>  
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-email">Image</label>
-                <div class="col-sm-10">
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="file"
-                      name="image"
-                      id="basic-default-email"
-                      class="form-control"
-                      placeholder="john.doe"
-                      aria-label="john.doe"
-                      aria-describedby="basic-default-email2"
-                      accept="image/*,.webp"
-                    />
-                  </div>    
-                 <div id="image-error" class="text-danger"></div>
-
-                </div>
-              </div>
-              <div class="row justify-content-end">
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary">Send</button>
-                </div>
-              </div> 
-            </form>
-            
-            <script>
-            function validateForm() {
-              // Get form inputs
-              const categoryName = document.getElementById("basic-default-name");
-              const categoryNameError = document.getElementById("categoryname-error");
-              const description = document.getElementById("basic-default-phone");
-              const descriptionError = document.getElementById("description-error");
-              const image = document.getElementById("basic-default-email");
-              const imageError = document.getElementById("image-error");
-            
-              // Reset error messages
-              categoryNameError.textContent = "";
-              descriptionError.textContent = "";
-              imageError.textContent = "";
-            
-              // Check if inputs are valid
-              let isValid = true;
-              if (categoryName.value.trim() === "") {
-                categoryNameError.textContent = "Please enter a category name.";
-                categoryNameError.style.color = "red";
-                isValid = false;
-              }
-              if (description.value.trim() === "") {
-                descriptionError.textContent = "Please enter a description.";
-                descriptionError.style.color = "red";
-                isValid = false;
-              }
-              if (image.files.length === 0) {
-                imageError.textContent = "Please select an image.";
-                imageError.style.color = "red";
-                isValid = false;
-              } else {
-                const file = image.files[0];
-                const fileType = file.type.split("/")[0];
-                if (fileType !== "image" && fileType !== "image/webp") {
-                  imageError.textContent = "Please select a valid image file.";
-                  imageError.style.color = "red";
-                  isValid = false;
-                }
-              }
-            
-              return isValid;
-            }
-            </script>
-            
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <%- include('../layouts/adminfooter.ejs') %>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                      <form id="formAccountSettings" >
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input class="form-control"type="text"id="firstName"name="firstName" placeholder="<%= admin[i].name %>" />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="lastName" class="form-label">E-mail</label>
+                            <input class="form-control" type="text" name="lastName" id="lastName" placeholder="<%= admin[i].email %>" />
+                          </div>
+                         
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                            <div class="input-group input-group-merge">
+                              <span class="input-group-text"></span>
+                              <input
+                                type="text"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                class="form-control"
+                                placeholder="<%= admin[i].mobile %>"
+                                style="color: black;"
+                              />
+                            </div>
+                          </div>
+                          <%}} else{%>
+                         
+                        <%}%>
+                                             
+                        </div>
+                      </form>
+                    </div>
+          <!-- / Navbar -->
+          <%- include('../layouts/adminfooter.ejs') %>

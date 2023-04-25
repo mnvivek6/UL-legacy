@@ -203,7 +203,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/admin/list-user" class="menu-link">
+                  <a href="/admin/adminprofile" class="menu-link">
                     <div data-i18n="Error">admin profile</div>
                   </a>
                 </li>
@@ -296,7 +296,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="/admin/adminprofile">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -360,18 +360,16 @@
                         <div class="col-sm-10">
                           <select id="Select Category" name="category" class="form-select">
 
+                            <option selected><%= product.category?.name %></option>
+
                             <%
                       if(category.length > 0){
   
                           for(let i=0; i<category.length; i++){
-                              %>
-                              <%if(product.category==category[i]._id){%>
-                            <option selected value= <%= category[i]._id %> ><%= category[i].name %></option>
+                              %>  
+                            <option  value= "<%= category[i]._id %>" ><%= category[i].name %></option>
 
-                                <%}else{%>
-                            <option  value= <%= category[i]._id %> ><%= category[i].name %></option>
-
-                                  <%}%>
+                                  
                             <% }} %>
                           </select>
                         </div>
@@ -431,7 +429,7 @@
                   document.write(new Date().getFullYear());
                 </script>
                 , made with ❤️ by
-                <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+                <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">UL</a>
               </div>
               <div>
                 <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>

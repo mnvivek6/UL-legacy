@@ -98,16 +98,20 @@
                                             <ul>
                                                 <%if(user == false){%>
                                           
-                                                    <li><a href="/logout">logout</a></li>
-                                            <%}else{%>
+                                                 <li><a href="/logout">logout</a></li>
+                                                 <li><a href="/orderlist">Orders List</a></li>
+                                                 <li><a href="/whishlist">Wishlist</a></li>
+                                                 <li><a href="/userprofile">Profile Page</a></li>
+                                                 <%}else{%>  
                                                 <li><a href="/login">login</a>
-                                                
+                                                    <li><a href="/login">Orders List</a></li>
+                                                    <li><a href="/login">Wishlist</a></li>
+                                                 <li><a href="/login">Profile Page</a></li>
+                                                <%}%>
+                                            
+                                              
+                                              
                                                
-                                            <%}%>
-                                                <!-- <li><a href="adfs">Password Recovery</a></li> -->
-                                                <li><a href="/orderlist">Orders List</a></li>
-                                                <li><a href="/whishlist">Wishlist</a></li>
-                                                <li><a href="/userprofile">Profile Page</a></li>
                                                 <!-- <li><a href="account-address.html">Contact / Shipping Address</a></li> -->
                                                 <!-- <li><a href="account-tickets.html">My Tickets</a></li>
                                                 <li><a href="account-single-ticket.html">Single Ticket</a></li> -->
@@ -139,14 +143,21 @@
                                                 <ul class="dropdown-menu cart-list">                                                   
                                                     
                                                     <li class="total bg-primary">
-                                                       
+                                                        <%if(user == false){%>
                                                         <a href="/listcart" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="heart"> <a href="/whishlist"><i class="ti-heart"></i></a></li>                                          
-                                        </ul>
-                                    </div>
+                                                        <%}else{%>
+                                                            <a href="/login" class="butn-style2 small white float-end w-auto"><span>View Cart</span></a>
+                                                            <%}%>
+                                                      </li>
+                                                      </ul>
+                                                      </li>
+                                                      <%if(user == false){%>
+                                                       <li class="heart"> <a href="/whishlist"><i class="ti-heart"></i></a></li>     
+                                                       <%}else{%>  
+                                                        <li class="heart"> <a href="/login"><i class="ti-heart"></i></a></li> 
+                                                        <%}%>
+                                                    </ul>
+                                                      </div>
                                     <!-- end attribute navigation -->
 
                                 </nav>

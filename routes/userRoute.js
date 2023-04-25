@@ -93,9 +93,9 @@ user_route.get('/downloadinvoice',auth.isLogin,userController.singelorderdowload
 
 // pagenation
 user_route.get('/shop',userController.productlist)
-user_route.get('/shopfullsleeve',userController.shopcategory)
+user_route.get('/productlist/:id',userController.loadbycategory)
 // coupon
-user_route.post('/couponapply',auth.isLogin,userController.couponApply)
+user_route.post('/couponapply/:id',auth.isLogin,userController.couponApply)
 
 user_route.post('/verifypayment',auth.isLogin,userController.verifyPayment)
 user_route.post('/whishlistTocart',auth.isLogin,userController.whishlistTocart)
