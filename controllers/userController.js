@@ -904,10 +904,10 @@ const OrderCancel = async (req, res) => {
 const productlist = async (req, res) => {
 
     try {
-        
+        const category = await Category.find()
         const products= await Product.find()
         const user= true
-        res.render('productlist',{products,user})
+        res.render('productlist',{products,user,category})
 
     } catch (error) {
         console.log(error.message);
@@ -1129,20 +1129,7 @@ const search_product = async (req, res) => {
   }
 
 
-  const shopcategory = async(req, res)=>{
-
-    try {
-
-        const Id = req.query.id
-       const user= true
-        console.log(Id,"here i got");
-        res.render('shopfullsleeve',{user})
-        
-    } catch (error) {
-        console.log(error.message);
-        res.render('500')
-    }
-  }
+  
 
   const singelorderdowload = async ( req, res)=>{
 
@@ -1162,6 +1149,32 @@ const search_product = async (req, res) => {
         res.render('500')
     }
   }
+
+  const loadbycategory = async (req, res) => {
+
+    try {
+        const user= true
+
+        const cat_id = req.params.id
+        console.log(cat_id);
+        const category = await Category.find({})
+        const cat_name = await Category.findOne({ _id: cat_id })
+       
+        const categoryname = cat_name.name
+        console.log(categoryname);
+        const products = await Product.find({ category: cat_id })
+        console.log(products,'gggggggggggggggggggggg');
+        
+      
+        res.render('productlist', { products,  categoryname, user, category,})
+
+    } catch (error) {
+                
+        res.render('500');
+        console.log(error.message); 
+
+    }
+}
 // exporting usercontroller module   
 module.exports = {
     loadRegister,
@@ -1201,6 +1214,7 @@ module.exports = {
     whishlistTocart,
     returnOrder,
     search_product,
-    shopcategory,
-    singelorderdowload
+    
+    singelorderdowload,
+    loadbycategory
 }
