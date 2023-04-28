@@ -1161,9 +1161,9 @@ const search_product = async (req, res) => {
         const cat_name = await Category.findOne({ _id: cat_id })
        
         const categoryname = cat_name.name
-        console.log(categoryname);
+       
         const products = await Product.find({ category: cat_id })
-        console.log(products,'gggggggggggggggggggggg');
+        
         
       
         res.render('productlist', { products,  categoryname, user, category,})

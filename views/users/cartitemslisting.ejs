@@ -221,15 +221,15 @@
                                         
                                    
                                       <td class="product-quantity">
-                                        <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
-                                          onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',-1,'<%= productId.price %>')"> -</button>
-                                        <span id="<%= productId._id %>">
-                                          <%= cart.qty %>
-                                        </span>  
-                                                 
-                                        <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
-                                          onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',1,'<%= productId.price %>')"> + </button>
-                                      </td>
+  <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
+    onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',-1,'<%= productId.price %>')"> -</button>
+  <span id="<%= productId._id %>">
+    <%= cart.qty %>
+  </span>                                               
+  <button style="border: none;border-radius:3px; padding:0 16px 0 16px"
+    onclick="cartquantityupdation('<%= userData._id %>','<%= productId._id %>',1,'<%= productId.price %>', '<%= productId.quantity %>')"> + </button>
+</td>
+
                                      
                                      
                                       
@@ -437,36 +437,51 @@
         
     </div>
          <script>
-         function cartquantityupdation(userId, productId, count, proPrice) {  
-         let quantity = parseInt(document.getElementById(productId).innerHTML)
-         let procount = parseInt(count)
-         if(quantity <= 1 && procount === -1 ){
-            console.log('hi');
-        }else{
-          $.ajax({
-            url: '/changequantity',
-            data: {
-              user: userId,
-              product: productId,
-              count: count,
-              Quantity: quantity,
-              proPrice:proPrice
-            },
+            function cartquantityupdation(userId, productId, count, proPrice, availableQuantity) {  
+  let quantity = parseInt(document.getElementById(productId).innerHTML);
+  console.log(availableQuantity)
+  console.log(quantity);
+  let updatedQuantity = quantity + parseInt(count);
+  console.log(updatedQuantity);
 
-            method: 'post',
-            success: (response) => {
-    
-              document.getElementById(productId).innerHTML = quantity+count
-              document.getElementsByClassName(productId)[0].innerHTML = response.singleproductprice
-              document.getElementById('total').innerHTML = response.sum
-            
-            }
-          })
-          
-        }
+  if (updatedQuantity < 1) {
 
-        
-    }
+    Swal.fire({
+      title: 'Invalid quantity',
+      text: "Quantity cannot be less than one",
+      icon: 'warning',
+      confirmButtonColor: 'false',
+    });
+  } else if (updatedQuantity >=availableQuantity) {
+    Swal.fire({
+      title: 'Out of stock',
+      text: "Sorry, currently unavailable!",
+      icon: 'warning',
+      confirmButtonColor: 'false',
+    });
+  } else {
+    $.ajax({
+      url: '/changequantity',
+      data: {
+        user: userId,
+        product: productId,
+        count: count,
+        Quantity: quantity,
+        proPrice: proPrice
+      },
+      method: 'post',
+      success: (response) => {
+        document.getElementById(productId).innerHTML = updatedQuantity;
+        document.getElementsByClassName(productId)[0].innerHTML = response.singleproductprice;
+        document.getElementById('total').innerHTML = response.sum;
+      },
+      error: (err) => {
+        console.log('Error updating quantity:', err);
+      }
+    });
+  }
+}
+
     </script>
 
 <!-- quantity updation ending -->

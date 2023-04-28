@@ -126,6 +126,7 @@ const editproduct = async (req, res) => {
     console.log('hi');
     try {
         const id = req.query.id
+        console.log(req.body.category);
         console.log(id);
         if (id) {
 
@@ -134,12 +135,14 @@ const editproduct = async (req, res) => {
                     productname: req.body.name,
 
                     category: req.body.category,
+                    
                     price: req.body.price,
                     description: req.body.description,
                     quantity: req.body.quantity
 
                 }
             })
+
 
             res.redirect('/admin/list-product')
 
