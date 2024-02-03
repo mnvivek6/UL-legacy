@@ -31,6 +31,7 @@ const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, {
 // bcrypt the password for security
 // console.log("khgfkgdkhgc");
 const Securepassword = async (password) => {
+    console.log(password);
     console.log("come pass");
     try {
 
@@ -45,6 +46,8 @@ const Securepassword = async (password) => {
 }
 // for send verification mail
 const sendVeryfymail = async (name, email, user_id) => {
+
+    console.log(name,email,user_id);
 
     try {
         const transporter = nodemailer.createTransport({
@@ -62,7 +65,7 @@ const sendVeryfymail = async (name, email, user_id) => {
             from: config.emailUser,
             to: email,
             subject: 'for verification mail',
-            html: '<p>hii' + name + ',please click here to <a href="http://localhost:3000/verify?id=' + user_id + '" >verify</a>your mail.</p>'
+            html: '<p>hii' + name + ',please click here to <a href="http://localhost:3000/verify?id=' + user_id + '" >verify</a>your Email.</p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
@@ -134,7 +137,7 @@ const insertUser = async (req, res) => {
         console.log(NEwUser);
         const userData = await NEwUser.save()
         if (userData) {
-            sendVeryfymail(req.body.name, req.body.email, userData._id)
+            sendVeryfymail(userData.name, userData.email, userData._id)
             res.render('userlogin', { message: "your registration has been successfull" })
         } else {
             res.render('signup', { message: "your registration has been failed" })
@@ -450,7 +453,7 @@ const userProfile = async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.render('500')
+        res.render(500)
     }
 }
 
