@@ -183,7 +183,7 @@ const AddtoCart = async (req, res) => {
 
             } else {
 
-                console.log('adding to cart is failed it didnt updated');
+                console.log(' adding to cart is failed it didnt updated');
 
             }
         }
