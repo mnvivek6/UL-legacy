@@ -5,7 +5,6 @@ const Product = require('../models/productmodel');
 
 // show category
 const formcategory = async (req, res) => {
-
     try {
 
         res.render('add-category')
@@ -13,7 +12,6 @@ const formcategory = async (req, res) => {
         console.log(error.message);
     }
 }
-
 // addcategory
 
 const addcategory = async (req, res) => {
