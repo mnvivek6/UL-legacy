@@ -39,25 +39,17 @@ user_route.get('/logout', userController.userLogout)
 
 
 user_route.post('/login', userController.verifylogin)
-
 user_route.get('/', auth.isLogout, userController.loadhome)
-
 user_route.get('/forget', userController.forgetload)
-
 user_route.post('/forget', userController.forgetVerify)
-
 user_route.get('/forget-password', userController.forgetpasswordload)
-
 user_route.post('/forget-password', userController.resetPassword)
-
 user_route.get('/verify', userController.verifymail)
-
 user_route.get('/login', userController.loginLoad)
 // otp
 user_route.post('/verification-form', userController.verifyPhone)
 user_route.get('/verification-form', userController.otpPage)
 user_route.post('/otp', userController.verifyOtp)
-
 user_route.get('/productdetail', auth.isLogin, userController.productdetail)
 
 // cart

@@ -7,8 +7,6 @@ const User = require('../models/usersmodel')
 const session = require('express-session');
 const { default: mongoose } = require('mongoose');
 
-
-
 const list_product = async (req, res) => {
     try {
         const product = await Product.find().populate('category')
