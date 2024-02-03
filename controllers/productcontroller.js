@@ -190,7 +190,7 @@ const AddtoCart = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from addto cart');
-        res.render('500')
+        res.render(500)
     }
 
 }
