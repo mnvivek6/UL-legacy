@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 // connecting to mongodb
 
-// mongoose.set('strictQuery', true)
+mongoose.set('strictQuery', true)
 mongoose.connect("mongodb+srv://mvivekmn:1234@cluster0.kb2qbes.mongodb.net/untitledlegacy?retryWrites=true&w=majority").then((data)=>{
     console.log('mongodb connected');
 });
