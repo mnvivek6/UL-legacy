@@ -66,7 +66,7 @@ const sendVeryfymail = async (name, email, user_id) => {
             from: config.emailUser,
             to: email,
             subject: 'for verification mail',
-            html: '<p>hii' + name + ',please click here to <a href="https://ul-legacy.onrender.com/verify?id=' + user_id + '" >verify</a>your Email.</p>'
+            html: '<p>hi ' + name + ',please click here to <a href="https://ul-legacy.onrender.com/verify?id=' + user_id + '" >verify</a> your Email.</p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
@@ -100,7 +100,7 @@ const sendResetPasswordmail = async (name, email, token) => {
             from: config.emailUser,
             to: email,
             subject: 'for reset password',
-            html: '<p>hii  ' + name + ',please click here to <a href="http://localhost:3000/forget password?token=' + token + '" > Reset </a>forget your password.</p>'
+            html: '<p>hii  ' + name + ',please click here to <a href="https://ul-legacy.onrender.com/forgetpassword?token=' + token + '" > Reset </a>forget your password.</p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
