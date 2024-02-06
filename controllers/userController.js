@@ -66,7 +66,7 @@ const sendVeryfymail = async (name, email, user_id) => {
             from: config.emailUser,
             to: email,
             subject: 'for verification mail',
-            html: '<p>hii' + name + ',please click here to <a href="http://localhost:3000/verify?id=' + user_id + '" >verify</a>your Email.</p>'
+            html: '<p>hii' + name + ',please click here to <a href="https://ul-legacy.onrender.com/verify?id=' + user_id + '" >verify</a>your Email.</p>'
         }
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
@@ -171,15 +171,21 @@ const verifylogin = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password
 
+        console.log(password,email,'user password');
+
         const userData = User.findOne({ email: email })
+       
             .then((userData) => {
+
+                console.log(userData.password);
                 if (userData) {
                     // bcrypt.compare(password, userData.password).then((data) => {
 
-                        if(password==userData.password){
+                        if(password == userData.password){
 
                         
                         const passwordMatch = password
+                        console.log(passwordMatch,'password match here');
                         if (passwordMatch) {
 
 
