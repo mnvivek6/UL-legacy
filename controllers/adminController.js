@@ -3,7 +3,7 @@ const { config } = require('nodemon');
 const category = require('../models/category');
 const Product = require('../models/productmodel');
 const user = require('../models/usersmodel')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const configg = require('../config/config')
 const Coupon = require('../models/couponModel')
@@ -39,7 +39,11 @@ const verifylogin = async (req, res) => {
         if (userData) {
             console.log(userData);
 
-            const passwordMatch = await bcrypt.compare(password, userData.password)
+            
+            if(password == userData.password){
+                const passwordMatch = password
+            
+           
             if (passwordMatch) {
 
                 if (userData.is_admin === 0) {
@@ -54,6 +58,7 @@ const verifylogin = async (req, res) => {
 
                 }
             }
+        }
         } else {
             res.render('login', { message: 'email and password is incorrect' })
         }
