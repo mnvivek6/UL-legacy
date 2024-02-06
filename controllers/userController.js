@@ -1,6 +1,6 @@
 // setting rout
 const User = require('../models/usersmodel')
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 const nodemailer = require('nodemailer');
 const config = require('../config/config')
@@ -35,7 +35,8 @@ const Securepassword = async (password) => {
     console.log("come pass");
     try {
 
-        const passwordHash = await bcrypt.hash(password, 10)
+        const passwordHash = password
+        //  await bcrypt.hash(password, 10)
         return passwordHash;
 
     } catch (error) {
@@ -173,9 +174,12 @@ const verifylogin = async (req, res) => {
         const userData = User.findOne({ email: email })
             .then((userData) => {
                 if (userData) {
-                    bcrypt.compare(password, userData.password).then((data) => {
+                    // bcrypt.compare(password, userData.password).then((data) => {
 
-                        const passwordMatch = data
+                        if(password==userData.password){
+
+                        
+                        const passwordMatch = password
                         if (passwordMatch) {
 
 
@@ -199,7 +203,8 @@ const verifylogin = async (req, res) => {
                         } else {
                             res.render('userlogin', { message: "Email and password is incorrect" })
                         }
-                    })
+                    // })
+                }
 
                 } else if (password === "" || email === "") {
 
